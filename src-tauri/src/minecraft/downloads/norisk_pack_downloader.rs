@@ -10,6 +10,8 @@ use tokio::fs;
 const DEFAULT_CONCURRENT_MOD_DOWNLOADS: usize = 4;
 const MOD_CACHE_DIR_NAME: &str = "mod_cache"; // Reuse the same cache directory
 const MODRINTH_MAVEN_URL: &str = "https://api.modrinth.com/maven"; // Modrinth Maven repo
+/// Marks a mod that ships inside the installer instead of being downloaded.
+const BUNDLED_PREFIX: &str = "bundled:";
 
 #[derive(Clone)]
 pub struct NoriskPackDownloadService {
@@ -166,6 +168,23 @@ impl NoriskPackDownloadService {
                         Ok(())
                     }
                     NoriskModSourceDefinition::Url => {
+                        // `bundled:` mods ship inside the installer, so there is
+                        // nothing to fetch: copy them out of the resource dir.
+                        if let Some(relative) = effective_identifier.strip_prefix(BUNDLED_PREFIX) {
+                            info!(
+                                "Using bundled mod for cache: {} ({}) from {}",
+                                display_name, filename, relative
+                            );
+
+                            Self::copy_bundled_file(relative, &target_path).await
+                                .map_err(|e| {
+                                    error!("Failed to install bundled mod '{}': {}", display_name, e);
+                                    e
+                                })?;
+
+                            return Ok(());
+                        }
+
                         // For URL mods, use the identifier as direct URL
                         info!(
                             "Downloading URL mod for cache: {} ({}) from {}",
@@ -239,6 +258,30 @@ impl NoriskPackDownloadService {
     }
 
     /// Downloads a file from a URL to a target path, optionally verifying its SHA1 hash.
+    /// Copies a mod that shipped inside the installer into the cache, so the
+    /// launcher's own client mod works with no network and no release upload.
+    async fn copy_bundled_file(relative: &str, target_path: &PathBuf) -> Result<()> {
+        let source = crate::config::bundled_resource(relative).ok_or_else(|| {
+            crate::error::AppError::Other(
+                "Bundled resource directory is not available".to_string(),
+            )
+        })?;
+
+        if !source.exists() {
+            return Err(crate::error::AppError::Other(format!(
+                "Bundled mod '{}' is missing from the installation at {:?}",
+                relative, source
+            )));
+        }
+
+        if let Some(parent) = target_path.parent() {
+            tokio::fs::create_dir_all(parent).await?;
+        }
+        tokio::fs::copy(&source, target_path).await?;
+
+        Ok(())
+    }
+
     async fn download_and_verify_file(
         url: &str,
         target_path: &PathBuf,

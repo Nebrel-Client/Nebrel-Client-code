@@ -118,7 +118,7 @@ pub async fn open_tester_window<R: tauri::Runtime>(
         WINDOW_LABEL,
         tauri::WebviewUrl::App("tester-window.html".into()),
     )
-    .title("NoRisk Tester Queue")
+    .title("Nebrel Tester Queue")
     .inner_size(1100.0, 760.0)
     .min_inner_size(800.0, 600.0)
     .decorations(false)

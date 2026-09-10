@@ -21,9 +21,9 @@ impl CoreApi {
 
     pub fn get_api_base(is_experimental: bool) -> &'static str {
         if is_experimental {
-            "https://api-staging.norisk.gg/api/v1/core"
+            "https://api-staging.nebrel.de/api/v1/core"
         } else {
-            "https://api.norisk.gg/api/v1/core"
+            "https://api.nebrel.de/api/v1/core"
         }
     }
 

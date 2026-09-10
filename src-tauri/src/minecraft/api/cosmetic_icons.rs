@@ -1,7 +1,7 @@
 const ICONFONT_BASE: &str =
-    "https://cdn.norisk.gg/assets/norisk-prod/assets/nrc-cosmetics/assets/noriskclient/textures/iconfont/";
+    "https://cdn.nebrel.de/assets/norisk-prod/assets/nrc-cosmetics/assets/noriskclient/textures/iconfont/";
 const CREATORCODE_BASE: &str =
-    "https://cdn.norisk.gg/assets/norisk-prod/assets/nrc-cosmetics/assets/noriskclient/creatorcode/icons/";
+    "https://cdn.nebrel.de/assets/norisk-prod/assets/nrc-cosmetics/assets/noriskclient/creatorcode/icons/";
 
 pub const CREATOR_CODE_ICON_UUID: &str = "1e441d2b-c975-43b8-aeee-e46dd0dfd216";
 

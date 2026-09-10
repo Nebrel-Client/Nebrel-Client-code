@@ -131,7 +131,7 @@ pub async fn applixir_show_ad(
     }
 
     WebviewWindowBuilder::new(&app, "applixir_window", WebviewUrl::App(url.into()))
-        .title("NoRisk Ad")
+        .title("Nebrel Ad")
         .inner_size(1200.0, 720.0)
         .min_inner_size(900.0, 560.0)
         .decorations(false)

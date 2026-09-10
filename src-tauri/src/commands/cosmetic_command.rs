@@ -124,7 +124,7 @@ async fn resolve_custom_skin_url(settings: Option<&CosmeticSettings>) -> Option<
             }
         }
         CustomTextureSource::FileHash { hash } => Some(format!(
-            "https://cdn.norisk.gg/cosmetic-textures/prod/{}.png",
+            "https://cdn.nebrel.de/cosmetic-textures/prod/{}.png",
             hash.to_lowercase()
         )),
     }

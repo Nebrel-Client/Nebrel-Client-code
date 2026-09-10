@@ -15,7 +15,7 @@ type Result<T> = std::result::Result<T, CommandError>;
 /// 
 /// # Arguments
 /// 
-/// * `url` - The CDN URL of the asset model (e.g., "https://cdn.norisk.gg/asset-models/cosmetics/hat/amethyst_halo/amethyst_halo.gltf")
+/// * `url` - The CDN URL of the asset model (e.g., "https://cdn.nebrel.de/asset-models/cosmetics/hat/amethyst_halo/amethyst_halo.gltf")
 /// 
 /// # Returns
 /// 

@@ -1,0 +1,66 @@
+{
+  "packs": {
+    "nebrel-prod": {
+      "displayName": "Nebrel Client",
+      "description": "Der Nebrel Client: Modulsystem, In-Game-Menue, themebare Oberflaeche und HUD-Editor.",
+      "isExperimental": false,
+      "mods": [
+        {
+          "id": "nebrelclient",
+          "displayName": "Nebrel Client",
+          "source": { "type": "url" },
+          "compatibility": {
+            "26.1": {
+              "fabric": {
+                "identifier": "bundled:mods/nebrelclient-26.1.jar",
+                "filename": "nebrelclient-26.1.jar"
+              }
+            },
+            "26.1.1": {
+              "fabric": {
+                "identifier": "bundled:mods/nebrelclient-26.1.1.jar",
+                "filename": "nebrelclient-26.1.1.jar"
+              }
+            },
+            "26.1.2": {
+              "fabric": {
+                "identifier": "bundled:mods/nebrelclient-26.1.2.jar",
+                "filename": "nebrelclient-26.1.2.jar"
+              }
+            },
+            "26.2": {
+              "fabric": {
+                "identifier": "bundled:mods/nebrelclient-26.2.jar",
+                "filename": "nebrelclient-26.2.jar"
+              }
+            }
+          }
+        },
+        {
+          "id": "fabric-api",
+          "displayName": "Fabric API",
+          "source": {
+            "type": "modrinth",
+            "projectId": "P7dR8mSH",
+            "projectSlug": "fabric-api"
+          },
+          "compatibility": {
+            "26.1": { "fabric": { "identifier": "0.145.1+26.1" } },
+            "26.1.1": { "fabric": { "identifier": "0.145.4+26.1.1" } },
+            "26.1.2": { "fabric": { "identifier": "0.149.1+26.1.2" } },
+            "26.2": { "fabric": { "identifier": "0.159.0+26.2" } }
+          }
+        }
+      ],
+      "loaderPolicy": {
+        "byMinecraft": {
+          "26.1": { "fabric": { "version": "0.18.4" } },
+          "26.1.1": { "fabric": { "version": "0.18.4" } },
+          "26.1.2": { "fabric": { "version": "0.18.4" } },
+          "26.2": { "fabric": { "version": "0.19.3" } }
+        }
+      }
+    }
+  },
+  "repositories": {}
+}

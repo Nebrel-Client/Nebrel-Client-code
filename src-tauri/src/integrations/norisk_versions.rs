@@ -8,7 +8,7 @@ use std::env;
 use std::path::PathBuf;
 use tokio::fs;
 
-const NORISK_API_BASE_URL: &str = "https://api.noriskclient.com/v1";
+const NORISK_API_BASE_URL: &str = "https://api.nebrel.de/v1";
 
 /// Helper to compute versions file path based on experimental flag
 fn norisk_versions_path_for(is_experimental: bool) -> PathBuf {

@@ -164,7 +164,7 @@ impl FriendsState {
     }
 
     pub async fn disconnect_websocket(&self) -> Result<()> {
-        self.websocket.read().await.disconnect().await
+        self.websocket.write().await.disconnect().await
     }
 
     pub async fn is_websocket_connected(&self) -> bool {

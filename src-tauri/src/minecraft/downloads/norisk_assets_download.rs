@@ -613,7 +613,7 @@ impl NoriskClientAssetsDownloadService {
                 // Use updated URL format from user edit
                 let url = format!(
                     "{}/{}/assets/{}",
-                    "https://cdn.norisk.gg/assets", asset_id_clone, name_clone
+                    "https://cdn.nebrel.de/assets", asset_id_clone, name_clone
                 );
 
                 let mut request = HTTP_CLIENT.get(&url);

@@ -349,7 +349,7 @@ pub async fn toggle_content_from_profile(
         None => {
             log::warn!("SHA1 hash is required for the current toggle implementation when not toggling a NoRisk Pack item.");
             return Err(CommandError::from(AppError::Other(
-                "SHA1 hash is required for this toggle operation when not toggling a NoRisk Pack item.".to_string(),
+                "SHA1 hash is required for this toggle operation when not toggling a Nebrel Pack item.".to_string(),
             )));
         }
     };
@@ -774,7 +774,7 @@ pub async fn install_content_to_profile(
         profile_utils::ContentType::NoRiskMod => {
             log::info!("NoRiskMod installation is not supported via this unified command");
             Err(CommandError::from(AppError::Other(
-                "NoRiskMod installation not supported via this command".to_string(),
+                "Nebrel mod installation not supported via this command".to_string(),
             )))
         }
         profile_utils::ContentType::ResourcePack => {
@@ -1053,7 +1053,7 @@ pub async fn install_local_content_to_profile(
                 payload.profile_id
             );
             return Err(CommandError::from(AppError::Other(
-                "Local installation of NoRiskMod content type is not supported.".to_string(),
+                "Local installation of Nebrel mod content type is not supported.".to_string(),
             )));
         }
         // Handle any other ContentType variants not explicitly covered, if any exist or are added later.
@@ -1269,7 +1269,7 @@ pub async fn switch_content_version(
         profile_utils::ContentType::NoRiskMod => {
             log::error!("Switching version for NoRiskMod is not supported via this command.");
             Err(CommandError::from(AppError::InvalidOperation(
-                "NoRiskMod versions are managed by pack configuration.".to_string(),
+                "Nebrel mod versions are managed by pack configuration.".to_string(),
             )))
         }
     }

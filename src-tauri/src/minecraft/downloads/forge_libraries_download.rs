@@ -23,7 +23,7 @@ async fn fetch_forgeloader_resolution(
     mc_version: &str,
 ) -> Result<ForgeloaderResolveResponse> {
     let url = format!(
-        "https://assets.norisk.gg/api/v1/assets/forgeloader?loader={}&mc={}",
+        "https://assets.nebrel.de/api/v1/assets/forgeloader?loader={}&mc={}",
         loader, mc_version
     );
     let response = HTTP_CLIENT

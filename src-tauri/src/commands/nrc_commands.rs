@@ -40,7 +40,7 @@ pub async fn discord_auth_link(app: AppHandle) -> Result<(), CommandError> {
     let token = norisk_creds.get_token_for_mode(is_experimental)?;
 
     let url_string = format!(
-        "https://api{}.norisk.gg/api/v1/core/oauth/discord?token={}",
+        "https://api{}.nebrel.de/api/v1/core/oauth/discord?token={}",
         if is_experimental { "-staging" } else { "" },
         token
     );
@@ -69,7 +69,7 @@ pub async fn discord_auth_link(app: AppHandle) -> Result<(), CommandError> {
 
     let window =
         WebviewWindowBuilder::new(&app, "discord-signin", WebviewUrl::External(external_url))
-            .title("Discord X NoRiskClient")
+            .title("Discord X Nebrel")
             .always_on_top(true)
             .center()
             .inner_size(500.0, 700.0)
@@ -103,9 +103,9 @@ pub async fn discord_auth_link(app: AppHandle) -> Result<(), CommandError> {
             Ok(current_url) => {
                 let current_url_str = current_url.as_str();
                 if current_url_str
-                    .starts_with("https://api.norisk.gg/api/v1/core/oauth/discord/complete")
+                    .starts_with("https://api.nebrel.de/api/v1/core/oauth/discord/complete")
                     || current_url_str.starts_with(
-                        "https://api-staging.norisk.gg/api/v1/core/oauth/discord/complete",
+                        "https://api-staging.nebrel.de/api/v1/core/oauth/discord/complete",
                     )
                 {
                     debug!("Discord authentication successful, closing window.");
@@ -211,7 +211,7 @@ pub async fn github_auth_link(app: AppHandle) -> Result<(), CommandError> {
     let token = norisk_creds.get_token_for_mode(is_experimental)?;
 
     let url_string = format!(
-        "https://api{}.norisk.gg/api/v1/core/oauth/github?token={}",
+        "https://api{}.nebrel.de/api/v1/core/oauth/github?token={}",
         if is_experimental { "-staging" } else { "" },
         token
     );
@@ -240,7 +240,7 @@ pub async fn github_auth_link(app: AppHandle) -> Result<(), CommandError> {
 
     let window =
         WebviewWindowBuilder::new(&app, "github-signin", WebviewUrl::External(external_url))
-            .title("GitHub X NoRiskClient")
+            .title("GitHub X Nebrel")
             .always_on_top(true)
             .center()
             .inner_size(500.0, 700.0)
@@ -274,9 +274,9 @@ pub async fn github_auth_link(app: AppHandle) -> Result<(), CommandError> {
             Ok(current_url) => {
                 let current_url_str = current_url.as_str();
                 if current_url_str
-                    .starts_with("https://api.norisk.gg/api/v1/core/oauth/github/complete")
+                    .starts_with("https://api.nebrel.de/api/v1/core/oauth/github/complete")
                     || current_url_str.starts_with(
-                        "https://api-staging.norisk.gg/api/v1/core/oauth/github/complete",
+                        "https://api-staging.nebrel.de/api/v1/core/oauth/github/complete",
                     )
                 {
                     debug!("GitHub authentication successful, closing window.");

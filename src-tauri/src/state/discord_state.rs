@@ -8,7 +8,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::sync::{Mutex, RwLock};
 use uuid::Uuid;
 
-const DISCORD_APP_ID: &str = "1237087999104122981";
+const DISCORD_APP_ID: &str = "1547332829556252692";
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum DiscordState {
@@ -237,7 +237,7 @@ impl DiscordManager {
 
     async fn build_and_set_activity(&self, state: &DiscordState, client_ref: &mut DiscordIpcClient) -> std::result::Result<(), AppError> {
         let icon = "icon_512px";
-        let download_button = activity::Button::new("DOWNLOAD", "https://norisk.gg/");
+        let download_button = activity::Button::new("DOWNLOAD", "https://nebrel.de/");
         let buttons = vec![download_button];
 
         let client_state = Self::read_active_client_state();
@@ -294,7 +294,7 @@ impl DiscordManager {
             .assets(
                 activity::Assets::new()
                     .large_image(icon)
-                    .large_text("NoRisk Client"),
+                    .large_text("Nebrel"),
             )
             .timestamps(activity::Timestamps::new().start(start_time))
             .buttons(buttons);

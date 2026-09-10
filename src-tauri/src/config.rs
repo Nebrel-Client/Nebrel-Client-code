@@ -2,12 +2,12 @@ use directories::ProjectDirs;
 use once_cell::sync::Lazy;
 use reqwest::Client;
 use std::path::PathBuf;
-use std::sync::RwLock;
+use std::sync::{OnceLock, RwLock};
 use std::time::Duration;
 
 pub static LAUNCHER_DIRECTORY: Lazy<ProjectDirs> =
     Lazy::new(
-        || match ProjectDirs::from("gg", "norisk", "NoRiskClientV3") {
+        || match ProjectDirs::from("gg", "nebrel", "NebrelClient") {
             Some(proj_dirs) => proj_dirs,
             None => panic!("Failed to get application directory"),
         },
@@ -16,7 +16,7 @@ pub static LAUNCHER_DIRECTORY: Lazy<ProjectDirs> =
 pub static CUSTOM_GAME_DIR_CACHE: Lazy<RwLock<Option<Option<PathBuf>>>> = 
     Lazy::new(|| RwLock::new(None));
 
-static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"), " (support@norisk.gg)");
+static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
 
 pub const HTTP_CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
 
@@ -77,4 +77,21 @@ pub fn update_custom_game_dir(path: Option<PathBuf>) {
     if let Ok(mut guard) = CUSTOM_GAME_DIR_CACHE.write() {
         *guard = Some(path);
     }
+}
+
+/// Directory holding the files bundled with the installer (see `bundle.resources`
+/// in tauri.conf.json). Resolved once during setup, because the path depends on
+/// the platform's install layout and only an `AppHandle` knows it.
+static BUNDLED_RESOURCES: OnceLock<PathBuf> = OnceLock::new();
+
+/// Records where the bundled resources live. Called once from the Tauri setup
+/// hook; later calls are ignored.
+pub fn set_bundled_resource_dir(dir: PathBuf) {
+    let _ = BUNDLED_RESOURCES.set(dir);
+}
+
+/// Path of a file shipped inside the installer, or `None` when the resource
+/// directory has not been resolved yet (for instance in unit tests).
+pub fn bundled_resource(relative: &str) -> Option<PathBuf> {
+    BUNDLED_RESOURCES.get().map(|dir| dir.join("resources").join(relative))
 }

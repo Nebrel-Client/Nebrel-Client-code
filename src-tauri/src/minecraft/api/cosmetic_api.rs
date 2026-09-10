@@ -11,9 +11,9 @@ impl CosmeticApi {
 
     fn get_api_base(is_experimental: bool) -> String {
         if is_experimental {
-            String::from("https://api-staging.norisk.gg/api/v1/cosmetics")
+            String::from("https://api-staging.nebrel.de/api/v1/cosmetics")
         } else {
-            String::from("https://api.norisk.gg/api/v1/cosmetics")
+            String::from("https://api.nebrel.de/api/v1/cosmetics")
         }
     }
 

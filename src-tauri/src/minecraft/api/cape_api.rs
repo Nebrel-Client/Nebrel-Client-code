@@ -104,10 +104,10 @@ impl CapeApi {
     fn get_api_base(is_experimental: bool) -> String {
         if is_experimental {
             debug!("[Cape API] Using experimental API endpoint");
-            String::from("https://api-staging.norisk.gg/api/v1/cosmetics")
+            String::from("https://api-staging.nebrel.de/api/v1/cosmetics")
         } else {
             debug!("[Cape API] Using production API endpoint");
-            String::from("https://api.norisk.gg/api/v1/cosmetics")
+            String::from("https://api.nebrel.de/api/v1/cosmetics")
         }
     }
 
@@ -299,9 +299,9 @@ impl CapeApi {
         is_experimental: bool,
     ) -> Result<bool> {
         let base_url = if is_experimental {
-            "https://api-staging.norisk.gg/api/v1"
+            "https://api-staging.nebrel.de/api/v1"
         } else {
-            "https://api.norisk.gg/api/v1"
+            "https://api.nebrel.de/api/v1"
         };
         let url = format!("{}/core/permissions/is-moderator", base_url);
 

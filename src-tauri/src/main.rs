@@ -4,6 +4,7 @@
     windows_subsystem = "windows"
 )]
 
+pub mod branding;
 #[macro_use]
 mod utils;
 mod cli;
@@ -150,7 +151,7 @@ use commands::friends_command::{
     disconnect_friends_websocket, is_friends_websocket_connected, get_or_create_chat,
     get_private_chats, get_chat_messages, send_chat_message, edit_chat_message,
     delete_chat_message, send_typing_indicator, add_message_reaction,
-    remove_message_reaction,
+    remove_message_reaction, mark_message_received,
 };
 
 #[tokio::main]
@@ -159,7 +160,7 @@ async fn main() {
         eprintln!("FEHLER: Logging konnte nicht initialisiert werden: {}", e);
     }
 
-    info!("Starting NoRiskClient Launcher...");
+    info!("Starting Nebrel Launcher...");
 
     tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
@@ -200,6 +201,16 @@ async fn main() {
         .setup(|app| {
             let app_handle = app.handle().clone();
 
+            // Resolve the bundled resource directory before anything else needs
+            // it: the default pack config and the client jars ship inside it.
+            match app.path().resource_dir() {
+                Ok(dir) => {
+                    info!("Bundled resources resolved to {:?}", dir);
+                    crate::config::set_bundled_resource_dir(dir);
+                }
+                Err(e) => error!("Could not resolve the bundled resource directory: {}", e),
+            }
+
             // CLI cold-start: handle subcommands (version short-circuits GUI;
             // launch fires asynchronously after State::init completes).
             if cli::dispatch_cold_start(&app_handle) {
@@ -207,14 +218,14 @@ async fn main() {
             }
 
             // --- Initialize System Tray (Tauri 2.0) ---
-            let show_item = MenuItem::with_id(app, "show", "Show NoRisk Launcher", true, None::<&str>)?;
+            let show_item = MenuItem::with_id(app, "show", "Show Nebrel Launcher", true, None::<&str>)?;
             let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show_item, &quit_item])?;
 
             let _tray = TrayIconBuilder::new()
                 .menu(&menu)
                 .show_menu_on_left_click(false)
-                .tooltip("NoRisk Client Launcher")
+                .tooltip("Nebrel Launcher")
                 .icon(app.default_window_icon().unwrap().clone())
                 .on_menu_event(|app, event| match event.id.as_ref() {
                     "show" => {
@@ -457,11 +468,11 @@ async fn main() {
                                 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
                                 let _ = state_init_app_handle
                                     .dialog()
-                                    .message("The NoRisk Launcher encountered a critical error.\n\n\
+                                    .message("The Nebrel Launcher encountered a critical error.\n\n\
                                         Please join our Discord for support:\n\
-                                        https://discord.norisk.gg")
+                                        https://discord.nebrel.de")
                                     .kind(MessageDialogKind::Error)
-                                    .title("NoRisk Launcher - Critical Error")
+                                    .title("Nebrel Launcher - Critical Error")
                                     .blocking_show();
                             }
 
@@ -476,11 +487,11 @@ async fn main() {
                         use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
                         let _ = state_init_app_handle
                             .dialog()
-                            .message("The NoRisk Launcher encountered a critical error.\n\n\
+                            .message("The Nebrel Launcher encountered a critical error.\n\n\
                                 Please join our Discord for support:\n\
-                                https://discord.norisk.gg")
+                                https://discord.nebrel.de")
                             .kind(MessageDialogKind::Error)
-                            .title("NoRisk Launcher - Critical Error")
+                            .title("Nebrel Launcher - Critical Error")
                             .blocking_show();
                     }
 
@@ -780,7 +791,7 @@ async fn main() {
             delete_chat_message,
             send_typing_indicator,
             add_message_reaction,
-            remove_message_reaction,
+            remove_message_reaction, mark_message_received,
             commands::deep_link_handler::confirm_auth_bridge,
         ])
         .build(tauri::generate_context!())

@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "NoRisk Launcher",
-  "version": "0.6.25",
-  "identifier": "gg.norisk.NoRiskClientLauncherV3",
+  "productName": "Nebrel Launcher",
+  "version": "0.1.0",
+  "identifier": "gg.nebrel.NebrelClientLauncher",
   "build": {
     "beforeDevCommand": "yarn dev",
     "devUrl": "http://localhost:1430",
@@ -15,7 +15,7 @@
       "active": true,
       "endpoints": [],
       "dialog": false,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDk5QkZBNTBGNjhDQTBGOEYKUldTUEQ4cG9ENlcvbVpVTVdnVkNNSGlXWXVXRklqcGFxNnBuRW1LM3VDTXpKcXU2MmdCNVc5S2IK"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM5OEE4MTgzNjlDNTI2NQpSV1JsVXB3MkdLaVlEQkhtYW9HbnVPZnZrSXlNRUdSWHlJRFJvOWdTeDkvNkJSejllNEFPczdrMwo="
     },
     "singleInstance": {
       "active": true
@@ -28,7 +28,7 @@
       }
     },
     "cli": {
-      "description": "NoRisk Launcher",
+      "description": "Nebrel Launcher",
       "subcommands": {
         "launch": {
           "description": "Launch a profile with runtime-only overrides (does not persist)",
@@ -58,7 +58,7 @@
             {
               "name": "pack",
               "takesValue": true,
-              "description": "Override NoRisk pack id"
+              "description": "Override Nebrel pack id"
             },
             {
               "name": "world",
@@ -152,7 +152,7 @@
             {
               "name": "pack",
               "takesValue": true,
-              "description": "Optional NoRisk pack id"
+              "description": "Optional Nebrel pack id"
             },
             {
               "name": "name",
@@ -192,7 +192,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "NoRiskClient",
+        "title": "Nebrel",
         "width": 1280,
         "height": 800,
         "minWidth": 1080,
@@ -278,6 +278,10 @@
     }
   },
   "bundle": {
+    "resources": [
+      "resources/norisk_modpacks.json",
+      "resources/mods/*.jar"
+    ],
     "windows": {
       "webviewInstallMode": {
         "type": "embedBootstrapper"
@@ -328,10 +332,10 @@
     "fileAssociations": [
       {
         "ext": [
-          "noriskpack"
+          "nebrelpack"
         ],
-        "name": "NoriskPack File",
-        "description": "NoRiskClient Modpack File"
+        "name": "NebrelPack File",
+        "description": "Nebrel Modpack File"
       }
     ]
   }

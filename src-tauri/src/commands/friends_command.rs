@@ -27,7 +27,7 @@ async fn get_auth_info() -> Result<(String, Uuid, String, bool), CommandError> {
     } else {
         account.norisk_credentials.production.as_ref()
     }
-    .ok_or_else(|| CommandError { message: "No NoRisk token available".to_string(), kind: "NoToken".to_string(), ..Default::default() })?;
+    .ok_or_else(|| CommandError { message: "No Nebrel token available".to_string(), kind: "NoToken".to_string(), ..Default::default() })?;
 
     Ok((
         norisk_token.value.clone(),
@@ -162,26 +162,11 @@ pub async fn update_privacy_setting(
 }
 
 #[tauri::command]
-pub async fn connect_friends_websocket(
-    _app: tauri::AppHandle,
-) -> Result<(), CommandError> {
-    // TODO: Re-enable when WebSocket is stable
-    // let (token, uuid, username, is_experimental) = get_auth_info().await?;
-    // let state = State::get().await.map_err(|e| CommandError {
-    //     message: e.to_string(),
-    //     kind: "StateError".to_string(),
-    // })?;
-    //
-    // state
-    //     .friends_state
-    //     .connect_websocket(Arc::new(app), uuid, username, token, is_experimental)
-    //     .await
-    //     .map_err(|e| CommandError {
-    //         message: e.to_string(),
-    //         kind: "WebSocketError".to_string(),
-    //     })?;
-
-    Ok(())
+pub async fn connect_friends_websocket(app: tauri::AppHandle) -> Result<(), CommandError> {
+    let (token, uuid, username, is_experimental) = get_auth_info().await?;
+    let state = State::get().await.map_err(CommandError::from)?;
+    state.friends_state.connect_websocket(Arc::new(app), uuid, username, token, is_experimental)
+        .await.map_err(CommandError::from)
 }
 
 #[tauri::command]
@@ -333,4 +318,10 @@ pub async fn remove_message_reaction(
         .map_err(|e| CommandError::from(e))?;
 
     Ok(())
+}
+#[tauri::command(rename_all = "camelCase")]
+pub async fn mark_message_received(chat_id: String, message_id: String) -> Result<(), CommandError> {
+    let (token, _, _, experimental) = get_auth_info().await?;
+    ChatApi::mark_message_received(&token, &chat_id, &message_id, experimental)
+        .await.map_err(CommandError::from)
 }

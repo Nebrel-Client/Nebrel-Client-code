@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 fn cdn_base(pack: &str) -> String {
-    format!("https://cdn.norisk.gg/assets/{}/assets/", pack)
+    format!("https://cdn.nebrel.de/assets/{}/assets/", pack)
 }
 
 fn cdn_url(pack: &str, object_path: &str) -> String {
@@ -79,7 +79,7 @@ pub async fn load_pack_index(pack: &str) -> Result<ParsedPack> {
         }
     }
 
-    let url = format!("https://api.norisk.gg/api/v1/launcher/pack/{}", pack);
+    let url = format!("https://api.nebrel.de/api/v1/launcher/pack/{}", pack);
     let index: Value = nrc_get(url).json::<Value>("Cosmetic pack index").await?;
     Ok(parse_index(&index))
 }

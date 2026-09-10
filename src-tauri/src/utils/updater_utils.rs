@@ -52,9 +52,9 @@ pub async fn check_update_available_detailed(
 
     // Determine the base part of the URL and the platform-specific segment template
     let base_repo_url = if is_beta_channel {
-        "https://api-staging.norisk.gg/api/v1/launcher/releases-v2"
+        "https://api-staging.nebrel.de/api/v1/launcher/releases-v2"
     } else {
-        "https://api.norisk.gg/api/v1/launcher/releases-v2"
+        "https://api.nebrel.de/api/v1/launcher/releases-v2"
     };
 
     let mut platform_specific_target = "{{target}}".to_string(); // Default: Tauri replaces {{target}}
@@ -225,7 +225,7 @@ pub async fn create_updater_window(app_handle: &AppHandle) -> tauri::Result<Webv
         "updater",                              // Unique label
         WebviewUrl::App("updater.html".into()), // Load local HTML file
     )
-    .title("NoRiskClient Updater")
+    .title("Nebrel Updater")
     .inner_size(325.0, 400.0)
     .resizable(false)
     .center()
@@ -437,9 +437,9 @@ pub async fn check_for_updates(
 
     // Determine the base part of the URL and the platform-specific segment template
     let base_repo_url = if is_beta_channel {
-        "https://api-staging.norisk.gg/api/v1/launcher/releases-v2"
+        "https://api-staging.nebrel.de/api/v1/launcher/releases-v2"
     } else {
-        "https://api.norisk.gg/api/v1/launcher/releases-v2"
+        "https://api.nebrel.de/api/v1/launcher/releases-v2"
     };
 
     let mut platform_specific_target = "{{target}}".to_string(); // Default: Tauri replaces {{target}}

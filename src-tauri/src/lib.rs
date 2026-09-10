@@ -1,3 +1,4 @@
+pub mod branding;
 #[macro_use]
 pub mod utils;
 pub mod commands;

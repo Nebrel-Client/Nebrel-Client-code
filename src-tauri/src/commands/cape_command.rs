@@ -808,9 +808,9 @@ pub async fn download_template_and_open_explorer(
 
     let template_file = if with_elytra { "template.png" } else { "template_no_elytra.png" };
     let template_url = if is_experimental {
-        format!("https://cdn.norisk.gg/capes-staging/{}", template_file)
+        format!("https://cdn.nebrel.de/capes-staging/{}", template_file)
     } else {
-        format!("https://cdn.norisk.gg/capes/{}", template_file)
+        format!("https://cdn.nebrel.de/capes/{}", template_file)
     };
     debug!("Template URL: {}", template_url);
 

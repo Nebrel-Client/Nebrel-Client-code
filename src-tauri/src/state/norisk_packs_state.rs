@@ -51,25 +51,53 @@ impl NoriskPackManager {
     async fn load_config_internal(&self, path: &PathBuf) -> Result<NoriskModpacksConfig> {
         if !path.exists() {
             info!(
-                "Norisk packs config file not found at {:?}, using default empty config.",
+                "Norisk packs config file not found at {:?}, falling back to the bundled one.",
                 path
             );
-            return Ok(NoriskModpacksConfig {
-                packs: HashMap::new(),
-                repositories: HashMap::new(),
-            });
+            return Ok(Self::bundled_config().await);
         }
 
         let data = fs::read_to_string(path).await?;
 
-        match serde_json::from_str(&data) {
+        match serde_json::from_str::<NoriskModpacksConfig>(&data) {
+            // A cached file with no packs means the API had nothing for us; the
+            // packs shipped with the installer are still better than an empty
+            // picker.
+            Ok(config) if config.packs.is_empty() => Ok(Self::bundled_config().await),
             Ok(config) => Ok(config),
             Err(e) => {
-                error!("Failed to parse norisk_modpacks.json at {:?}: {}. Returning default empty config.", path, e);
-                Ok(NoriskModpacksConfig {
-                    packs: HashMap::new(),
-                    repositories: HashMap::new(),
-                })
+                error!("Failed to parse norisk_modpacks.json at {:?}: {}. Falling back to the bundled config.", path, e);
+                Ok(Self::bundled_config().await)
+            }
+        }
+    }
+
+    /// The pack definition shipped inside the installer. Used whenever the API
+    /// and the on-disk cache have nothing, so the launcher's own client pack is
+    /// selectable on a fresh install with no network.
+    async fn bundled_config() -> NoriskModpacksConfig {
+        let empty = NoriskModpacksConfig {
+            packs: HashMap::new(),
+            repositories: HashMap::new(),
+        };
+
+        let Some(path) = crate::config::bundled_resource("norisk_modpacks.json") else {
+            return empty;
+        };
+
+        let Ok(data) = fs::read_to_string(&path).await else {
+            debug!("No bundled pack config at {:?}", path);
+            return empty;
+        };
+
+        match serde_json::from_str::<NoriskModpacksConfig>(&data) {
+            Ok(config) => {
+                info!("Loaded {} bundled pack(s) from {:?}", config.packs.len(), path);
+                config
+            }
+            Err(e) => {
+                error!("Bundled pack config at {:?} is invalid: {}", path, e);
+                empty
             }
         }
     }
@@ -89,6 +117,14 @@ impl NoriskPackManager {
                     "Successfully fetched {} packs definitions from API.",
                     new_config.packs.len()
                 );
+
+                // An empty answer is not an update. Overwriting here would drop
+                // the packs shipped with the installer and leave the picker
+                // blank, which is exactly what the fallback exists to prevent.
+                if new_config.packs.is_empty() {
+                    info!("API returned no packs; keeping the packs already loaded.");
+                    return Ok(());
+                }
                 {
                     // Scope for the write lock
                     let mut config_guard = self.config.write().await;

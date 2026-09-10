@@ -40,10 +40,10 @@ impl PayloadCmsApi {
     pub fn get_cms_base(is_experimental: bool) -> String {
         if is_experimental {
             debug!("[Payload CMS] Using experimental CMS endpoint");
-            String::from("https://cms-staging.norisk.gg")
+            String::from("https://cms-staging.nebrel.de")
         } else {
             debug!("[Payload CMS] Using production CMS endpoint");
-            String::from("https://cms.norisk.gg")
+            String::from("https://cms.nebrel.de")
         }
     }
 

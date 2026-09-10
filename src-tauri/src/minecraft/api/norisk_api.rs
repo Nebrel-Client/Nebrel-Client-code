@@ -139,10 +139,10 @@ impl NoRiskApi {
     pub fn get_api_base(is_experimental: bool) -> String {
         if is_experimental {
             debug!("[NoRisk API] Using experimental API endpoint");
-            String::from("https://api-staging.norisk.gg/api/v1")
+            String::from(crate::branding::API_BASE_STAGING)
         } else {
             debug!("[NoRisk API] Using production API endpoint");
-            String::from("https://api.norisk.gg/api/v1")
+            String::from(crate::branding::API_BASE)
         }
     }
 
@@ -159,7 +159,7 @@ impl NoRiskApi {
             .await?;
 
         let server_id = &server_response.server_id;
-        if !server_id.starts_with("nrc-") {
+        if !server_id.starts_with("nbr-") {
             error!("[NoRisk API] Invalid server ID received: {}", server_id);
             return Err(AppError::RequestError(format!(
                 "Invalid server ID received from NoRisk API: {}",
@@ -521,9 +521,9 @@ impl NoRiskApi {
         is_experimental: bool,
     ) -> Result<serde_json::Value> {
         let base_url = if is_experimental {
-            "https://discord-api-staging.norisk.gg/api/v1/discord"
+            "https://discord-api-staging.nebrel.de/api/v1/discord"
         } else {
-            "https://discord-api.norisk.gg/api/v1/discord"
+            "https://discord-api.nebrel.de/api/v1/discord"
         };
         let endpoint = "crashlog/check";
         let url = format!("{}/{}", base_url, endpoint);
@@ -731,7 +731,7 @@ impl NoRiskApi {
     }
 
     /// Mark a specific notification as read
-    /// https://api.norisk.gg/api/v1/core/notifications/read?notificationId=695623e0bc1b0644b2e97ba3
+    /// https://api.nebrel.de/api/v1/core/notifications/read?notificationId=695623e0bc1b0644b2e97ba3
     /// Method: PUT
     pub async fn mark_notification_read(
         norisk_token: &str,

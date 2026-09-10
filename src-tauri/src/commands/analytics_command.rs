@@ -29,7 +29,7 @@ pub struct TrackEventResponse {
     pub message: Option<String>,
 }
 
-const ANALYTICS_URL: &str = "https://analytics-api-staging.norisk.gg/api/track";
+const ANALYTICS_URL: &str = "https://analytics-api-staging.nebrel.de/api/track";
 
 /// Fire-and-forget analytics from Rust call sites.
 /// Spawns the HTTP request — returns immediately so callers never block on telemetry.
