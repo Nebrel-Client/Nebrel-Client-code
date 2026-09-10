@@ -1,4 +1,5 @@
 "use client";
+import { LibraryHeader } from "../ui/LibraryHeader";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -174,12 +175,12 @@ export function CapeBrowser(): JSX.Element {
   const sortOptions = [
     { value: "mostUsed", label: t('capes.mostUsed'), icon: "solar:heart-bold" },
     { value: "newest", label: t('capes.newest'), icon: "solar:sort-by-time-linear" },
-    { value: "oldest", label: t('capes.oldest'), icon: "mdi:arrow-up-bold-circle-outline" },
+    { value: "oldest", label: t('capes.oldest'), icon: "ph:arrow-circle-up-bold" },
   ];
 
   const filterOptions = [
     { value: "", label: t('capes.allTime'), icon: "solar:calendar-mark-linear" },
-    { value: "weekly", label: t('capes.weekly'), icon: "mdi:calendar-week-outline" },
+    { value: "weekly", label: t('capes.weekly'), icon: "ph:calendar-blank-bold" },
     { value: "monthly", label: t('capes.monthly'), icon: "solar:calendar-date-linear" },
   ];
 
@@ -796,7 +797,8 @@ export function CapeBrowser(): JSX.Element {
   }, [capesData]);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden p-4 relative">
+    <div className="nebrel-library nebrel-capes h-full flex flex-col overflow-hidden relative">
+      <LibraryHeader section="capes" />
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {/* Group Tabs */}
         <div className="mb-4">

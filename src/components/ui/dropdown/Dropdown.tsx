@@ -265,7 +265,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           "fixed font-smallcaps backdrop-blur-md z-[1001] overflow-hidden",
           radiusClass,
           "text-white transition-all duration-200",
-          "border-2 border-b-4 shadow-[0_8px_0_rgba(0,0,0,0.3),0_10px_15px_rgba(0,0,0,0.35)]",
+          "border shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
           animationState === "entering" && animationClasses.entering,
           animationState === "entered" && animationClasses.entered,
           animationState === "exiting" && animationClasses.exiting,

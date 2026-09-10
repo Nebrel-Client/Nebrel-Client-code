@@ -233,10 +233,10 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       }
 
       if (variant === "3d") {
-        return shadowDepth === "none" ? "border-2" : "border-2 border-b-4";
+        return "border";
       }
 
-      return "border border-b-2";
+      return "border";
     };
 
     const getShadowClasses = () => {
@@ -250,8 +250,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       }
 
       return shadowDepth === "default"
-        ? "shadow-[0_8px_0_rgba(0,0,0,0.3),0_10px_15px_rgba(0,0,0,0.35)]"
-        : "shadow-[0_4px_0_rgba(0,0,0,0.3),0_6px_10px_rgba(0,0,0,0.35)]";
+        ? "shadow-[0_8px_22px_rgba(0,0,0,0.42)]"
+        : "shadow-[0_4px_12px_rgba(0,0,0,0.38)]";
     };
 
     const buttonElement = (

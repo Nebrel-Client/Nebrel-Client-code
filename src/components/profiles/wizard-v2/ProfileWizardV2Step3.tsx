@@ -137,8 +137,10 @@ export function ProfileWizardV2Step3({
                 console.log("PACKS", packsData);
                 setNoriskPacks(packsData.packs);
 
-                // Auto-select "norisk-prod" if available
-                if (packsData.packs["norisk-prod"]) {
+                // Prefer the Nebrel production pack; retain compatibility with older catalogs.
+                if (packsData.packs["nebrel-prod"]) {
+                    setSelectedNoriskPackId("nebrel-prod");
+                } else if (packsData.packs["norisk-prod"]) {
                     setSelectedNoriskPackId("norisk-prod");
                 }
             } catch (err) {
@@ -170,7 +172,7 @@ export function ProfileWizardV2Step3({
         .filter(([packId]) => {
             if (showAllVersions) return true; // Show all versions when checkbox is checked
             // Show only curated versions when checkbox is unchecked
-            return packId === "norisk-prod" || packId === "norisk-bughunter" || packId === "";
+            return packId === "nebrel-prod" || packId === "nebrel-bughunter" || packId === "norisk-prod" || packId === "norisk-bughunter" || packId === "";
         })
         .map(([packId, packDef]) => ({
             value: packId,
@@ -196,7 +198,7 @@ export function ProfileWizardV2Step3({
                     "get_norisk_packs_resolved"
                 );
 
-                // Check if the selected pack has NoRisk Client mods for this version/loader
+                // Check if the selected pack has Nebrel mods for this version/loader
                 const selectedPack = resolvedPacks.packs[selectedNoriskPackId];
 
                 if (!selectedPack) {
@@ -207,9 +209,9 @@ export function ProfileWizardV2Step3({
                 // Get the mods in the pack
                 const mods = selectedPack.mods || [];
 
-                // Check if any NoRisk Client mod exists and is compatible with the selected version/loader
+                // Check if any Nebrel mod exists and is compatible with the selected version/loader
                 const hasCompatibleNoRiskClient = mods.some((mod: NoriskModEntryDefinition) => {
-                    // Check if this is a NoRisk Client mod
+                    // Check if this is a Nebrel mod
                     if (mod.id === "noriskclient-client" || mod.id === "nrc-client") {
                         // Check if it has compatibility for the selected version and loader
                         const versionCompat = mod.compatibility?.[selectedMinecraftVersion];
@@ -227,7 +229,7 @@ export function ProfileWizardV2Step3({
                 });
 
                 console.log("Pack mods for", selectedNoriskPackId, selectedMinecraftVersion, selectedLoader, ":", mods);
-                console.log("Has compatible NoRisk Client:", hasCompatibleNoRiskClient);
+                console.log("Has compatible Nebrel:", hasCompatibleNoRiskClient);
 
                 if (!hasCompatibleNoRiskClient) {
                     setShowYellowWarning(true);
@@ -425,7 +427,7 @@ export function ProfileWizardV2Step3({
 
                     {showAdvancedSettings && (
                         <div className="space-y-4 p-4 bg-white/5 border border-white/10 rounded-lg">
-                            {/* NoRisk Pack Selection */}
+                            {/* Nebrel Pack Selection */}
                             <div className="space-y-3">
                                 <label className="block text-base font-minecraft text-white/50">
                                     {t('profiles.wizard.noriskClientPack')}

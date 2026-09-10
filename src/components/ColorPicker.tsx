@@ -74,7 +74,7 @@ export function ColorPicker({
               relative transition-all duration-200
               ${disabled 
                 ? "opacity-40 cursor-not-allowed" 
-                : "cursor-pointer shadow-[0_4px_0_rgba(0,0,0,0.2),0_6px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_5px_0_rgba(0,0,0,0.15),0_8px_15px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,0.4)] hover:translate-y-[-2px] active:shadow-[0_2px_0_rgba(0,0,0,0.1),0_3px_5px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.2)] active:translate-y-[1px]"
+                : "cursor-pointer shadow-[0_4px_14px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.4)] hover:scale-105 active:scale-95"
               }
               ${accentColor.value === color.value ? "ring-2 ring-white ring-offset-2 ring-offset-black/50" : ""}
             `}
@@ -110,7 +110,7 @@ export function ColorPicker({
               relative transition-all duration-200
               ${disabled 
                 ? "opacity-40 cursor-not-allowed" 
-                : "cursor-pointer shadow-[0_4px_0_rgba(0,0,0,0.2),0_6px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_5px_0_rgba(0,0,0,0.15),0_8px_15px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,0.4)] hover:translate-y-[-2px] active:shadow-[0_2px_0_rgba(0,0,0,0.1),0_3px_5px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.2)] active:translate-y-[1px]"
+                : "cursor-pointer shadow-[0_4px_14px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.4)] hover:scale-105 active:scale-95"
               }
               bg-gradient-to-r from-purple-500 via-pink-500 to-red-500
               ${accentColor.isCustom ? "ring-2 ring-white ring-offset-2 ring-offset-black/50" : ""}

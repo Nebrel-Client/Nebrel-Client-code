@@ -67,8 +67,8 @@ export function PlayTab() {
   const outline = { strength: 4, thickness: 3, sensitivity: 0.1 };
 
   return (
-    <div className="flex h-full relative">
-      <div className="flex-grow flex flex-col items-center justify-center p-8 relative z-15">
+    <div className="nebrel-play flex h-full relative">
+      <div className="nebrel-play-stage flex-grow flex flex-col items-center justify-center p-8 relative z-15">
         {/* Only show RetroGrid effect if no theme background is active and effects are not hidden */}
         {currentEffect === BACKGROUND_EFFECTS.RETRO_GRID && shouldShowEffects && !(isThemeActive && selectedTheme?.backgroundImage) && (
           <RetroGridEffect
@@ -101,7 +101,7 @@ export function PlayTab() {
           className="absolute top-6 left-6 z-10"
         /> */}
 
-        <div className="relative z-10">
+        <div className="nebrel-player-stage relative z-10">
           {profilesError && !loading && (
             <ErrorMessage
               message={profilesError || "An unknown error occurred"}
@@ -124,7 +124,7 @@ export function PlayTab() {
         </div>
       </div>
 
-      <NewsSection className="w-1/3 border-l-2 border-white/40 bg-black/10 backdrop-blur-lg p-5 overflow-hidden flex flex-col relative z-10" />
+      <NewsSection className="nebrel-news backdrop-blur-lg p-5 overflow-hidden flex flex-col relative z-10" />
     </div>
   );
 }

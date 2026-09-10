@@ -1,5 +1,5 @@
 {
-  "name": "noriskclient-launcher-v3",
+  "name": "nebrel-launcher",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "prebuild": "yarn icons",
     "preview": "vite preview",
     "tauri": "tauri",
+    "release": "powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1",
     "icons": "node scripts/generate-icon-bundle.mjs"
   },
   "dependencies": {

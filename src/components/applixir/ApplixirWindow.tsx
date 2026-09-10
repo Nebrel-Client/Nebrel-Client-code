@@ -133,13 +133,13 @@ function Titlebar({
           onClick={() => appWindow.minimize()}
           className="w-5 h-5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer"
         >
-          <Icon icon="pixel:minus-solid" className="w-4 h-4" />
+          <Icon icon="ph:minus-bold" className="w-4 h-4" />
         </div>
         <div
           onClick={() => appWindow.close()}
           className="w-5 h-5 flex items-center justify-center text-white/60 hover:text-red-500 transition-colors cursor-pointer"
         >
-          <Icon icon="pixel:window-close-solid" className="w-4 h-4" />
+          <Icon icon="ph:x-bold" className="w-4 h-4" />
         </div>
       </div>
     </div>

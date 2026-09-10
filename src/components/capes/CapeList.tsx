@@ -182,7 +182,7 @@ function CapeItemDisplay({
   return (
     <div
       className={cn(
-        "group relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-white/10 hover:border-white/20 transition-all duration-200",
+        "nebrel-cape-card group relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-white/10 hover:border-white/20 transition-all duration-200",
         isDenied ? "cursor-default opacity-60" : "cursor-pointer"
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -614,7 +614,7 @@ export function CapeList({
 
   if (!isLoading && noActualCapesToDisplay && hasInitiallyLoaded) {
     return (
-      <div className="flex-grow flex items-center justify-center p-5">
+      <div className="nebrel-cape-empty flex-grow flex items-center justify-center p-5">
         <EmptyState
           icon="solar:hanger-2-line-duotone"
           message={
@@ -758,7 +758,7 @@ export function CapeList({
       {contextMenu && contextMenu.cape && (
         <div
           ref={menuRef}
-          className="fixed z-[9999] rounded-md shadow-xl border-2 border-b-4 overflow-hidden"
+          className="fixed z-[9999] rounded-md shadow-xl border overflow-hidden"
           style={{
             top: menuPosition.y,
             left: menuPosition.x,

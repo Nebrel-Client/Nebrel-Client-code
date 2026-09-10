@@ -34,7 +34,7 @@ function RewardDisplay({ reward, shopItemName, shopItemModelUrl }: { reward: Rew
     if (reward?.type === "ShopItem") {
       setIsLoadingModel(true);
       // Use shopItemModelUrl if available, otherwise fallback to hardcoded URL
-      const cdnUrl = shopItemModelUrl || "https://cdn.norisk.gg/misc/fivehead.gltf";
+      const cdnUrl = shopItemModelUrl || "https://cdn.nebrel.de/misc/fivehead.gltf";
       logInfo(`[AdventRewardModal] Loading asset model from CDN: ${cdnUrl}`);
       
       getOrDownloadAssetModel(cdnUrl)
@@ -193,7 +193,7 @@ function RewardDisplay({ reward, shopItemName, shopItemModelUrl }: { reward: Rew
             </div>
             <div className="text-center">
               <p className="font-minecraft text-xl text-white mb-1">
-                NoRisk Plus
+                Nebrel Plus
               </p>
               <p className="font-minecraft text-white/60 text-sm">
                 {Math.floor(reward.duration / (1000 * 60 * 60 * 24))} days

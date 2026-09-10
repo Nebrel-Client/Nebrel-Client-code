@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Icon } from "@iconify/react";
 import { cn } from "../../lib/utils";
-import { Logo } from "../ui/Logo";
 import { NavButton } from "../ui/nav/NavButton";
 import { NavTooltip } from "../ui/nav/NavTooltip";
-import { CreditsModal } from "../modals/CreditsModal";
 import * as ConfigService from "../../services/launcher-config-service";
 import { useThemeStore } from "../../store/useThemeStore";
 import { createPortal } from "react-dom";
@@ -44,7 +42,6 @@ export function VerticalNavbar({
   const showNavLabels = useThemeStore((state) => state.showNavLabels);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [isMounted, setIsMounted] = useState(false);
-  const [showCreditsModal, setShowCreditsModal] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -128,10 +125,10 @@ export function VerticalNavbar({
     >
       <NavButton
         icon={<Icon icon={item.icon} className="w-8 h-8" />}
-        label={!item.isAction && showNavLabels ? item.label : undefined}
+        label={showNavLabels ? item.label : undefined}
         isActive={active === item.id}
         onClick={() => handleItemClick(item.id, item.isAction)}
-        onMouseEnter={() => handleMouseEnter(item.id)}
+        onMouseEnter={() => !showNavLabels && handleMouseEnter(item.id)}
         onMouseLeave={handleMouseLeave}
         aria-label={item.label}
       />
@@ -143,25 +140,23 @@ export function VerticalNavbar({
       <div
         ref={navRef}
         className={cn(
-          "flex flex-col items-center py-6 w-24 backdrop-blur-lg",
+          "nebrel-sidebar flex flex-col py-6 backdrop-blur-lg",
+          showNavLabels ? "nebrel-sidebar-expanded" : "nebrel-sidebar-compact",
           className,
         )}
         style={{
-          backgroundColor: `rgba(${parseInt(accentColor.value.slice(1, 3), 16)}, ${parseInt(accentColor.value.slice(3, 5), 16)}, ${parseInt(accentColor.value.slice(5, 7), 16)}, 0.4)`,
-          borderRight: `2px solid ${accentColor.value}60`,
-          borderLeft: `2px solid ${accentColor.value}60`,
-          boxShadow: `0 0 10px ${accentColor.value}30 inset`,
+          // A dark glass column lit from the top, with a single hairline edge.
+          backgroundImage: `linear-gradient(180deg, ${accentColor.value}2e 0%, ${accentColor.value}0d 38%, transparent 100%)`,
+          backgroundColor: "rgba(10, 3, 9, 0.55)",
+          borderRight: `1px solid ${accentColor.value}2b`,
         }}
-      >        <div className="mb-12">
-          <Logo size="sm" onClick={() => setShowCreditsModal(true)} />
-        </div>
-
-        <div className="flex-1 flex flex-col items-center space-y-4 min-h-[400px]">
+      >
+        <div className="nebrel-nav-primary flex-1 flex flex-col items-center space-y-2 min-h-0 w-full">
           {items.filter((item) => !item.isAction).map(renderItem)}
         </div>
 
         {items.some((item) => item.isAction) && (
-          <div className="flex flex-col items-center space-y-4 mt-4">
+          <div className="nebrel-nav-utilities flex flex-col items-center space-y-2 mt-4 w-full">
             {items.filter((item) => item.isAction).map(renderItem)}
           </div>
         )}
@@ -184,11 +179,6 @@ export function VerticalNavbar({
           </div>,
           document.body,
         )}
-
-      <CreditsModal
-        isOpen={showCreditsModal}
-        onClose={() => setShowCreditsModal(false)}
-      />
     </>
   );
 }

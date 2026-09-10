@@ -265,7 +265,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 aria-label="Clear input"
                 tabIndex={-1}
               >
-                <Icon icon="lucide:x" className="w-4 h-4" />
+                <Icon icon="ph:x-bold" className="w-4 h-4" />
               </button>
             )}
           </div>

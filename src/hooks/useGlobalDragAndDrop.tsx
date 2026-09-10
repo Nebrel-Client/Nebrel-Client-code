@@ -26,7 +26,7 @@ interface WebviewDragDropPayload {
 const recentlyProcessedPaths = new Set<string>();
 const PROCESS_COOLDOWN_MS = 1500; // Cooldown period in milliseconds
 
-const MODPACK_EXTENSIONS = ['.noriskpack', '.mrpack', '.zip'];
+const MODPACK_EXTENSIONS = ['.nebrelpack', '.noriskpack', '.mrpack', '.zip'];
 
 const CONTENT_EXTENSIONS: Partial<Record<BackendContentType, string[]>> = {
   [BackendContentType.Mod]: ['.jar', '.jar.disabled'],
@@ -159,7 +159,7 @@ export function useGlobalDragAndDrop() {
             if (currentMainTab === 'worlds' && currentProfileId) {
               // Filter for potential world folders (directories - paths without file extensions)
               // We'll try to import all dropped paths that don't have known file extensions
-              const knownFileExtensions = ['.jar', '.zip', '.noriskpack', '.mrpack', '.disabled'];
+              const knownFileExtensions = ['.jar', '.zip', '.nebrelpack', '.noriskpack', '.mrpack', '.disabled'];
               const potentialWorldFolders = droppedPaths.filter(path => {
                 const lowerPath = path.toLowerCase();
                 // Check if path doesn't end with a known file extension

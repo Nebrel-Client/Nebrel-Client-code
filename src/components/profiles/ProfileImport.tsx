@@ -36,7 +36,7 @@ export function ProfileImport({
         filters: [
           {
             name: t('profiles.import.modpack_files'),
-            extensions: ["noriskpack", "mrpack", "zip"],
+            extensions: ["nebrelpack", "noriskpack", "mrpack", "zip"],
           },
         ],
         title: t('profiles.import.select_modpack'),

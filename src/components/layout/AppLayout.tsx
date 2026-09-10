@@ -31,8 +31,7 @@ import { useLauncherTheme } from "../../hooks/useLauncherTheme";
 import * as ConfigService from "../../services/launcher-config-service";
 import { SocialsModal } from "../modals/SocialsModal";
 import { FriendsSidebar } from "../friends/FriendsSidebar";
-// TODO: Re-enable when WebSocket is stable
-// import { useFriendsWebSocket } from "../../hooks/useFriendsWebSocket";
+import { useFriendsWebSocket } from "../../hooks/useFriendsWebSocket";
 import { useFriendsStore } from "../../store/friends-store";
 import { useChatStore } from "../../store/chat-store";
 import { checkUpdateAvailable, downloadAndInstallUpdate } from "../../services/nrc-service";
@@ -74,14 +73,14 @@ export function AppLayout({
   const shouldShowEffects = !(isCustomMediaVisible && customMediaHideEffects);
 
   const navItems = [
-    { id: "play", icon: "solar:play-bold", label: t("nav.play") },
-    { id: "profiles", icon: "solar:user-id-bold", label: t("nav.profiles") },
-    { id: "mods", icon: "solar:widget-bold", label: t("nav.mods") },
-    { id: "skins", icon: "solar:emoji-funny-circle-bold", label: t("nav.skins") },
-    { id: "capes", icon: "solar:shop-bold", label: t("nav.capes") },
+    { id: "play", icon: "ph:play-circle-duotone", label: t("nav.play") },
+    { id: "profiles", icon: "ph:identification-card-duotone", label: t("nav.profiles") },
+    { id: "mods", icon: "ph:puzzle-piece-duotone", label: t("nav.mods") },
+    { id: "skins", icon: "ph:person-duotone", label: t("nav.skins") },
+    { id: "capes", icon: "ph:storefront-duotone", label: t("nav.capes") },
     // DISABLED: Advent Calendar (seasonal feature)
     // { id: "advent-calendar", icon: "solar:gift-bold", label: t("nav.advent") },
-    { id: "settings", icon: "solar:settings-bold", label: t("nav.settings"), isAction: true },
+    { id: "settings", icon: "ph:gear-six-duotone", label: t("nav.settings"), isAction: true },
   ];
   const { qualityLevel } = useQualitySettingsStore();
   const { isBackgroundAnimationEnabled, accentColor: themeAccentColor, accentColor } = useThemeStore();
@@ -90,23 +89,7 @@ export function AppLayout({
   const { connectWebSocket, loadCurrentUser, loadFriends } = useFriendsStore();
   const { loadChats } = useChatStore();
 
-  // TODO: Re-enable when WebSocket is stable
-  // useFriendsWebSocket();
-
-  useEffect(() => {
-    const initFriends = async () => {
-      try {
-        await loadCurrentUser();
-        await loadFriends();
-        await loadChats();
-        // TODO: Re-enable when WebSocket is stable
-        // await connectWebSocket();
-      } catch (e) {
-        // Silently fail - user might not be logged in yet
-      }
-    };
-    initFriends();
-  }, []);
+  useFriendsWebSocket();
 
   const getComplementaryBackground = () => {
     const hexToRgb = (hex: string) => {
@@ -323,7 +306,7 @@ export function AppLayout({
   return (
     <div
       ref={launcherRef}
-      className="h-screen w-full bg-black/50 backdrop-blur-lg border-2 overflow-hidden relative flex shadow-[0_0_25px_rgba(0,0,0,0.4)]"
+      className="nebrel-shell h-screen w-full bg-black/50 backdrop-blur-lg border overflow-hidden relative flex shadow-[0_0_25px_rgba(0,0,0,0.4)]"
       style={{
         backgroundColor: backgroundColor,
         backgroundSize: "cover",
@@ -335,13 +318,13 @@ export function AppLayout({
         boxShadow: `0 0 15px ${themeAccentColor.value}30, inset 0 0 10px ${themeAccentColor.value}20`,
       }}
     >
-      <BorderGlowEffects accentColor={themeAccentColor.value} />
+      {/* The shell uses a quiet hairline frame. */}
 
       <VerticalNavbar
         items={navItems}
         activeItem={activeTab}
         onItemClick={onNavChange}
-        className="h-full border-r-2 z-10"
+        className="h-full z-10"
         version={appConfig.version}
       />
 
@@ -354,7 +337,7 @@ export function AppLayout({
 
         <div className="flex-1 relative overflow-hidden">
           <CustomMediaBackground activeTab={activeTab} />
-          {shouldShowEffects && renderBackgroundEffect()}
+          {shouldShowEffects && activeTab === "play" && renderBackgroundEffect()}
           {/* Snow overlay - independent of theme/background */}
           {shouldShowEffects && isSnowEnabled && <Snowfall />}
 
@@ -508,13 +491,11 @@ function HeaderBar({ minimizeRef, maximizeRef, closeRef }: HeaderBarProps) {
 
   return (
     <div
-      className="h-20 flex-shrink-0 border-b-2 backdrop-blur-lg flex items-center justify-between px-8 z-10"
+      className="nebrel-titlebar h-16 flex-shrink-0 border-b backdrop-blur-lg flex items-center justify-between px-8 z-10"
       style={{
-        borderColor: `${accentColor.value}40`,
-        backgroundColor: `rgba(${Number.parseInt(accentColor.value.slice(1, 3), 16)}, ${Number.parseInt(
-          accentColor.value.slice(3, 5),
-          16,
-        )}, ${Number.parseInt(accentColor.value.slice(5, 7), 16)}, 0.01)`,
+        borderColor: `${accentColor.value}26`,
+        // A wash that fades out to the right, rather than a flat tinted bar.
+        backgroundImage: `linear-gradient(105deg, ${accentColor.value}1f 0%, transparent 55%)`,
       }}
       data-tauri-drag-region
     >
@@ -524,10 +505,11 @@ function HeaderBar({ minimizeRef, maximizeRef, closeRef }: HeaderBarProps) {
         <div className="flex flex-col items-start">
           <div className="flex items-center gap-3">
             <h1
-              className="font-smallcaps text-2xl tracking-wider font-bold text-shadow"
+              className="font-smallcaps text-2xl font-bold text-shadow"
+              style={{ letterSpacing: "0.34em" }}
               data-tauri-drag-region
             >
-              NoRiskClient
+              NEBREL
             </h1>
             {availableUpdate && (
               <Tooltip content={isUpdating ? t('header.update.tooltip_updating') : t('header.update.tooltip_available', { version: availableUpdate.version })}>
@@ -582,21 +564,21 @@ function WindowControls({
         className="titlebar-button-borderless w-5 h-5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer"
         title={t('window.minimize')}
       >
-        <Icon icon="pixel:minus-solid" className="w-4 h-4" />
+        <Icon icon="ph:minus-bold" className="w-4 h-4" />
       </div>
       <div
         ref={maximizeRef}
         className="titlebar-button-borderless w-5 h-5 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer"
         title={t('window.maximize')}
       >
-        <Icon icon="pixel:expand-solid" className="w-4 h-4" />
+        <Icon icon="ph:corners-out-bold" className="w-4 h-4" />
       </div>
       <div
         ref={closeRef}
         className="titlebar-button-borderless w-5 h-5 flex items-center justify-center text-white/60 hover:text-red-500 transition-colors cursor-pointer"
         title={t('window.close')}
       >
-        <Icon icon="pixel:window-close-solid" className="w-4 h-4" />
+        <Icon icon="ph:x-bold" className="w-4 h-4" />
       </div>
     </div>
   );

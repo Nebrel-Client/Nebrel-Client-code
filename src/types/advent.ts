@@ -51,7 +51,7 @@ export interface DiscountReward extends RewardBase {
 }
 
 /**
- * NoRisk Plus reward.
+ * Nebrel Plus reward.
  */
 export interface NrcPlusReward extends RewardBase {
   type: "NrcPlus";

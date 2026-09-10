@@ -3,12 +3,12 @@ import type { CapesBrowseResponse, BrowseCapesOptions, GetPlayerCapesPayloadOpti
 import type { MinecraftProfile } from '../types/minecraft';
 
 export const getCapeImageUrl = (hash: string, isExperimental: boolean): string => {
-  const base = isExperimental ? 'https://cdn.norisk.gg/capes-staging/prod' : 'https://cdn.norisk.gg/capes/prod';
+  const base = isExperimental ? 'https://cdn.nebrel.de/capes-staging/prod' : 'https://cdn.nebrel.de/capes/prod';
   return `${base}/${hash}.png`;
 };
 
 export const getCapeReviewImageUrl = (hash: string, isExperimental: boolean): string => {
-  const base = isExperimental ? 'https://cdn.norisk.gg/capes-staging/review' : 'https://cdn.norisk.gg/capes/review';
+  const base = isExperimental ? 'https://cdn.nebrel.de/capes-staging/review' : 'https://cdn.nebrel.de/capes/review';
   return `${base}/${hash}.png`;
 };
 

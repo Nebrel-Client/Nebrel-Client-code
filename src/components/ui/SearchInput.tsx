@@ -193,7 +193,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       if (variant === "minimal")
         return "border-b-2 border-white/30 rounded-none";
       if (variant === "filled") return "border-none rounded-[var(--border-radius)]";
-      if (variant === "3d") return "border-2 border-b-4 rounded-[var(--border-radius)]";
+      if (variant === "3d") return "border rounded-[var(--border-radius)]";
       return "border border-b-2 rounded-[var(--border-radius)]";
     };    const getBoxShadow = () => {
       if (variant === "minimal" || variant === "filled" || variant !== "3d")
@@ -274,7 +274,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               }}
               aria-label={t('common.clear_search')}
             >
-              <Icon icon="lucide:x" />
+              <Icon icon="ph:x-bold" />
             </button>
           )}
         </div>
@@ -342,7 +342,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
                   )}
                   aria-label={t('common.clear_search')}
                 >
-                  <Icon icon="lucide:x" />
+                  <Icon icon="ph:x-bold" />
                 </button>
               )}
             </div>

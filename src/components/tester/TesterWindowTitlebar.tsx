@@ -29,7 +29,7 @@ export function TesterWindowTitlebar({ remaining }: TesterWindowTitlebarProps) {
           className="font-minecraft text-xs tracking-wider"
           style={{ color: accentColor.value }}
         >
-          NoRisk Tester Queue
+          Nebrel Tester Queue
         </span>
         {remaining > 0 && (
           <span
@@ -51,21 +51,21 @@ export function TesterWindowTitlebar({ remaining }: TesterWindowTitlebarProps) {
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title="Minimize"
         >
-          <Icon icon="mdi:minus" className="w-4 h-4 text-white/70" />
+          <Icon icon="ph:minus-bold" className="w-4 h-4 text-white/70" />
         </button>
         <button
           onClick={() => appWindow.toggleMaximize()}
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title="Maximize"
         >
-          <Icon icon="mdi:checkbox-blank-outline" className="w-3.5 h-3.5 text-white/70" />
+          <Icon icon="ph:square-bold" className="w-3.5 h-3.5 text-white/70" />
         </button>
         <button
           onClick={() => appWindow.close()}
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-red-500/80 transition-colors"
           title="Close"
         >
-          <Icon icon="mdi:close" className="w-4 h-4 text-white/70" />
+          <Icon icon="ph:x-bold" className="w-4 h-4 text-white/70" />
         </button>
       </div>
     </div>

@@ -64,7 +64,7 @@ export function StatusMessage({
     <div
       ref={messageRef}
       className={cn(
-        "flex items-start p-4 mb-6 border-2 border-b-4",
+        "flex items-start p-4 mb-6 border",
         radiusClass,
         styles.bg,
         styles.border,

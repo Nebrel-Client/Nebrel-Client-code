@@ -1,3 +1,4 @@
+import { LibraryHeader } from "../ui/LibraryHeader";
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -165,7 +166,7 @@ export function ProfilesTabV2() {
   const createGroups = (): GroupTab[] => {
     const defaultGroups: GroupTab[] = [
       { id: "all", name: "All", count: getFilteredCountForGroup("all") },
-      { id: "nrc", name: "NRC", count: getFilteredCountForGroup("nrc") },
+      { id: "nrc", name: "Nebrel", count: getFilteredCountForGroup("nrc") },
       { id: "server", name: "SERVER", count: getFilteredCountForGroup("server") },
       { id: "modpacks", name: "MODPACKS", count: getFilteredCountForGroup("modpacks") },
     ];
@@ -385,7 +386,8 @@ export function ProfilesTabV2() {
   }
 
   return (
-    <div className="h-full flex flex-col overflow-hidden p-4 relative">
+    <div className="nebrel-profiles h-full flex flex-col overflow-hidden relative">
+      <LibraryHeader section="profiles" />
       {/* Group Tabs */}
       <GroupTabs
         groups={groups}

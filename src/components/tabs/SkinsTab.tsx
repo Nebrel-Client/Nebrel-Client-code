@@ -1,4 +1,5 @@
 "use client";
+import { LibraryHeader } from "../ui/LibraryHeader";
 
 import type React from "react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -106,7 +107,7 @@ const SkinPreview = memo(
           borderColor: isHovered ? `${accentColor.value}60` : undefined,
         }}
         className={cn(
-          "relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-white/10 hover:border-white/20 transition-all duration-200 cursor-pointer",
+          "nebrel-skin-card relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-white/10 hover:border-white/20 transition-all duration-200 cursor-pointer",
           animationClasses,
           isDisabled ? "opacity-60 pointer-events-none" : ""
         )}
@@ -251,7 +252,7 @@ const AddSkinCard = memo(
         key={`add-skin-${index}`}
         style={animationStyle}
         className={cn(
-          "relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-dashed border-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer",
+          "nebrel-skin-card nebrel-add-skin relative flex flex-col gap-3 p-4 rounded-lg bg-black/20 border border-dashed border-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer",
           animationClasses
         )}
         onClick={onClick}
@@ -595,7 +596,8 @@ export function SkinsTab() {
   );
 
   return (
-    <div className="h-full flex flex-col overflow-hidden p-4 relative">
+    <div className="nebrel-library nebrel-skins h-full flex flex-col overflow-hidden relative">
+      <LibraryHeader section="skins" />
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {/* Search & Filters */}
         <div className="mb-6 pb-4 border-b border-white/10">
@@ -653,7 +655,7 @@ export function SkinsTab() {
                   {t('skins.noSkinsMatchSearch')}
                 </p>
               ) : (
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-5">
                   <AddSkinCard
                     index={0}
                     onClick={() => startEditSkin(null, undefined)}

@@ -25,8 +25,8 @@ export function Logo({ size = "md", className, onClick }: LogoProps) {
     >
       <img
         src="/logo.png"
-        alt="NoRisk Logo"
-        className="w-full h-full object-contain"
+        alt="Nebrel Logo"
+        className="w-full h-full object-contain drop-shadow-[0_0_12px_var(--accent-shadow)]"
       />
     </div>
   );

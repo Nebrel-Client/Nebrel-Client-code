@@ -44,7 +44,7 @@ export function TabHeader({
   return (
     <div
       ref={headerRef}      className={cn(
-        "flex-shrink-0 flex flex-col gap-4 p-6 backdrop-blur-md border-b-4 shadow-md",
+        "flex-shrink-0 flex flex-col gap-4 p-6 backdrop-blur-md border-b shadow-md",
         "rounded-none",
         className,
       )}

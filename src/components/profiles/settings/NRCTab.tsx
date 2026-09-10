@@ -85,6 +85,8 @@ export function NRCTab({
       if (showAllVersions) return true; // Show all versions when checkbox is checked
       // Show only curated versions when checkbox is unchecked, plus keep the currently selected pack visible
       return (
+        packId === "nebrel-prod" ||
+        packId === "nebrel-bughunter" ||
         packId === "norisk-prod" ||
         packId === "norisk-bughunter" ||
         packId === "" ||
@@ -115,7 +117,7 @@ export function NRCTab({
           "get_norisk_packs_resolved"
         );
 
-        // Check if the selected pack has NoRisk Client mods
+        // Check if the selected pack has Nebrel mods
         if (!resolvedPacks.packs[editedProfile.selected_norisk_pack_id]) {
           setShowYellowWarning(true);
           return;
@@ -150,7 +152,7 @@ export function NRCTab({
       <div className="space-y-6">
 
 
-        {/* NoRisk Pack Selection */}
+        {/* Nebrel Pack Selection */}
         <div className="space-y-3">
           <div className="space-y-2">
             <label className="block text-lg font-smallcaps text-white mb-2">

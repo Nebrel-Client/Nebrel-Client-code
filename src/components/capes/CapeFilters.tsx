@@ -74,7 +74,7 @@ export function CapeFilters({
       value: "oldest",
       label: t('capes.oldest'),
       icon: (
-        <Icon icon="mdi:arrow-up-bold-circle-outline" className="w-5 h-5" />
+        <Icon icon="ph:arrow-circle-up-bold" className="w-5 h-5" />
       ),
     },
   ];
@@ -88,7 +88,7 @@ export function CapeFilters({
     {
       value: "weekly",
       label: t('capes.weekly'),
-      icon: <Icon icon="mdi:calendar-week-outline" className="w-5 h-5" />,
+      icon: <Icon icon="ph:calendar-blank-bold" className="w-5 h-5" />,
     },
     {
       value: "monthly",

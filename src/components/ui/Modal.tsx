@@ -107,12 +107,12 @@ export function Modal({
     if (variant === "3d") {
       return "border-2 border-b-4";
     }
-    return "border border-b-2";
+    return "border";
   };
 
   const getBoxShadow = () => {
     if (variant === "3d") {
-      return `0 10px 0 rgba(0,0,0,0.3), 0 15px 25px rgba(0,0,0,0.5), inset 0 1px 0 ${accentColor.value}40, inset 0 0 0 1px ${accentColor.value}20`;
+      return "0 24px 80px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.04) inset";
     }
     return "none";
   };
@@ -124,16 +124,16 @@ export function Modal({
     >
       <div
         className={cn(
-          "relative flex flex-col w-full rounded-lg overflow-hidden max-h-[90vh]",
+          "nebrel-modal relative flex flex-col w-full rounded-lg overflow-hidden max-h-[90vh]",
           getBorderClasses(),
           variant === "3d" ? "shadow-2xl" : "",
           widthClasses[width],
           className,
         )}
         style={{
-          backgroundColor: `${accentColor.value}20`,
-          borderColor: `${accentColor.value}80`,
-          borderBottomColor: accentColor.value,
+          backgroundColor: "var(--nebrel-panel)",
+          borderColor: "rgba(255,255,255,0.12)",
+          ...(variant === "3d" ? { borderBottomColor: `${accentColor.value}80` } : null),
           boxShadow: getBoxShadow(),
         }}
       >
@@ -146,15 +146,18 @@ export function Modal({
 
         <div
           ref={headerRef}
-          className="flex items-center justify-between px-6 py-4 border-b-2 flex-shrink-0"
+          className="flex items-center justify-between px-7 py-5 border-b flex-shrink-0"
           style={{
-            borderColor: `${accentColor.value}60`,
-            backgroundColor: `${accentColor.value}30`,
+            borderColor: "rgba(255,255,255,0.07)",
+            backgroundColor: "rgba(255,255,255,0.02)",
           }}
         >
           <div className="flex items-center space-x-3">
             {titleIcon && (
-              <span className="text-white flex-shrink-0 flex items-center">
+              <span
+                className="flex-shrink-0 flex items-center"
+                style={{ color: accentColor.value }}
+              >
                 {titleIcon}
               </span>
             )}

@@ -15,6 +15,14 @@ export type AccentColor = {
 };
 
 export const ACCENT_COLORS: Record<string, AccentColor> = {
+  nebrel: {
+    name: "Nebrel",
+    value: "#cc00a8",
+    hoverValue: "#a80089",
+    shadowValue: "rgba(204, 0, 168, 0.5)",
+    light: "#f24ad4",
+    dark: "#6d0059",
+  },
   cyan: {
     name: "Cyan",
     value: "#00B9E8",
@@ -200,7 +208,10 @@ const calculateColorVariants = (baseColor: string): Partial<AccentColor> => {
   };
 };
 
-export const DEFAULT_BORDER_RADIUS = 0;
+export const DEFAULT_BORDER_RADIUS = 12;
+
+/** The sharp-cornered default the launcher shipped with before the Nebrel look. */
+const LEGACY_BORDER_RADIUS = 4;
 export const MIN_BORDER_RADIUS = 0;
 export const MAX_BORDER_RADIUS = 32;
 
@@ -276,7 +287,7 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      accentColor: ACCENT_COLORS.blue,
+      accentColor: ACCENT_COLORS.nebrel,
       isBackgroundAnimationEnabled: false,
       showNavLabels: true,
       isDetailViewSidebarOnLeft: true,
@@ -558,6 +569,17 @@ export const useThemeStore = create<ThemeState>()(
       },
     }),    {
       name: "norisk-theme-storage",
+      version: 3,
+      migrate: (persisted) => {
+        const state = persisted as Partial<ThemeState>;
+        // Anyone still sitting on the old sharp-cornered default gets the new
+        // rounded one; a radius the user picked themselves is left alone.
+        const radius =
+          state.borderRadius === undefined || state.borderRadius === LEGACY_BORDER_RADIUS
+            ? DEFAULT_BORDER_RADIUS
+            : state.borderRadius;
+        return { ...state, borderRadius: radius };
+      },
       onRehydrateStorage: () => (state) => {
         if (state) {
           // Migration: Replace old "none" grouping criterion with "group"

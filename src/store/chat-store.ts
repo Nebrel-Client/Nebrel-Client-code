@@ -1,3 +1,5 @@
+import { useFriendsStore } from "./friends-store";
+import { useMinecraftAuthStore } from "./minecraft-auth-store";
 import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';
 
@@ -95,22 +97,33 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   loadChats: async () => {
+    const accountId = useMinecraftAuthStore.getState().activeAccount?.id;
     try {
       const chats = await invoke<ComputedChat[]>('get_private_chats');
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       console.log("[ChatStore] loadChats response:", chats);
       chats.forEach(c => {
         console.log("[ChatStore] Chat:", c._id, "participants:", c.participants, "unreadMessages:", c.unreadMessages);
       });
       set({ chats });
     } catch (e) {
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ error: String(e) });
     }
   },
 
   loadMessages: async (chatId: string, page: number = 0) => {
+    const accountId = useMinecraftAuthStore.getState().activeAccount?.id;
     set({ isLoading: true, error: null });
     try {
       const messages = await invoke<ChatMessage[]>('get_chat_messages', { chatId, page });
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id || get().activeChat?._id !== chatId) return;
+      const me = useFriendsStore.getState().currentUser?.uuid;
+      for (const message of messages) {
+        if (message.senderId !== me && !message.receivedAt && !message.deletedAt) {
+          void invoke('mark_message_received', { chatId, messageId: message._id }).catch(() => {});
+        }
+      }
       if (page === 0) {
         set({ messages: messages.reverse(), isLoading: false });
       } else {
@@ -120,6 +133,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
         }));
       }
     } catch (e) {
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id || get().activeChat?._id !== chatId) return;
       set({ error: String(e), isLoading: false });
     }
   },
@@ -131,7 +145,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
         content,
         relatesTo: relatesTo || null,
       });
-      set((s) => ({ messages: [...s.messages, message] }));
+      set((s) => s.activeChat?._id !== message.chatId || s.messages.some(m => m._id === message._id) ? {} : ({ messages: [...s.messages, message] }));
       return message;
     } catch (e) {
       set({ error: String(e) });
@@ -194,7 +208,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   addMessage: (message: ChatMessage) => {
     const { activeChat } = get();
     if (activeChat?._id === message.chatId) {
-      set((s) => ({ messages: [...s.messages, message] }));
+      set((s) => s.activeChat?._id !== message.chatId || s.messages.some(m => m._id === message._id) ? {} : ({ messages: [...s.messages, message] }));
     }
   },
 

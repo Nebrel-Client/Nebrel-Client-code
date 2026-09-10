@@ -59,7 +59,7 @@ function AccountLinkRow({
             size="sm"
             onClick={onUnlink}
             disabled={isProcessing || isLoading}
-            icon={<Icon icon={isLoading ? "mdi:loading" : "mdi:link-off"} className={isLoading ? "animate-spin" : ""} />}
+            icon={<Icon icon={isLoading ? "ph:circle-notch-bold" : "ph:link-break-bold"} className={isLoading ? "animate-spin" : ""} />}
             widthClassName="w-[140px]"
           >
             {t('socials.button.unlink')}
@@ -70,7 +70,7 @@ function AccountLinkRow({
             size="sm"
             onClick={onLink}
             disabled={isProcessing || isLoading}
-            icon={<Icon icon={isLoading ? "mdi:loading" : "mdi:link-variant"} className={isLoading ? "animate-spin" : ""} />}
+            icon={<Icon icon={isLoading ? "ph:circle-notch-bold" : "ph:link-bold"} className={isLoading ? "animate-spin" : ""} />}
             widthClassName="w-[140px]"
           >
             {t('socials.button.link')}
@@ -80,7 +80,7 @@ function AccountLinkRow({
           variant="ghost"
           size="sm"
           onClick={() => visitUrl && openExternalUrl(visitUrl)}
-          icon={<Icon icon="mdi:open-in-new" className="w-5 h-5" />}
+          icon={<Icon icon="ph:arrow-square-out-bold" className="w-5 h-5" />}
           disabled={!visitUrl}
           className={!visitUrl ? "invisible" : ""}
         />
@@ -166,7 +166,7 @@ export function SocialsModal() {
           if (config.is_experimental) {
             const betaFlag = config.check_beta_channel ? "true" : "false";
             setReferralLink(
-              `https://api-staging.norisk.gg/api/v1/launcher/referral/download?code=${activeAccount.username}&beta=${betaFlag}`
+              `https://api-staging.nebrel.de/api/v1/launcher/referral/download?code=${activeAccount.username}&beta=${betaFlag}`
             );
           } else {
             setReferralLink(`https://nrc.gg/invite/${activeAccount.username}`);
@@ -298,7 +298,7 @@ export function SocialsModal() {
     <Modal
       title={t('socials.title')}
       titleIcon={
-        <Icon icon="fluent:people-community-20-filled" className="w-7 h-7" />
+        <Icon icon="ph:users-three-fill" className="w-7 h-7" />
       }
       onClose={closeModal}
       width="md"
@@ -307,7 +307,7 @@ export function SocialsModal() {
         {/* Referral Section */}
         <div className="flex flex-col items-center text-center space-y-4">
           <Icon
-            icon="mdi:gift-outline"
+            icon="ph:gift-duotone"
             className="w-16 h-16 text-accent"
           />
           <p className="text-white/90 font-minecraft text-sm select-none">
@@ -331,7 +331,7 @@ export function SocialsModal() {
               variant="default"
               size="sm"
               onClick={handleCopyLink}
-              icon={<Icon icon="mdi:content-copy" className="w-4 h-4" />}
+              icon={<Icon icon="ph:copy-bold" className="w-4 h-4" />}
             />
           </div>
         </div>
@@ -345,7 +345,7 @@ export function SocialsModal() {
           <div className="space-y-2">
               <div className="flex items-center justify-between px-3 bg-black/20 rounded-md h-[58px]">
                 <div className="flex items-center">
-                  <Icon icon="material-symbols:phone-android" className="w-6 h-6 mr-3 text-white/80" />
+                  <Icon icon="ph:device-mobile-bold" className="w-6 h-6 mr-3 text-white/80" />
                   <span className="text-white/90 font-minecraft text-xs">{t('socials.mobile_app')}</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -356,7 +356,7 @@ export function SocialsModal() {
                         size="sm"
                         onClick={handleResetMobileAppToken}
                         disabled={isProcessingMobileApp || isLoadingMobileApp}
-                        icon={<Icon icon={isLoadingMobileApp ? "mdi:loading" : "mdi:refresh"} className={isLoadingMobileApp ? "animate-spin" : ""} />}
+                        icon={<Icon icon={isLoadingMobileApp ? "ph:circle-notch-bold" : "ph:arrows-clockwise-bold"} className={isLoadingMobileApp ? "animate-spin" : ""} />}
                         widthClassName="w-[140px]"
                       >
                         {t('socials.button.reset')}
@@ -367,7 +367,7 @@ export function SocialsModal() {
                         size="sm"
                         onClick={handleShowQrCode}
                         disabled={isProcessingMobileApp || isLoadingMobileApp}
-                        icon={<Icon icon={isLoadingMobileApp ? "mdi:loading" : "mdi:qrcode"} className={isLoadingMobileApp ? "animate-spin" : ""} />}
+                        icon={<Icon icon={isLoadingMobileApp ? "ph:circle-notch-bold" : "ph:qr-code-bold"} className={isLoadingMobileApp ? "animate-spin" : ""} />}
                         widthClassName="w-[140px]"
                       >
                         {t('socials.button.show_qr')}
@@ -386,7 +386,7 @@ export function SocialsModal() {
                   <IconButton
                     variant="ghost"
                     size="sm"
-                    icon={<Icon icon="mdi:open-in-new" className="w-5 h-5" />}
+                    icon={<Icon icon="ph:arrow-square-out-bold" className="w-5 h-5" />}
                     className="invisible"
                     disabled
                   />
@@ -409,18 +409,18 @@ export function SocialsModal() {
             </div>
 
           <AccountLinkRow
-            icon="ic:baseline-discord"
+            icon="ph:discord-logo-fill"
               name="Discord"
               isLoading={isLoadingDiscord}
               isLinked={isDiscordLinked}
               isProcessing={isProcessingDiscord}
               onLink={handleDiscordLink}
               onUnlink={handleDiscordUnlink}
-              visitUrl="https://discord.norisk.gg"
+              visitUrl="https://discord.nebrel.de"
             />
 
           <AccountLinkRow
-            icon="mdi:github"
+            icon="ph:github-logo-fill"
             name="GitHub"
             isLoading={isLoadingGithub}
             isLinked={isGithubLinked}

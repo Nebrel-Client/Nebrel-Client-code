@@ -185,7 +185,7 @@ export const LoadingState = forwardRef<HTMLDivElement, LoadingStateProps>(
         ref={mergedRef}
         className={cn(
           "flex flex-col items-center justify-center space-y-4 rounded-md backdrop-blur-md",
-          shadowDepth !== "none" && "border-2 border-b-4",
+          shadowDepth !== "none" && "border",
           sizeStyles.container,
           className,
         )}

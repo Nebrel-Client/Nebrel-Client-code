@@ -96,7 +96,7 @@ export function CreditsModal({ isOpen, onClose }: CreditsModalProps) {
               <div className="min-h-[3rem] flex flex-col justify-center">
                 <div className="flex items-baseline gap-2">
                   <h4 className="text-base font-smallcaps text-white tracking-wider">
-                    NoRisk
+                    Nebrel
                   </h4>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export function CreditsModal({ isOpen, onClose }: CreditsModalProps) {
             <Button
               variant="ghost"
               className="flex items-center gap-2 px-6 py-3 border border-[#ffffff20] hover:bg-white/5 transition-colors"
-              onClick={() => handleOpenUrl("https://norisk.gg/licenses")}
+              onClick={() => handleOpenUrl("https://nebrel.de/licenses")}
             >
               <Icon icon="solar:arrow-right-up-bold" className="w-5 h-5" />
               <span className="font-smallcaps text-xs">{t('credits_modal.view_licenses')}</span>

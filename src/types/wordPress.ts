@@ -29,6 +29,8 @@ export interface YoastHeadJson {
 export interface BlogPost {
   id: number; // Corresponds to i64
   date: string;
+  /** Which sections a post belongs to: 21 = news, 2 = changelog. */
+  categories: number[];
   // The 'yoast_head_json' field from the API response, potentially null.
   yoast_head_json: YoastHeadJson | null;
 

@@ -55,31 +55,29 @@ export function SettingsSection({
   }
 
   return (
-    <section id={id} className={cn("scroll-mt-4", className)}>
-      <div className="flex items-center justify-between gap-3 pb-2 border-b border-white/10">
-        <div className="flex items-center gap-2 min-w-0">
-          {icon && (
-            <Icon
-              icon={icon}
-              className="w-6 h-6 flex-shrink-0"
-              style={{ color: accentColor.value }}
-            />
-          )}
-          <h3
-            className="font-smallcaps text-lg leading-none tracking-wide"
-            style={{ color: accentColor.value }}
-          >
+    <section id={id} className={cn("nebrel-settings-section scroll-mt-4", className)}>
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h3 className="flex items-center gap-2.5 font-smallcaps text-xl leading-none tracking-wide text-white">
+            {icon && (
+              <Icon
+                icon={icon}
+                className="w-5 h-5 flex-shrink-0"
+                style={{ color: accentColor.value }}
+              />
+            )}
             {title}
           </h3>
+          {description && (
+            <p className="font-minecraft text-xs text-white/40 mt-2.5 leading-relaxed">
+              {description}
+            </p>
+          )}
         </div>
         {headerActions && <div className="flex-shrink-0">{headerActions}</div>}
       </div>
 
-      {description && (
-        <p className="font-minecraft text-xs text-white/45 mt-2">{description}</p>
-      )}
-
-      <div className={cn("mt-1", bodyClassName)}>{body}</div>
+      <div className={cn("nebrel-settings-section-body", bodyClassName)}>{body}</div>
     </section>
   );
 }

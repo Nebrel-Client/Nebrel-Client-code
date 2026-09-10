@@ -62,8 +62,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        smallcaps: ["SmallCaps", "monospace"],
-        minecraft: ["MinecraftTen", "sans-serif"],
+        smallcaps: ["var(--font-smallcaps)", "sans-serif"],
+        minecraft: ["var(--font-minecraft)", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

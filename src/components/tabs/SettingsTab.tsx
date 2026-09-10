@@ -61,7 +61,6 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
       { id: "interface", label: t("settings.sections.interface") },
     ],
     appearance: [
-      { id: "theme", label: t("settings.theme.title") },
       { id: "font", label: t("settings.font.title") },
       { id: "background", label: t("settings.background.title") },
       { id: "custom-background", label: t("settings.custom_background.title") },
@@ -81,10 +80,10 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
     icon: string;
     children?: { id: string; label: string }[];
   }[] = [
-    { id: "general", label: t("settings.tabs.general"), icon: "solar:settings-bold", children: sectionDefs.general },
-    { id: "appearance", label: t("settings.tabs.appearance"), icon: "solar:palette-bold", children: sectionDefs.appearance },
-    { id: "advanced", label: t("settings.tabs.advanced"), icon: "solar:tuning-bold", children: sectionDefs.advanced },
-    { id: "debug", label: t("settings.tabs.debug"), icon: "solar:bug-bold", children: sectionDefs.debug },
+    { id: "general", label: t("settings.tabs.general"), icon: "ph:sliders-horizontal-duotone", children: sectionDefs.general },
+    { id: "appearance", label: t("settings.tabs.appearance"), icon: "ph:paint-brush-broad-duotone", children: sectionDefs.appearance },
+    { id: "advanced", label: t("settings.tabs.advanced"), icon: "ph:wrench-duotone", children: sectionDefs.advanced },
+    { id: "debug", label: t("settings.tabs.debug"), icon: "ph:bug-duotone", children: sectionDefs.debug },
   ];
 
   const selectTab = (id: SettingsTabId) => {
@@ -296,10 +295,15 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
   return (
     <Modal
       title={t("nav.settings")}
-      titleIcon={<Icon icon="solar:settings-bold" className="w-8 h-8" />}
+      titleIcon={<Icon icon="ph:gear-six-duotone" className="w-8 h-8" />}
+      titleSubtitle={
+        <span className="font-minecraft text-xs text-white/45">
+          {t("settings.subtitle")}
+        </span>
+      }
       onClose={onClose}
       width="xl"
-      className="!max-w-6xl h-[85vh] min-h-[600px] flex flex-col"
+      className="nebrel-settings !max-w-6xl h-[88vh] min-h-0 flex flex-col"
       headerActions={
         <ActionButton
           id="open-directory"
@@ -319,11 +323,19 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
         />
       }
     >
-      <div className="flex h-full p-4 gap-2">
-        <div className="w-64 flex flex-col flex-shrink-0">
-          <div className="px-1 pb-3">
+      <div className="nebrel-settings-layout flex h-full p-5 gap-5">
+        <div className="nebrel-settings-nav w-64 flex flex-col flex-shrink-0">
+          <div className="px-1 pb-4">
+            <h2 className="font-smallcaps text-xl text-white leading-none">
+              {t("nav.settings")}
+            </h2>
+            <p className="font-minecraft text-xs text-white/40 mt-2 leading-relaxed">
+              {t("settings.nav_hint")}
+            </p>
+          </div>
+          <div className="px-1 pb-4">
             <SearchWithFilters
-              placeholder={t("common.search")}
+              placeholder={t("settings.search_placeholder")}
               searchValue={sidebarSearch}
               onSearchChange={setSidebarSearch}
               showSort={false}
@@ -336,20 +348,27 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
             {tabConfig.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
-                <div key={tab.id}>
+                <div key={tab.id} className="mb-2">
                   <button
                     className={cn(
-                      "w-full text-left px-3 py-2.5 rounded-lg transition-colors border-0 outline-none flex items-center gap-3",
+                      "nebrel-settings-pill w-full text-left flex items-center gap-3",
                       isActive
                         ? "text-white"
-                        : "bg-transparent text-white/60 hover:bg-white/5 hover:text-white/90",
+                        : "text-white/55 hover:text-white/90",
                     )}
-                    style={isActive ? { backgroundColor: `${accentColor.value}26` } : undefined}
+                    style={
+                      isActive
+                        ? {
+                            backgroundColor: `${accentColor.value}1f`,
+                            borderColor: `${accentColor.value}5c`,
+                          }
+                        : undefined
+                    }
                     onClick={() => selectTab(tab.id)}
                   >
                     <Icon
                       icon={tab.icon}
-                      className="w-6 h-6 transition-colors duration-200"
+                      className="w-5 h-5 flex-shrink-0 transition-colors duration-200"
                       style={{ color: isActive ? accentColor.value : undefined }}
                     />
                     <span
@@ -363,7 +382,7 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
                   </button>
 
                   {isActive && !sidebarQuery && tab.children && (
-                    <div className="flex flex-col mt-1 ml-5 border-l border-white/10">
+                    <div className="flex flex-col mt-2 mb-1 ml-7 border-l border-white/10">
                       {tab.children.map((child) => {
                         const childActive = activeSection === child.id;
                         return (
@@ -391,14 +410,10 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
           </div>
         </div>
 
-        <div className="flex items-center">
-          <div className="border-l border-white/10 mx-4 my-3 h-[85%]"></div>
-        </div>
-
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <div
             ref={contentRef}
-            className="flex-1 py-2 px-5 overflow-y-auto overflow-x-hidden custom-scrollbar min-w-0"
+            className="flex-1 py-3 px-6 overflow-y-auto overflow-x-hidden custom-scrollbar min-w-0"
           >
             <SettingsConfigProvider value={{ config, tempConfig, setTempConfig, saving }}>
               <SettingsSearchContext.Provider value={sidebarQuery}>

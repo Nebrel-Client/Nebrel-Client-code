@@ -49,39 +49,30 @@ export const NavButton = forwardRef<HTMLButtonElement, NavButtonProps>(
     const colors = getVariantColors();
 
     const baseClasses = cn(
-      "font-smallcaps relative overflow-hidden transition-all duration-300",
-      "w-16 rounded-md text-white flex items-center justify-center",
+      "nebrel-nav-button font-smallcaps relative overflow-hidden transition-all duration-200",
+      "w-16 rounded-[var(--border-radius)] text-white flex items-center justify-center",
       label ? "py-2" : "h-16",
-      variant !== "ghost" && "border-2 border-b-4 border-transparent",
+      variant !== "ghost" && "border border-transparent",
       "text-shadow-sm",
       "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-1 focus-visible:ring-offset-black/20",
     );
 
     const activeStateClasses = cn(
-      variant !== "ghost" && [
-        "border-2 border-b-4",
-        "shadow-[0_6px_0_rgba(0,0,0,0.25),0_8px_15px_rgba(0,0,0,0.3)]",
-        "hover:translate-y-[-2px] hover:shadow-[0_8px_0_rgba(0,0,0,0.2),0_10px_20px_rgba(0,0,0,0.25)]",
-        "active:translate-y-[2px] active:shadow-[0_3px_0_rgba(0,0,0,0.15),0_4px_8px_rgba(0,0,0,0.2)]",
-      ],
-      "hover:brightness-110 active:brightness-90",
+      variant !== "ghost" && "border",
+      "hover:brightness-110 active:brightness-95",
     );
     
+    // Active navigation uses the same inset edge as the content panels.
     const activeStateStyles: React.CSSProperties = variant === "ghost" ? {} : {
-      backgroundColor: `${colors.main}40`,
-      borderColor: `${colors.main}90`,
-      borderTopColor: colors.light,
-      borderBottomColor: colors.dark,
-      boxShadow: `0 6px 0 rgba(0,0,0,0.25), 0 8px 15px rgba(0,0,0,0.3), inset 0 1px 0 ${colors.light}40, inset 0 0 0 1px ${colors.main}20`,
+      backgroundImage: `linear-gradient(90deg, ${colors.main}59 0%, ${colors.main}1a 100%)`,
+      borderColor: `${colors.main}4d`,
+      boxShadow: `inset 0 -3px 0 ${colors.main}, 0 3px 0 #0005`,
       color: colors.text,
     };
 
     const nonActiveStateClasses = cn(
-      variant !== "ghost" && [
-        "hover:translate-y-[-2px]",
-        "active:translate-y-[1px]",
-      ],
-      "hover:brightness-110 active:brightness-90",
+      variant !== "ghost" && "hover:bg-white/5",
+      "hover:brightness-110 active:brightness-95",
     );
 
     const nonActiveStateStyles: React.CSSProperties = {};
@@ -94,6 +85,7 @@ export const NavButton = forwardRef<HTMLButtonElement, NavButtonProps>(
     return (
       <button
         ref={ref || buttonRef}
+        aria-current={isActive ? "page" : undefined}
         className={cn(
           baseClasses,
           isActive ? activeStateClasses : nonActiveStateClasses,
@@ -104,9 +96,9 @@ export const NavButton = forwardRef<HTMLButtonElement, NavButtonProps>(
       >
         <span
           className={cn(
-            "absolute inset-0 bg-gradient-radial from-white/30 via-transparent to-transparent",
+            "absolute inset-0 bg-gradient-radial from-white/20 via-transparent to-transparent",
             isActive
-              ? "opacity-30"
+              ? "opacity-10"
               : "opacity-0 transition-opacity duration-300",
           )}
         />

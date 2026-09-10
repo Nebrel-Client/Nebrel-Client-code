@@ -46,11 +46,15 @@ export function GeneralTab() {
       <SettingsSection
         id="settings-section-language"
         title={t("settings.language")}
-        icon="solar:global-bold"
+        icon="ph:globe-hemisphere-west-duotone"
         keywords={kw("settings.language", "sprache", "language", "locale")}
         description={t("settings.language.description")}
       >
-        <SettingRow label={t("settings.language")} searchKeywords={kw("settings.language", "sprache", "locale")}>
+        <SettingRow
+          label={t("settings.language")}
+          description={t("settings.language.row_description")}
+          searchKeywords={kw("settings.language", "sprache", "locale")}
+        >
           <div className="w-56">
             <Select
               value={language}
@@ -70,7 +74,7 @@ export function GeneralTab() {
       <SettingsSection
         id="settings-section-accent"
         title={t("settings.accent_color.title")}
-        icon="solar:palette-bold"
+        icon="ph:palette-duotone"
         keywords={kw("settings.accent_color.title", "color", "colour", "farbe", "akzent", "accent", "theme")}
         description={
           <>
@@ -118,14 +122,14 @@ export function GeneralTab() {
               </span>
             </div>
             <Icon
-              icon="solar:palette-bold"
+              icon="ph:palette-duotone"
               className="w-5 h-5 text-white/60 group-hover:text-white transition-colors"
             />
           </button>
         </div>
       </SettingsSection>
 
-      <SettingsSection id="settings-section-behaviour" title={t("settings.sections.behaviour")} icon="solar:tuning-2-bold" keywords={kw("settings.sections.behaviour", "behaviour", "behavior", "verhalten")}>
+      <SettingsSection id="settings-section-behaviour" title={t("settings.sections.behaviour")} icon="ph:faders-duotone" keywords={kw("settings.sections.behaviour", "behaviour", "behavior", "verhalten")}>
         <SettingRow
           label={t("settings.auto_updates")}
           description={t("settings.auto_updates.tooltip")}
@@ -230,7 +234,7 @@ export function GeneralTab() {
         </SettingRow>
       </SettingsSection>
 
-      <SettingsSection id="settings-section-interface" title={t("settings.sections.interface")} icon="solar:slider-horizontal-bold" keywords={kw("settings.sections.interface", "downloads", "interface", "oberfläche", "performance")}>
+      <SettingsSection id="settings-section-interface" title={t("settings.sections.interface")} icon="ph:faders-horizontal-duotone" keywords={kw("settings.sections.interface", "downloads", "interface", "oberfläche", "performance")}>
         <SettingRow
           label={t("settings.concurrent_downloads")}
           description={t("settings.concurrent_downloads.tooltip")}
@@ -249,7 +253,7 @@ export function GeneralTab() {
             size="sm"
             minLabel="1"
             maxLabel="10"
-            icon={<Icon icon="solar:multiple-forward-right-bold" className="w-3 h-3" />}
+            icon={<Icon icon="ph:arrow-fat-lines-right-duotone" className="w-3 h-3" />}
           />
         </SettingRow>
         <SettingRow
@@ -270,7 +274,7 @@ export function GeneralTab() {
             size="sm"
             minLabel="1"
             maxLabel="20"
-            icon={<Icon icon="solar:server-bold" className="w-3 h-3" />}
+            icon={<Icon icon="ph:hard-drives-duotone" className="w-3 h-3" />}
           />
         </SettingRow>
         <SettingRow
@@ -291,7 +295,7 @@ export function GeneralTab() {
             size="sm"
             minLabel="0px"
             maxLabel="20px"
-            icon={<Icon icon="solar:widget-bold" className="w-3 h-3" />}
+            icon={<Icon icon="ph:squares-four-duotone" className="w-3 h-3" />}
           />
         </SettingRow>
       </SettingsSection>

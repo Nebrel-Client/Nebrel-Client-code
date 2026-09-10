@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { cn } from "../../lib/utils";
 
 interface ChatInputProps {
-  onSend: (content: string) => void;
+  onSend: (content: string) => void | Promise<void>;
   disabled?: boolean;
   accentColor: string;
 }
@@ -12,6 +12,8 @@ interface ChatInputProps {
 export function ChatInput({ onSend, disabled, accentColor }: ChatInputProps) {
   const { t } = useTranslation();
   const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -25,17 +27,22 @@ export function ChatInput({ onSend, disabled, accentColor }: ChatInputProps) {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const trimmed = message.trim();
-    if (!trimmed || disabled) return;
+    if (!trimmed || disabled || sending) return;
 
-    onSend(trimmed);
-    setMessage("");
-    inputRef.current?.focus();
+    setSending(true);
+    setSendError(false);
+    try {
+      await onSend(trimmed);
+      setMessage("");
+    } catch { setSendError(true); }
+    finally { setSending(false); inputRef.current?.focus(); }
   };
 
   return (
     <div className="p-3" style={{ borderTop: `1px solid ${accentColor}30` }}>
+      {sendError && <p role="alert" className="text-red-400 text-sm mb-2">{t("chat.sendFailed", "Message could not be sent. Please try again.")}</p>}
       <div
         className="flex items-end gap-2 p-2 rounded-xl"
         style={{
@@ -46,11 +53,12 @@ export function ChatInput({ onSend, disabled, accentColor }: ChatInputProps) {
         <textarea
           ref={inputRef}
           value={message}
+          maxLength={4000}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={t('chat.type_message')}
           rows={1}
-          disabled={disabled}
+          disabled={disabled || sending}
           className={cn(
             "flex-1 resize-none px-2 py-1.5 text-sm font-minecraft",
             "bg-transparent text-white placeholder-white/40",

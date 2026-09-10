@@ -51,6 +51,11 @@ export const useFontStore = create<FontState>()(
     }),
     {
       name: "norisk-font-storage",
+      version: 2,
+      migrate: (persisted) => {
+        const state = persisted as Partial<FontState>;
+        return { ...state, fontId: state.fontId === "system" ? DEFAULT_FONT_ID : state.fontId ?? DEFAULT_FONT_ID };
+      },
       onRehydrateStorage: () => (state) => {
         state?.applyFontToDOM();
       },

@@ -189,11 +189,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         return "none";
       }
 
-      const part1Y = shadowDepth === "short" ? "4px" : "8px";
-      const part2Y = shadowDepth === "short" ? "6px" : "10px";
-      const part2Blur = shadowDepth === "short" ? "10px" : "15px";
+      // A solid lower edge gives the control its Minecraft-style depth.
+      const lift = shadowDepth === "short" ? "4px" : "8px";
+      const blur = shadowDepth === "short" ? "12px" : "22px";
 
-      return `0 ${part1Y} 0 rgba(0,0,0,0.3), 0 ${part2Y} ${part2Blur} rgba(0,0,0,0.35), inset 0 1px 0 ${colors.light}40, inset 0 0 0 1px ${colors.main}20`;
+      return `0 ${lift} 0 rgba(0,0,0,0.3), 0 ${lift} ${blur} rgba(0,0,0,0.25), inset 0 1px 0 ${colors.light}1f`;
     };
 
     const getBorderClasses = () => {
@@ -202,7 +202,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       }
 
       if (variant === "3d") {
-        return shadowDepth === "none" ? "border-2" : "border-2 border-b-4";
+        return "border-2 border-b-4";
       }
 
       return "border border-b-2";
@@ -221,7 +221,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={mergedRef}
         type="button"
         disabled={disabled}        className={cn(
-          "relative overflow-hidden font-smallcaps transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2",
+          "nebrel-button relative overflow-hidden font-smallcaps transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2",
           "flex items-center justify-center gap-2 backdrop-blur-md whitespace-nowrap",
           radiusClass,
           sizeClasses,

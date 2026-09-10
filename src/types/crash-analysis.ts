@@ -24,7 +24,7 @@ export interface CrashCheckResult {
   status: CrashStatus; // wiki status if known
   title: string | null;
   wikiUrl: string | null;
-  issueUrl?: string | null; // link to the tracking issue on norisk.gg/issues/N (from the wiki entry)
+  issueUrl?: string | null; // link to the tracking issue on nebrel.de/issues/N (from the wiki entry)
   summary: string | null;
   statusMessage: string | null;
   actions: CrashAction[];

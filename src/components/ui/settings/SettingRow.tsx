@@ -25,14 +25,14 @@ export function SettingRow({
   children,
 }: SettingRowProps) {
   const labelNode = (
-    <span className="font-minecraft text-base text-white">{label}</span>
+    <span className="nebrel-setting-label font-minecraft text-white">{label}</span>
   );
 
   return (
     <div
       className={cn(
-        "flex gap-4 py-3 border-b border-white/10 last:border-b-0",
-        vertical ? "flex-col" : "items-center justify-between",
+        "nebrel-setting-row flex gap-8 py-5 border-b border-white/[0.06] last:border-b-0 last:pb-1",
+        vertical ? "flex-col gap-3" : "items-center justify-between",
         disabled && "opacity-50",
         className,
       )}
@@ -40,7 +40,7 @@ export function SettingRow({
       <div className="min-w-0">
         {tooltip ? <SimpleTooltip content={tooltip}>{labelNode}</SimpleTooltip> : labelNode}
         {description && (
-          <div className="font-minecraft text-xs text-white/50 mt-0.5">
+          <div className="nebrel-setting-description font-minecraft text-white/40 mt-1.5 leading-relaxed">
             {description}
           </div>
         )}

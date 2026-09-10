@@ -188,7 +188,7 @@ function InstanceItem({
             />
           ) : (
             <Icon
-              icon="mdi:minecraft"
+              icon="ph:cube-duotone"
               className="w-6 h-6"
               style={{ color: accentColor.value }}
             />

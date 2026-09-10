@@ -44,12 +44,12 @@ function formatNumber(num: number): string {
 
 function getProjectTypeIcon(type: string): string {
   switch (type) {
-    case "mod": return "pixel:bolt-solid";
-    case "modpack": return "pixel:folder-open-solid";
-    case "resourcepack": return "pixel:image-solid";
-    case "shader": return "pixel:sun-solid";
-    case "datapack": return "pixel:archive-solid";
-    default: return "pixel:archive-solid";
+    case "mod": return "ph:lightning-duotone";
+    case "modpack": return "ph:folder-open-duotone";
+    case "resourcepack": return "ph:image-duotone";
+    case "shader": return "ph:sun-duotone";
+    case "datapack": return "ph:archive-duotone";
+    default: return "ph:archive-duotone";
   }
 }
 

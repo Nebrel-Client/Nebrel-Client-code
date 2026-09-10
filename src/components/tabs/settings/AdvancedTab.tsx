@@ -13,6 +13,7 @@ import { openExternalUrl } from "../../../services/tauri-service";
 import { isApplixirEnabled } from "../../../services/flagsmith-service";
 import { showApplixirAd } from "../../../services/nrc-service";
 import { useSettingsConfig, useSettingsKeywords } from "./settings-context";
+import { CreditsModal } from "../../modals/CreditsModal";
 
 export function AdvancedTab() {
   const { t } = useTranslation();
@@ -25,6 +26,7 @@ export function AdvancedTab() {
   const [isWrapperEditEnabled, setIsWrapperEditEnabled] = useState(false);
   const [isPostExitEditEnabled, setIsPostExitEditEnabled] = useState(false);
   const [adsEnabled, setAdsEnabled] = useState(false);
+  const [showCreditsModal, setShowCreditsModal] = useState(false);
 
   useEffect(() => {
     isApplixirEnabled().then(setAdsEnabled).catch(() => setAdsEnabled(false));
@@ -36,7 +38,7 @@ export function AdvancedTab() {
         <SettingsSection
           id="settings-section-ads"
           title={t("settings.sections.ads")}
-          icon="solar:play-circle-bold"
+          icon="ph:play-circle-duotone"
           keywords={kw("settings.sections.ads", "ads", "werbung", "consent", "privacy", "gdpr", "dsgvo")}
         >
           <SettingRow
@@ -59,7 +61,7 @@ export function AdvancedTab() {
           </SettingRow>
         </SettingsSection>
       )}
-      <SettingsSection id="settings-section-login_cache" title={t("settings.sections.login_cache")} icon="solar:login-3-bold" keywords={kw("settings.sections.login_cache", "login", "cache", "anmeldung")}>
+      <SettingsSection id="settings-section-login_cache" title={t("settings.sections.login_cache")} icon="ph:sign-in-duotone" keywords={kw("settings.sections.login_cache", "login", "cache", "anmeldung")}>
         <SettingRow
           label={t("settings.browser_login")}
           description={t("settings.browser_login.tooltip")}
@@ -91,7 +93,7 @@ export function AdvancedTab() {
       <SettingsSection
         id="settings-section-gamedir"
         title={t("settings.game_data_dir.title")}
-        icon="solar:folder-bold"
+        icon="ph:folder-duotone"
         keywords={kw("settings.game_data_dir.title", "game", "data", "directory", "ordner", "verzeichnis", "pfad", "path", "folder")}
         description={t("settings.game_data_dir.description")}
       >
@@ -146,7 +148,7 @@ export function AdvancedTab() {
             }}
             title={t("settings.game_data_dir.select_tooltip")}
           >
-            <Icon icon="solar:folder-open-bold" className="w-5 h-5" />
+            <Icon icon="ph:folder-open-duotone" className="w-5 h-5" />
           </Button>
         </div>
       </SettingsSection>
@@ -154,7 +156,7 @@ export function AdvancedTab() {
       <SettingsSection
         id="settings-section-hooks"
         title={t("settings.hooks.title")}
-        icon="solar:code-bold"
+        icon="ph:code-duotone"
         keywords={kw("settings.hooks.title", "hook", "hooks", "script", "skript", "command", "befehl", "wrapper")}
         description={t("settings.hooks.description")}
         headerActions={
@@ -178,7 +180,7 @@ export function AdvancedTab() {
             <div className="p-4 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Icon icon="solar:play-circle-bold" className="w-5 h-5 text-white" />
+                  <Icon icon="ph:play-circle-duotone" className="w-5 h-5 text-white" />
                   <h5 className="font-smallcaps text-base text-white">{t("settings.hooks.pre_launch.title")}</h5>
                 </div>
                 <Button
@@ -240,7 +242,7 @@ export function AdvancedTab() {
             <div className="p-4 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Icon icon="solar:shield-bold" className="w-5 h-5 text-white" />
+                  <Icon icon="ph:shield-check-duotone" className="w-5 h-5 text-white" />
                   <h5 className="font-smallcaps text-base text-white">{t("settings.hooks.wrapper.title")}</h5>
                 </div>
                 <Button
@@ -363,7 +365,7 @@ export function AdvancedTab() {
 
             <div className="mt-6 p-4 rounded-lg border border-orange-500/30 bg-orange-900/20">
               <div className="flex items-start gap-3">
-                <Icon icon="solar:danger-triangle-bold" className="w-6 h-6 text-orange-400 flex-shrink-0 mt-1" />
+                <Icon icon="ph:warning-duotone" className="w-6 h-6 text-orange-400 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="text-sm font-smallcaps text-orange-300 mb-2">
                     {t("settings.hooks.warning.title")}
@@ -377,7 +379,7 @@ export function AdvancedTab() {
 
             <div className="mt-6 p-4 rounded-lg border border-[#ffffff20] bg-black/10">
               <div className="flex items-start gap-3">
-                <Icon icon="solar:info-circle-bold" className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
+                <Icon icon="ph:info-duotone" className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="text-sm font-smallcaps text-blue-300 mb-2">
                     {t("settings.hooks.examples.title")}
@@ -397,24 +399,39 @@ export function AdvancedTab() {
       <SettingsSection
         id="settings-section-licenses"
         title={t("settings.licenses.title")}
-        icon="solar:document-text-bold"
+        icon="ph:file-text-duotone"
         keywords={kw("settings.licenses.title", "license", "licenses", "lizenz", "lizenzen", "credits")}
         description={t("settings.licenses.description")}
         headerActions={
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              openExternalUrl("https://norisk.gg/licenses")
-            }}
-            icon={<Icon icon="solar:arrow-right-up-bold" className="w-5 h-5" />}
-          >
-            {t("settings.licenses.view")}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowCreditsModal(true)}
+              icon={<Icon icon="ph:heart-duotone" className="w-5 h-5" />}
+            >
+              {t("credits_modal.title")}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                openExternalUrl("https://nebrel.de/licenses")
+              }}
+              icon={<Icon icon="ph:arrow-square-out-bold" className="w-5 h-5" />}
+            >
+              {t("settings.licenses.view")}
+            </Button>
+          </div>
         }
       >
         <div className="py-1" />
       </SettingsSection>
+
+      <CreditsModal
+        isOpen={showCreditsModal}
+        onClose={() => setShowCreditsModal(false)}
+      />
 
       {confirmDialog}
     </div>

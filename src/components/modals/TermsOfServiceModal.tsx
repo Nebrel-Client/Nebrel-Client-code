@@ -31,7 +31,7 @@ export function AnalyticsConsentBanner({ onAccept, onDecline, onDismiss }: Analy
             <p className="text-sm text-gray-300 font-minecraft leading-relaxed mb-4">
               {t('analytics.banner.description')}{' '}
               <button
-                onClick={() => openExternalUrl('https://blog.norisk.gg/en/privacy-policy/')}
+                onClick={() => openExternalUrl('https://blog.nebrel.de/en/privacy-policy/')}
                 className="text-accent hover:text-accent-hover underline underline-offset-2 transition-colors text-sm"
               >
                 {t('analytics.banner.learn_more')}
@@ -78,7 +78,7 @@ export function TermsOfServiceModal({ isOpen }: TermsOfServiceModalProps) {
 
   const handleOpenPrivacyPolicy = async () => {
     try {
-      await openExternalUrl('https://norisk.gg/privacy');
+      await openExternalUrl('https://nebrel.de/privacy');
       toast.success(t('tos.toast.privacy_opened'));
     } catch (error) {
       console.error("Failed to open Privacy Policy URL:", error);
@@ -88,7 +88,7 @@ export function TermsOfServiceModal({ isOpen }: TermsOfServiceModalProps) {
 
   const handleOpenTerms = async () => {
     try {
-      await openExternalUrl('https://norisk.gg/tos');
+      await openExternalUrl('https://nebrel.de/tos');
       toast.success(t('tos.toast.terms_opened'));
     } catch (error) {
       console.error("Failed to open Terms URL:", error);

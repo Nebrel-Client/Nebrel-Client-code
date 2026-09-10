@@ -145,7 +145,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(  ({
           >
             {(checked || indeterminate) && (
               <Icon
-                icon={indeterminate ? "mdi:minus" : "mingcute:check-line"}
+                icon={indeterminate ? "ph:minus-bold" : "ph:check-bold"}
                 className={cn(
                   "text-white transition-all duration-200",
                   iconSizes[effectiveSize]

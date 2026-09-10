@@ -1,3 +1,4 @@
+import { useMinecraftAuthStore } from "./minecraft-auth-store";
 import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';
 import { translateApiError } from '../utils/nrc-error-translations';
@@ -72,7 +73,7 @@ interface FriendsState {
 
   updateFriendStatus: (uuid: string, state: OnlineState) => void;
   updateFriendServer: (uuid: string, server: string | null) => void;
-  updateFriendState: (uuid: string, state: OnlineState, server?: string) => void;
+  updateFriendState: (uuid: string, state: OnlineState, server?: string | null) => void;
   addFriend: (friend: FriendsFriendUser) => void;
   removeFriendFromList: (uuid: string) => void;
   removeFriendByUuid: (uuid: string) => void;
@@ -105,6 +106,7 @@ export const useFriendsStore = create<FriendsState>((set, get) => ({
   toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
 
   loadFriends: async (force = false) => {
+    const accountId = useMinecraftAuthStore.getState().activeAccount?.id;
     const state = get();
     const now = Date.now();
     const staleTime = 30_000; // 30 seconds
@@ -117,26 +119,34 @@ export const useFriendsStore = create<FriendsState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const friends = await invoke<FriendsFriendUser[]>('get_friends');
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ friends, isLoading: false, lastFetchedAt: now });
     } catch (e) {
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ error: String(e), isLoading: false });
     }
   },
 
   loadPendingRequests: async () => {
+    const accountId = useMinecraftAuthStore.getState().activeAccount?.id;
     try {
       const pendingRequests = await invoke<FriendRequestWithUsers[]>('get_pending_requests');
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ pendingRequests });
     } catch (e) {
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ error: translateApiError(e) });
     }
   },
 
   loadCurrentUser: async () => {
+    const accountId = useMinecraftAuthStore.getState().activeAccount?.id;
     try {
       const currentUser = await invoke<FriendsUser>('get_friends_user');
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ currentUser });
     } catch (e) {
+      if (accountId !== useMinecraftAuthStore.getState().activeAccount?.id) return;
       set({ error: translateApiError(e) });
     }
   },
@@ -158,7 +168,7 @@ export const useFriendsStore = create<FriendsState>((set, get) => ({
           (r) => !r.users.some((u) => u.username === name)
         ),
       }));
-      await get().loadFriends();
+      await get().loadFriends(true);
     } catch (e) {
       set({ error: translateApiError(e) });
       throw e;
@@ -253,10 +263,10 @@ export const useFriendsStore = create<FriendsState>((set, get) => ({
     }));
   },
 
-  updateFriendState: (uuid: string, state: OnlineState, server?: string) => {
+  updateFriendState: (uuid: string, state: OnlineState, server?: string | null) => {
     set((s) => ({
       friends: s.friends.map((f) =>
-        f.uuid === uuid ? { ...f, state, server: server ?? f.server } : f
+        f.uuid === uuid ? { ...f, state, server: server === undefined ? f.server : server } : f
       ),
     }));
   },

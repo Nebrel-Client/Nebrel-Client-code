@@ -18,7 +18,7 @@ import { getPackRolloutConfig } from "../../services/flagsmith-service";
 
 const ACTIVE_COLOR = "#f59e0b";
 const FALLBACK_PCT = 5;
-const DISCORD_URL = "https://discord.norisk.gg";
+const DISCORD_URL = "https://discord.nebrel.de";
 
 const POPOVER_WIDTH = 320; // px (matches w-[20rem])
 const POPOVER_EST_HEIGHT = 260; // px (estimate for boundary calc)
@@ -229,7 +229,7 @@ export function RolloutIndicator() {
                 <Button
                   variant="secondary"
                   size="sm"
-                  icon={<Icon icon="ic:baseline-discord" className="w-5 h-5" />}
+                  icon={<Icon icon="ph:discord-logo-fill" className="w-5 h-5" />}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

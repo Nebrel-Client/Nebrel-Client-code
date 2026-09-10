@@ -19,28 +19,28 @@
 }
 
 :root {
-    --background: 0 0% 7%;
+    --background: 305 24% 5%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 12%;
+    --card: 305 18% 9%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
+    --popover: 305 18% 9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 210 78% 35%;
+    --primary: 311 100% 40%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 10% 25%;
+    --secondary: 305 12% 18%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 10% 25%;
+    --muted: 305 12% 18%;
     --muted-foreground: 215 20% 65%;
-    --accent: 217 10% 25%;
+    --accent: 311 40% 24%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217 19% 27%;
-    --input: 217 19% 27%;
-    --ring: 210 78% 35%;
+    --border: 308 20% 22%;
+    --input: 308 20% 22%;
+    --ring: 311 100% 40%;
     --text-primary: #ffffff;
-    --text-secondary: #ababab;
-    --text-muted: #808080;
+    --text-secondary: #bda9b8;
+    --text-muted: #8a7a86;
     --animation-short: 0.2s;
     --animation-medium: 0.5s;
     --animation-long: 1s;    --radius-sm: 4px;
@@ -48,7 +48,7 @@
     --radius-lg: 12px;
     --radius-xl: 16px;
     --radius-2xl: 24px;
-    --border-radius: 0px; 
+    --border-radius: 12px;
     --font-smallcaps: "SmallCaps", monospace;
     --font-minecraft: "MinecraftTen", sans-serif;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -62,10 +62,10 @@
     --spacing-2xl: 3rem;
 
     /* Default accent color */
-    --accent: #4f8eff;
-    --accent-hover: #3a7aff;
-    --accent-shadow: rgba(79, 142, 255, 0.5);
-    --accent-rgb: 79, 142, 255;
+    --accent: #cc00a8;
+    --accent-hover: #a80089;
+    --accent-shadow: rgba(204, 0, 168, 0.5);
+    --accent-rgb: 204, 0, 168;
 }
 
 @keyframes fadeIn {
@@ -235,6 +235,11 @@
 
     body {
         @apply bg-dark text-white;
+        /* Nebrel: a magenta bloom in the upper left, so the shell reads as lit
+           from the logo rather than as a flat dark slab. */
+        background-image:
+            radial-gradient(120% 90% at 12% -10%, rgba(var(--accent-rgb), 0.20) 0%, transparent 60%),
+            radial-gradient(80% 70% at 100% 110%, rgba(var(--accent-rgb), 0.10) 0%, transparent 65%);
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -293,7 +298,7 @@
 
 .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4) transparent;
+    scrollbar-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -306,16 +311,16 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4);
+  background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4);
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.6);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.6);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:active {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.8);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.8);
 }
 
 /* Scrollbar hidden by default, revealed (accent-tinted) only while hovering the area */
@@ -328,7 +333,7 @@
 }
 .scrollbar-hover:hover {
     scrollbar-width: thin;
-    scrollbar-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4) transparent;
+    scrollbar-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4) transparent;
 }
 .scrollbar-hover:hover::-webkit-scrollbar {
     width: 6px;
@@ -338,11 +343,11 @@
     background: transparent;
 }
 .scrollbar-hover:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4);
     border-radius: 3px;
 }
 .scrollbar-hover:hover::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.6);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.6);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -364,7 +369,7 @@
 .search-results-area,
 .filters-sidebar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4) transparent;
+    scrollbar-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4) transparent;
 }
 .search-results-area::-webkit-scrollbar,
 .filters-sidebar::-webkit-scrollbar {
@@ -377,16 +382,16 @@
 }
 .search-results-area::-webkit-scrollbar-thumb,
 .filters-sidebar::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.4);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.4);
     border-radius: 4px;
 }
 .search-results-area::-webkit-scrollbar-thumb:hover,
 .filters-sidebar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.6);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.6);
 }
 .search-results-area::-webkit-scrollbar-thumb:active,
 .filters-sidebar::-webkit-scrollbar-thumb:active {
-    background-color: rgba(var(--accent-rgb, 79, 142, 255), 0.8);
+    background-color: rgba(var(--accent-rgb, 204, 0, 168), 0.8);
 }
 
 :root {
@@ -551,15 +556,232 @@ nav button:not(.no-radius),
 @keyframes nrc-claim-glow {
     0%,
     100% {
-        box-shadow: 0 0 0 0 rgba(var(--accent-rgb, 79, 142, 255), 0.55);
-        border-color: rgba(var(--accent-rgb, 79, 142, 255), 0.9);
+        box-shadow: 0 0 0 0 rgba(var(--accent-rgb, 204, 0, 168), 0.55);
+        border-color: rgba(var(--accent-rgb, 204, 0, 168), 0.9);
     }
     50% {
-        box-shadow: 0 0 14px 3px rgba(var(--accent-rgb, 79, 142, 255), 0.45);
-        border-color: rgba(var(--accent-rgb, 79, 142, 255), 0.45);
+        box-shadow: 0 0 14px 3px rgba(var(--accent-rgb, 204, 0, 168), 0.45);
+        border-color: rgba(var(--accent-rgb, 204, 0, 168), 0.45);
     }
 }
 
 .animate-claim-glow {
     animation: nrc-claim-glow 1.6s ease-in-out infinite;
 }
+
+/* Nebrel: pixel typography, inset surfaces and a compact workstation layout. */
+:root {
+  /* Surfaces read as a neutral charcoal now, with the accent doing the colouring
+     rather than the panels themselves. */
+  --nebrel-panel: #131117;
+  --nebrel-surface: #1b1920;
+  --nebrel-surface-raised: #221f28;
+  --nebrel-line: #ffffff14;
+  --nebrel-line-strong: #ffffff24;
+  --nebrel-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --nebrel-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --border-radius: 12px;
+  --font-smallcaps: "SmallCaps", monospace;
+  --font-minecraft: "MinecraftTen", sans-serif;
+}
+body { background: #0d0c10; font-family: var(--font-minecraft); }
+
+/* Shared card shape. Everything that used a hard block edge now uses this. */
+.nebrel-project-card,
+.nebrel-skin-card,
+.nebrel-cape-card,
+.nebrel-profile-card,
+.nebrel-news,
+.nebrel-play-stage,
+.nebrel-library .filters-sidebar {
+  border-radius: var(--border-radius);
+  box-shadow: var(--nebrel-shadow);
+}
+h1, h2, h3, h4 { font-weight: 400; letter-spacing: .015em; }
+button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+::selection { background: rgba(var(--accent-rgb), .4); color: white; }
+.nebrel-shell { border-color: rgba(var(--accent-rgb), .35) !important; }
+.nebrel-titlebar { height: 58px; background: rgba(15,14,18,.9); border-bottom: 1px solid var(--nebrel-line); padding-inline: 24px; }
+.nebrel-titlebar h1 { font-size: 20px; letter-spacing: .12em !important; }
+.nebrel-sidebar { width: 116px; padding: 16px 12px; flex-shrink: 0; background: rgba(17,16,20,.94) !important; border-right: 1px solid var(--nebrel-line) !important; }
+.nebrel-sidebar-compact { width: 80px; }
+.nebrel-brand { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.nebrel-brand-name { font-family: var(--font-smallcaps); font-size: 18px; letter-spacing: .08em; text-align: center; }
+.nebrel-brand-name span { display: block; color: #a99ab4; font: 9px/1.8 system-ui, sans-serif; letter-spacing: .18em; }
+.nebrel-sidebar .nav-item { width: 100%; }
+.nebrel-sidebar .nebrel-nav-button { width: 100%; min-height: 66px; padding: 9px 3px; border: 1px solid transparent; border-radius: var(--border-radius); transition: background-color .15s, border-color .15s, color .15s; }
+.nebrel-sidebar .nebrel-nav-button:hover:not([aria-current="page"]) { background-color: rgba(255,255,255,.05); }
+.nebrel-sidebar .nebrel-nav-button svg { width: 25px; height: 25px; }
+.nebrel-sidebar .nebrel-nav-button > span:last-child { gap: 4px; }
+.nebrel-sidebar .nebrel-nav-button > span:last-child > span:last-child { font-size: 12px; }
+.nebrel-sidebar .nebrel-nav-button[aria-current="page"] { background: rgba(var(--accent-rgb),.16); border-color: rgba(var(--accent-rgb),.42); color: white; }
+.nebrel-sidebar .nebrel-nav-button[aria-current="page"] svg { color: var(--accent); filter: brightness(1.5); }
+.nebrel-nav-primary { overflow-y: auto; scrollbar-width: thin; }
+.nebrel-nav-utilities { border-top: 1px solid var(--nebrel-line); padding-top: 12px; }
+.nebrel-nav-utilities .nebrel-nav-button { min-height: 58px; }
+.nebrel-nav-utilities .nebrel-nav-button > span:last-child { flex-direction: column; gap: 4px; }
+.nebrel-nav-utilities .nebrel-nav-button svg { width: 19px; height: 19px; }
+/* Content libraries (mods, skins, capes) share one page shell. One padding
+   scale, one header rhythm, so switching tabs does not feel like switching
+   apps. */
+.nebrel-library { padding: 28px 32px 24px; }
+.nebrel-library-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-shrink: 0;
+  padding-bottom: 24px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--nebrel-line);
+}
+.nebrel-library-symbol {
+  order: -1;
+  width: 56px;
+  height: 56px;
+  margin-top: 4px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--accent-rgb), .28);
+  border-radius: calc(var(--border-radius) * 1.15);
+  background: rgba(var(--accent-rgb), .1);
+  color: var(--accent);
+}
+.nebrel-library-symbol svg { width: 26px; height: 26px; }
+.nebrel-eyebrow {
+  font-family: var(--font-smallcaps);
+  font-size: 11px;
+  color: #8d8496;
+  letter-spacing: .14em;
+}
+.nebrel-eyebrow span { padding: 0 6px; color: var(--accent); }
+.nebrel-library-header h1 {
+  font-family: var(--font-minecraft);
+  font-size: 30px;
+  line-height: 1.1;
+  margin: 8px 0 6px;
+}
+/* Capped at a comfortable reading measure instead of stretching to the window. */
+.nebrel-library-header p { color: #a79fb0; font-size: 14px; margin: 0; max-width: 62ch; }
+
+.nebrel-library > .flex-1 { min-height: 0; }
+.nebrel-library .modrinth-search-v2 { gap: 22px; }
+.nebrel-library .left-content-area { min-width: 0; }
+.nebrel-library .filters-sidebar {
+  order: -1;
+  width: 220px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--nebrel-surface);
+  border: 1px solid var(--nebrel-line);
+  padding: 14px 12px;
+}
+.nebrel-library .filters-sidebar button { font-size: 13px; border-radius: calc(var(--border-radius) * .7); }
+.nebrel-library .search-results-area { padding-right: 8px; }
+.nebrel-library .search-results-area .space-y-1 > * + * { margin-top: 10px; }
+.nebrel-project-card { min-height: 118px; background: var(--nebrel-surface); border: 1px solid var(--nebrel-line); transition: background .15s, border-color .15s, transform .15s; }
+.nebrel-project-card:hover { background: var(--nebrel-surface-raised); border-color: rgba(var(--accent-rgb),.4); transform: translateY(-1px); }
+.nebrel-project-card p { color: #c0b5c8; line-height: 1.4; }
+.nebrel-project-card .text-lg { font-size: 21px; }
+.nebrel-project-card .w-20 { width: 72px; height: 72px; }
+.nebrel-project-card button { font-size: 13px; }
+.nebrel-skin-card, .nebrel-cape-card { background: radial-gradient(ellipse at 50% 35%, rgba(var(--accent-rgb),.10), transparent 70%), var(--nebrel-surface); padding: 22px 18px 18px; border: 1px solid var(--nebrel-line); position: relative; transition: background .15s, border-color .15s, transform .15s; }
+.nebrel-skin-card::before, .nebrel-cape-card::before { content: ''; position: absolute; left: 14px; right: 14px; bottom: 72px; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),.35), transparent); pointer-events: none; }
+.nebrel-skin-card:hover, .nebrel-cape-card:hover { border-color: rgba(var(--accent-rgb),.5); background-color: var(--nebrel-surface-raised); transform: translateY(-1px); }
+.nebrel-skin-card .font-minecraft.text-base, .nebrel-cape-card .font-minecraft.text-base { font-size: 20px; }
+.nebrel-add-skin { background: rgba(var(--accent-rgb),.035); border-style: dashed; }
+.nebrel-cape-empty, .nebrel-skins .text-center.py-10 { min-height: 220px; padding: 40px 24px; border: 1px dashed rgba(var(--accent-rgb),.25); border-radius: var(--border-radius); background: var(--nebrel-surface); font-style: normal; }
+.nebrel-settings > div:first-child h2 { font-size: 24px; line-height: 1.1; }
+.nebrel-settings-layout { background: var(--nebrel-panel); }
+.nebrel-settings-nav { padding: 16px 10px 10px; border-right: 1px solid var(--nebrel-line); }
+
+/* Category pills in the settings sidebar. */
+.nebrel-settings-pill {
+  padding: 11px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.03);
+  outline: none;
+  transition:
+    background-color var(--animation-short) ease,
+    border-color var(--animation-short) ease,
+    color var(--animation-short) ease;
+}
+.nebrel-settings-pill:hover { background-color: rgba(255, 255, 255, 0.06); }
+
+.nebrel-settings-section {
+  padding: 26px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: calc(var(--border-radius) * 1.5);
+  background-color: rgba(23, 19, 28, 0.62);
+  transition: border-color var(--animation-short) ease;
+}
+.nebrel-settings-section:hover { border-color: rgba(255, 255, 255, 0.12); }
+.nebrel-settings-section h3 { font-family: var(--font-smallcaps); font-size: 21px; }
+
+.nebrel-settings-section-body { margin-top: 18px; }
+.nebrel-settings-section-body:empty { margin-top: 0; }
+
+/* Row typography: a solid label with a quiet explanatory line under it. */
+.nebrel-setting-label { font-size: 17px; line-height: 1.3; }
+.nebrel-setting-description { font-size: 12.5px; max-width: 46ch; }
+.nebrel-settings-section .text-xs { line-height: 1.55; }
+.nebrel-button { letter-spacing: .025em; }
+.nebrel-switch-track { border-radius: 999px !important; border-width: 1px !important; }
+.nebrel-switch-knob { border-radius: 999px !important; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.nebrel-modal { border-color: var(--nebrel-line-strong) !important; border-radius: calc(var(--border-radius) * 1.35) !important; box-shadow: var(--nebrel-shadow-lg) !important; }
+/* Play screen: the character is the subject, so the stage gets the room and the
+   news column stays a quiet sidebar rather than competing for attention. */
+.nebrel-play { padding: 24px; gap: 24px; }
+.nebrel-play-stage {
+  order: 1;
+  min-width: 0;
+  border: 1px solid var(--nebrel-line);
+  /* Light pooled under the character, fading before it reaches the edges. */
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 62%, rgba(var(--accent-rgb), .13), transparent 70%),
+    var(--nebrel-panel);
+  overflow: hidden;
+}
+.nebrel-news {
+  order: 0;
+  width: 320px;
+  flex-shrink: 0;
+  border: 1px solid var(--nebrel-line);
+  background: var(--nebrel-surface);
+}
+.nebrel-news h2, .nebrel-news h3 { letter-spacing: .06em; }
+.nebrel-player-stage { max-width: 100%; }
+.nebrel-social-detail, .nebrel-social-list { background: #14101bee !important; box-shadow: -8px 0 32px #0005 !important; }
+.nebrel-social-list { border-left: 2px solid rgba(var(--accent-rgb),.55) !important; }
+.nebrel-social input { min-width: 0; }
+.nebrel-profiles { padding: 24px 28px; }
+@media (max-width: 1200px) {
+  .nebrel-library, .nebrel-profiles { padding: 18px 20px; }
+  .nebrel-news { width: 255px; }
+  .nebrel-play { padding: 16px; gap: 16px; }
+  .nebrel-library .filters-sidebar { width: 185px; }
+}
+@media (max-width: 960px) {
+  .nebrel-sidebar-expanded { width: 94px; padding-inline: 8px; }
+  .nebrel-brand-name { font-size: 15px; }
+  .nebrel-news { width: 220px; }
+  .nebrel-library .filters-sidebar { width: 165px; }
+  .nebrel-library-header p { font-size: 13px; }
+}
+@media (max-height: 760px) {
+  .nebrel-sidebar { padding-top: 12px; }
+  .nebrel-brand { margin-bottom: 12px; }
+  .nebrel-sidebar .nebrel-nav-button { min-height: 52px; padding-block: 5px; }
+  .nebrel-nav-primary { gap: 0; }
+  .nebrel-library-header { padding-bottom: 12px; margin-bottom: 14px; }
+  .nebrel-library-header h1 { font-size: 25px; }
+  .nebrel-library-symbol { width: 50px; height: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+.nebrel-profile-card { border: 1px solid var(--nebrel-line); background-color: var(--nebrel-surface); transition: background .15s, border-color .15s, transform .15s; }
+.nebrel-profile-card:hover { border-color: rgba(var(--accent-rgb),.45); background-color: var(--nebrel-surface-raised); transform: translateY(-1px); }

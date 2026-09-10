@@ -28,7 +28,7 @@ const initializeFlagsmith = async () => {
     log('info', `Initializing Flagsmith service with install id ${installId}...`);
     await flagsmith.init({
       environmentID: FLAGSMITH_ENVIRONMENT_ID,
-      api: 'https://flagsmith-staging.norisk.gg/api/v1/',
+      api: 'https://flagsmith-staging.nebrel.de/api/v1/',
       identity: installId,
     });
     flagsmithInitialized = true;

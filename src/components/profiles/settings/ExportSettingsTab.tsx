@@ -30,7 +30,7 @@ const EXPORT_FORMATS: {
   {
     value: "noriskpack",
     labelKey: "export.format_noriskpack",
-    extension: "noriskpack",
+    extension: "nebrelpack",
     image: "/logo.png",
   },
   {
@@ -43,7 +43,7 @@ const EXPORT_FORMATS: {
     value: "curseforge",
     labelKey: "export.format_curseforge",
     extension: "zip",
-    image: "https://cdn.norisk.gg/misc/curseforge.webp",
+    image: "https://cdn.nebrel.de/misc/curseforge.webp",
   },
 ];
 

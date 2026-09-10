@@ -342,7 +342,7 @@ export interface FoundItemDetails {
 }
 
 /**
- * Details about an item when it comes from a NoRisk Pack
+ * Details about an item when it comes from a Nebrel Pack
  */
 export interface NoRiskPackItemDetails {
   is_enabled: boolean;

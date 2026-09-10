@@ -185,7 +185,7 @@ export const ModrinthSearchControlsV2: React.FC<
               title={t('content.search_curseforge')}
             >
               <img
-                src="https://cdn.norisk.gg/misc/curseforge.webp"
+                src="https://cdn.nebrel.de/misc/curseforge.webp"
                 alt="CurseForge"
                 className="w-5 h-5 object-contain"
               />

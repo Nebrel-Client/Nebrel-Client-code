@@ -69,7 +69,7 @@ interface ChatPanelProps {
   friend: FriendsFriendUser;
 }
 
-const MESSAGES_PER_PAGE = 5; // Backend pageSize
+const MESSAGES_PER_PAGE = 25;
 
 export function ChatPanel({ friend }: ChatPanelProps) {
   const { t } = useTranslation();
@@ -80,7 +80,7 @@ export function ChatPanel({ friend }: ChatPanelProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const avatarUrl = usePlayerAvatar({ uuid: friend.uuid, size: 20 });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -97,7 +97,7 @@ export function ChatPanel({ friend }: ChatPanelProps) {
       setIsLoading(true);
       setIsLoadingMore(false);
       setHasMore(true);
-      setCurrentPage(1);
+      setCurrentPage(0);
 
       try {
         const chatData = await invoke<ChatInfo>("get_or_create_chat", {
@@ -108,7 +108,8 @@ export function ChatPanel({ friend }: ChatPanelProps) {
 
         const messagesData = await invoke<Message[]>("get_chat_messages", {
           chatId: chatData._id,
-          page: 1,
+          page: 0,
+          limit: MESSAGES_PER_PAGE,
         });
         if (cancelled) return;
 
@@ -122,6 +123,11 @@ export function ChatPanel({ friend }: ChatPanelProps) {
           return timeA - timeB;
         });
         setMessages(sorted);
+        for (const message of sorted) {
+          if (message.senderId !== currentUser?.uuid && !message.receivedAt && !message.deletedAt) {
+            void invoke("mark_message_received", { chatId: chatData._id, messageId: message._id }).catch(() => {});
+          }
+        }
 
         requestAnimationFrame(() => {
           messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
@@ -145,6 +151,9 @@ export function ChatPanel({ friend }: ChatPanelProps) {
       (event) => {
         const msg = event.payload;
         if (msg.chatId === chat._id && msg._id) {
+          if (msg.senderId !== currentUser?.uuid && !msg.receivedAt) {
+            void invoke("mark_message_received", { chatId: chat._id, messageId: msg._id }).catch(() => {});
+          }
           setMessages((prev) => {
             if (prev.some((m) => m._id === msg._id)) {
               return prev;
@@ -197,6 +206,7 @@ export function ChatPanel({ friend }: ChatPanelProps) {
       const messagesData = await invoke<Message[]>("get_chat_messages", {
         chatId: chat._id,
         page: nextPage,
+        limit: MESSAGES_PER_PAGE,
       });
 
       if (messagesData.length === 0) {
@@ -303,6 +313,7 @@ export function ChatPanel({ friend }: ChatPanelProps) {
       }, 50);
     } catch (e) {
       console.error("Failed to send message:", e);
+      throw e;
     }
   };
 

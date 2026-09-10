@@ -248,7 +248,7 @@ export default function Updater() {
             <img
               ref={logoRef}
               src="/logo.png"
-              alt="NoRiskClient Logo"
+              alt="Nebrel Logo"
               className="w-32 h-32 object-contain mb-1"
             />
             <p className="text-xs font-smallcaps text-white/70">

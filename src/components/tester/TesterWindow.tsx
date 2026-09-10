@@ -19,7 +19,7 @@ import type {
 } from "../../types/tester";
 import { parseErrorMessage } from "../../utils/error-utils";
 
-const WEBSITE_BASE = "https://norisk.gg";
+const WEBSITE_BASE = "https://nebrel.de";
 
 function buildIssueUrl(issue: TesterIssue): string {
   const slug = issue.header.slug || issue.header.number || issue.id;

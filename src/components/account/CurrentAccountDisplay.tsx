@@ -38,7 +38,7 @@ export function CurrentAccountDisplay({
     if (variant === "flat") {
       return "border border-b-2";
     }
-    return "border-2 border-b-4";
+    return "border";
   };
 
   // Get box shadow based on variant
@@ -100,7 +100,7 @@ export function CurrentAccountDisplay({
           "text-shadow-sm",
           getBorderClasses(),
           variant !== "flat" &&
-            "shadow-[0_8px_0_rgba(0,0,0,0.3),0_10px_15px_rgba(0,0,0,0.35)]",
+            "shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
           "cursor-pointer",
           getHoverTransform(),
           variant !== "flat" && `hover:shadow-[${getHoverBoxShadow()}]`,
@@ -171,7 +171,7 @@ export function CurrentAccountDisplay({
         "text-shadow-sm",
         getBorderClasses(),
         variant !== "flat" &&
-          "shadow-[0_8px_0_rgba(0,0,0,0.3),0_10px_15px_rgba(0,0,0,0.35)]",
+          "shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
         "cursor-pointer",
         getHoverTransform(),
         variant !== "flat" && `hover:shadow-[${getHoverBoxShadow()}]`,

@@ -290,7 +290,7 @@ export function GlobalCrashReportModal() {
   
   const handleContactSupport = async () => {
     try {
-      await openExternalUrl('https://discord.norisk.gg');
+      await openExternalUrl('https://discord.nebrel.de');
       toast.success(t('crash_modal.toast.discord_opened'));
     } catch (error) {
       console.error("Failed to open Discord URL:", error);

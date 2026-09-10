@@ -192,18 +192,18 @@ export function ProfileSettings({ profile, onClose }: ProfileSettingsProps) {
   };
 
   const baseTabConfig = [
-    { id: "general", label: t('profiles.settings.general'), icon: "solar:settings-bold" },
-    { id: "installation", label: t('profiles.settings.installation'), icon: "solar:download-bold" },
-    { id: "java", label: t('profiles.settings.javaMemory'), icon: "solar:code-bold" },
-    { id: "window", label: t('profiles.settings.window'), icon: "solar:widget-bold" },
-    { id: "nrc", label: t('profiles.settings.nrc'), icon: "solar:gamepad-bold" },
-    { id: "symlinks", label: t('profiles.settings.symlinks'), icon: "solar:link-bold" },
+    { id: "general", label: t('profiles.settings.general'), icon: "ph:sliders-horizontal-duotone" },
+    { id: "installation", label: t('profiles.settings.installation'), icon: "ph:download-simple-duotone" },
+    { id: "java", label: t('profiles.settings.javaMemory'), icon: "ph:coffee-duotone" },
+    { id: "window", label: t('profiles.settings.window'), icon: "ph:frame-corners-duotone" },
+    { id: "nrc", label: t('profiles.settings.nrc'), icon: "ph:game-controller-duotone" },
+    { id: "symlinks", label: t('profiles.settings.symlinks'), icon: "ph:link-simple-duotone" },
   ];
 
   const tabConfig = showDesignerTab
     ? [
         ...baseTabConfig,
-        { id: "designer", label: t('profiles.settings.designer'), icon: "solar:palette-bold" },
+        { id: "designer", label: t('profiles.settings.designer'), icon: "ph:paint-brush-broad-duotone" },
       ]
     : baseTabConfig;
 
@@ -342,12 +342,12 @@ export function ProfileSettings({ profile, onClose }: ProfileSettingsProps) {
       footer={renderFooter()}
       className="!max-w-6xl h-[85vh] min-h-[600px] flex flex-col"
     >
-      <div className="flex h-full p-4 gap-2">
+      <div className="nebrel-settings-layout flex h-full p-5 gap-5">
         <div
           ref={sidebarRef}
-          className="w-64 flex flex-col flex-shrink-0"
+          className="nebrel-settings-nav w-64 flex flex-col flex-shrink-0"
         >
-          <div className="space-y-0.5 flex-1 overflow-y-auto scrollbar-hover">
+          <div className="flex-1 overflow-y-auto scrollbar-hover">
             {tabConfig.map((tab) => {
               const isActive = activeTab === tab.id;
 
@@ -355,17 +355,22 @@ export function ProfileSettings({ profile, onClose }: ProfileSettingsProps) {
                 <button
                   key={tab.id}
                   className={cn(
-                    "w-full text-left px-3 py-2.5 rounded-lg transition-colors border-0 outline-none flex items-center gap-3",
-                    isActive
-                      ? "text-white"
-                      : "bg-transparent text-white/60 hover:bg-white/5 hover:text-white/90",
+                    "nebrel-settings-pill w-full text-left flex items-center gap-3 mb-2",
+                    isActive ? "text-white" : "text-white/55 hover:text-white/90",
                   )}
-                  style={isActive ? { backgroundColor: `${accentColor.value}26` } : undefined}
+                  style={
+                    isActive
+                      ? {
+                          backgroundColor: `${accentColor.value}1f`,
+                          borderColor: `${accentColor.value}5c`,
+                        }
+                      : undefined
+                  }
                   onClick={() => handleTabClick(tab.id)}
                 >
                   <Icon
                     icon={tab.icon}
-                    className="w-6 h-6 transition-colors duration-200"
+                    className="w-5 h-5 flex-shrink-0 transition-colors duration-200"
                     style={{ color: isActive ? accentColor.value : undefined }}
                   />
                   <span
@@ -382,14 +387,9 @@ export function ProfileSettings({ profile, onClose }: ProfileSettingsProps) {
           </div>
         </div>
 
-        {/* Vertical separator line */}
-        <div className="flex items-center">
-          <div className="border-l border-white/10 mx-4 my-3 h-[85%]"></div>
-        </div>
-
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <div
-            className="flex-1 py-2 px-5 overflow-y-auto overflow-x-hidden custom-scrollbar min-w-0"
+            className="flex-1 py-3 px-6 overflow-y-auto overflow-x-hidden custom-scrollbar min-w-0"
             ref={contentRef}
             style={{ maxWidth: '100%', boxSizing: 'border-box' }}
           >

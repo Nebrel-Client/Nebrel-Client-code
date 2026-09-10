@@ -259,21 +259,18 @@ export const getToastVariantStyles = (variant: ToastVariant, accentColor: string
       return {
         backgroundColor: "rgba(16, 185, 129, 0.3)",
         borderColor: "rgba(16, 185, 129, 0.8)",
-        borderBottomColor: "#059669",
         color: "#d1fae5",
       };
     case "error":
       return {
         backgroundColor: "rgba(239, 68, 68, 0.3)",
         borderColor: "rgba(239, 68, 68, 0.8)",
-        borderBottomColor: "#dc2626",
         color: "#fee2e2",
       };
     default:
       return {
         backgroundColor: `${accentColor}30`,
         borderColor: `${accentColor}80`,
-        borderBottomColor: accentColor,
         color: "#ffffff",
       };
   }
@@ -285,9 +282,8 @@ export const getToastBaseStyles = (config: ToastStyleConfig): React.CSSPropertie
 
   return {
     borderWidth: "1px",
-    borderBottomWidth: "2px",
     borderStyle: "solid",
-    boxShadow: "none",
+    boxShadow: "var(--nebrel-shadow-lg)",
     padding: "12px 20px",
     backdropFilter: "blur(8px)",
     WebkitBackdropFilter: "blur(8px)",

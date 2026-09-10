@@ -48,7 +48,7 @@ export const NavTooltip = forwardRef<HTMLDivElement, NavTooltipProps>(
           "font-smallcaps relative overflow-hidden backdrop-blur-md",
           "px-4 py-2 rounded-md text-white whitespace-nowrap",
           "text-shadow-sm text-base",
-          "border-2 shadow-[0_4px_0_rgba(0,0,0,0.2),0_6px_10px_rgba(0,0,0,0.25)]",
+          "border shadow-[0_6px_18px_rgba(0,0,0,0.4)]",
           className,
         )}
         style={{

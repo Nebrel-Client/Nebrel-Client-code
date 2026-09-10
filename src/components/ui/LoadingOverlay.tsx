@@ -216,7 +216,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>(
           ref={contentRef}
           className={cn(
             "relative overflow-hidden rounded-md backdrop-blur-md",
-            shadowDepth !== "none" && "border-2 border-b-4",
+            shadowDepth !== "none" && "border",
             sizeStyles.container,
           )}
           style={{

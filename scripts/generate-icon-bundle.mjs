@@ -12,15 +12,15 @@ const attributionFile = join(root, "THIRD_PARTY_ICONS.md");
 
 /** Icon sets we ship. A name with any other prefix is an error. */
 const COLLECTIONS = [
-  "solar", "pixel", "mdi", "simple-icons", "circle-flags", "ph",
-  "material-symbols", "mingcute", "svg-spinners", "noto", "lucide",
-  "line-md", "ic", "fluent", "eos-icons",
+  "solar", "simple-icons", "circle-flags", "ph",
+  "svg-spinners", "line-md", "eos-icons",
 ];
 
-/** `prefix:name` shaped string literals that are not icons (tailwind variants, CSS values). */
+/** Non-icon prefixes: Tailwind variants, CSS values and Tauri event namespaces. */
 const NOT_ICONS = new Set([
   "hover", "group-hover", "focus", "active", "data", "0",
   "visibility", "overflow",
+  "friends", "chat",
 ]);
 
 const ICON_RE = /["'`]([a-z][a-z0-9-]*):([a-z0-9][a-z0-9-]*)["'`]/g;

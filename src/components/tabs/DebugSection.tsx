@@ -207,12 +207,12 @@ export function DebugSection() {
 
   return (
     <div className="space-y-6">
-      <LogFileSection id="launcher" title={t("debug.tabs.launcher")} icon="solar:document-text-bold" loader={listLauncherLogs} />
-      <LogFileSection id="minecraft" title={t("debug.tabs.minecraft")} icon="solar:document-text-bold" loader={listAllMcLogs} />
-      <LogFileSection id="process" title={t("debug.tabs.process")} icon="solar:document-text-bold" loader={listProcessLogs} />
-      <LogFileSection id="crashes" title={t("debug.tabs.crashes")} icon="solar:danger-triangle-bold" crash loader={listCrashReports} />
+      <LogFileSection id="launcher" title={t("debug.tabs.launcher")} icon="ph:file-text-duotone" loader={listLauncherLogs} />
+      <LogFileSection id="minecraft" title={t("debug.tabs.minecraft")} icon="ph:file-text-duotone" loader={listAllMcLogs} />
+      <LogFileSection id="process" title={t("debug.tabs.process")} icon="ph:file-text-duotone" loader={listProcessLogs} />
+      <LogFileSection id="crashes" title={t("debug.tabs.crashes")} icon="ph:warning-duotone" crash loader={listCrashReports} />
 
-      <SettingsSection id="settings-section-permissions" title={t("debug.permissions.tab")} icon="solar:shield-keyhole-bold">
+      <SettingsSection id="settings-section-permissions" title={t("debug.permissions.tab")} icon="ph:shield-star-duotone">
         <div className="py-2">
           <PermissionsList
             permissions={permissions}
@@ -222,7 +222,7 @@ export function DebugSection() {
         </div>
       </SettingsSection>
 
-      <SettingsSection id="settings-section-testing" title={t("debug.tabs.testing")} icon="solar:test-tube-bold">
+      <SettingsSection id="settings-section-testing" title={t("debug.tabs.testing")} icon="ph:flask-duotone">
         <div className="py-2">
           <TestingPanel />
         </div>
@@ -364,7 +364,7 @@ function TestingPanel() {
   return (
     <div className="space-y-3">
       <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-        <Icon icon="solar:database-bold" className="w-5 h-5 text-amber-300 shrink-0" />
+        <Icon icon="ph:database-duotone" className="w-5 h-5 text-amber-300 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="text-white font-minecraft">{t("debug.testing.keepset_title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
@@ -429,7 +429,7 @@ function TestingPanel() {
       </div>
 
       <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-        <Icon icon="solar:database-bold" className="w-5 h-5 text-red-300 shrink-0" />
+        <Icon icon="ph:database-duotone" className="w-5 h-5 text-red-300 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="text-white font-minecraft">{t("debug.testing.clear_cache_title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
@@ -477,7 +477,7 @@ function TestingPanel() {
       )}
 
       <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-        <Icon icon="solar:history-bold" className="w-5 h-5 text-emerald-300 shrink-0" />
+        <Icon icon="ph:clock-counter-clockwise-duotone" className="w-5 h-5 text-emerald-300 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="text-white font-minecraft">{t("settings.backups.title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
@@ -493,7 +493,7 @@ function TestingPanel() {
           {loadingBackups ? (
             <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
           ) : (
-            <Icon icon="solar:list-bold" className="w-4 h-4" />
+            <Icon icon="ph:list-bullets-duotone" className="w-4 h-4" />
           )}
           {t("settings.backups.load")}
         </button>
@@ -512,7 +512,7 @@ function TestingPanel() {
             <div className="divide-y divide-white/10 max-h-96 overflow-y-auto">
               {backups.map((b) => (
                 <div key={b.path} className="p-3 px-4 hover:bg-white/5 flex items-center gap-4">
-                  <Icon icon="solar:archive-bold" className="w-5 h-5 text-white/50 shrink-0" />
+                  <Icon icon="ph:archive-duotone" className="w-5 h-5 text-white/50 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="text-white font-minecraft truncate">
                       {new Date(b.backup_time * 1000).toLocaleString()}
@@ -590,7 +590,7 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
   return (
     <div className="space-y-3">
       <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-        <Icon icon="solar:shield-keyhole-bold" className="w-5 h-5 text-white/60 shrink-0" />
+        <Icon icon="ph:shield-star-duotone" className="w-5 h-5 text-white/60 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="text-white font-minecraft">
             {t('debug.permissions.count', { n: nodes.length })}
@@ -616,7 +616,7 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
 
       {canTest && (
         <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-          <Icon icon="solar:test-tube-bold" className="w-5 h-5 text-amber-300 shrink-0" />
+          <Icon icon="ph:flask-duotone" className="w-5 h-5 text-amber-300 shrink-0" />
           <div className="flex-1 min-w-0">
             <div className="text-white font-minecraft">{t("debug.testing.tester_queue")}</div>
             <div className="text-xs text-white/40 font-sans truncate">
@@ -636,7 +636,7 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
             {opening ? (
               <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
             ) : (
-              <Icon icon="solar:test-tube-bold" className="w-4 h-4" />
+              <Icon icon="ph:flask-duotone" className="w-4 h-4" />
             )}
             {t("debug.testing.tester_open")}
           </button>

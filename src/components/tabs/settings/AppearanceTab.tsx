@@ -5,7 +5,6 @@ import { ToggleSwitch } from "../../ui/ToggleSwitch";
 import { SnowEffectToggle } from "../../ui/SnowEffectToggle";
 import { SettingsSection } from "../../ui/settings/SettingsSection";
 import { SettingRow } from "../../ui/settings/SettingRow";
-import { ThemeSelector } from "../../ThemeSelector";
 import { FontSelector } from "../../FontSelector";
 import EffectPreviewCard from "../../EffectPreviewCard";
 import { useThemeStore } from "../../../store/useThemeStore";
@@ -46,21 +45,9 @@ export function AppearanceTab() {
   return (
     <div className="space-y-6">
       <SettingsSection
-        id="settings-section-theme"
-        title={t("settings.theme.title")}
-        icon="solar:star-bold"
-        keywords={kw("settings.theme.title", "color", "colour", "farbe", "theme", "thema", "design", "skin", "aussehen")}
-        description={t("settings.theme.description")}
-      >
-        <div className="py-3">
-          <ThemeSelector />
-        </div>
-      </SettingsSection>
-
-      <SettingsSection
         id="settings-section-font"
         title={t("settings.font.title")}
-        icon="solar:text-bold"
+        icon="ph:text-aa-duotone"
         keywords={kw("settings.font.title", "font", "schrift", "schriftart", "typography", "typografie", "text")}
         description={t("settings.font.description")}
       >
@@ -72,7 +59,7 @@ export function AppearanceTab() {
       <SettingsSection
         id="settings-section-background"
         title={t("settings.background.title")}
-        icon="solar:stars-bold"
+        icon="ph:sparkle-duotone"
         keywords={kw("settings.background.title", "color", "colour", "farbe", "hintergrund", "background", "effekt", "effect", "animation", "animationen")}
         description={t("settings.background.description")}
       >
@@ -139,7 +126,7 @@ export function AppearanceTab() {
       <SettingsSection
         id="settings-section-custom-background"
         title={t("settings.custom_background.title")}
-        icon="solar:gallery-bold"
+        icon="ph:images-duotone"
         keywords={kw("settings.custom_background.title", "custom", "background", "video", "image", "bild", "hintergrund", "mp4", "gif")}
         description={t("settings.custom_background.description")}
       >
@@ -172,7 +159,7 @@ export function AppearanceTab() {
                   setCustomMedia(selected, type);
                 }
               }}
-              icon={<Icon icon="solar:folder-open-bold" />}
+              icon={<Icon icon="ph:folder-open-duotone" />}
             >
               {customMediaUrl ? t("settings.custom_background.change") : t("settings.custom_background.select")}
             </Button>

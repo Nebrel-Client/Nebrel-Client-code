@@ -150,7 +150,7 @@ export function ToggleSwitch({
         <div
           ref={trackRef}
           className={cn(
-            "rounded-full transition-colors duration-200",
+            "nebrel-switch-track rounded-full transition-colors duration-200",
             sizeConfig.track,
           )}
           style={{
@@ -172,7 +172,7 @@ export function ToggleSwitch({
           <div
             ref={knobRef}
             className={cn(
-              "absolute top-1/2 left-0.5 -translate-y-1/2 bg-white rounded-full shadow-md",
+              "nebrel-switch-knob absolute top-1/2 left-0.5 -translate-y-1/2 bg-white rounded-full shadow-md",
               sizeConfig.knob,
             )}
             style={{

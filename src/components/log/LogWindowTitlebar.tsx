@@ -54,7 +54,7 @@ export function LogWindowTitlebar({ title }: LogWindowTitlebarProps) {
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title={t('window.minimize')}
         >
-          <Icon icon="mdi:minus" className="w-4 h-4 text-white/70" />
+          <Icon icon="ph:minus-bold" className="w-4 h-4 text-white/70" />
         </button>
 
         {/* Maximize */}
@@ -63,7 +63,7 @@ export function LogWindowTitlebar({ title }: LogWindowTitlebarProps) {
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title={t('window.maximize')}
         >
-          <Icon icon="mdi:checkbox-blank-outline" className="w-3.5 h-3.5 text-white/70" />
+          <Icon icon="ph:square-bold" className="w-3.5 h-3.5 text-white/70" />
         </button>
 
         {/* Close */}
@@ -72,7 +72,7 @@ export function LogWindowTitlebar({ title }: LogWindowTitlebarProps) {
           className="w-8 h-8 flex items-center justify-center rounded hover:bg-red-500/80 transition-colors"
           title={t('window.close')}
         >
-          <Icon icon="mdi:close" className="w-4 h-4 text-white/70" />
+          <Icon icon="ph:x-bold" className="w-4 h-4 text-white/70" />
         </button>
       </div>
     </div>

@@ -119,7 +119,7 @@ export function NewsSection({ className }: NewsSectionProps) {
       return (
         <div className="text-center p-2">
           <Icon
-            icon="pixel:exclamation-triangle-solid"
+            icon="ph:warning-duotone"
             className="w-8 h-8 text-red-400 mx-auto mb-2"
           />
           <p className="text-red-400">{t('common.error')}: {error}</p>
@@ -132,7 +132,7 @@ export function NewsSection({ className }: NewsSectionProps) {
       return (
         <div className="text-center p-2">
           <Icon
-            icon="pixel:newspaper-solid"
+            icon="ph:newspaper-duotone"
             className="w-8 h-8 text-white/50 mx-auto mb-2"
           />
           <p className="text-white/70">{t('news.no_news_available')}</p>
@@ -144,7 +144,7 @@ export function NewsSection({ className }: NewsSectionProps) {
       <div className="flex flex-col space-y-1 w-full">
         {posts.map((post) => {
           const rawTitle = post.yoast_head_json?.title || t('news.item');
-          const suffixToRemove = " - NoRisk Client Blog";
+          const suffixToRemove = " - Nebrel Blog";
           let displayTitle = rawTitle;
           if (rawTitle.endsWith(suffixToRemove)) {
             displayTitle = rawTitle.substring(
@@ -213,7 +213,7 @@ export function NewsSection({ className }: NewsSectionProps) {
       <div className="pb-1">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Icon icon="pixel:newspaper-solid" className="w-7 h-7 text-white" />
+            <Icon icon="ph:newspaper-duotone" className="w-7 h-7 text-white" />
             <h2 className="text-base font-smallcaps text-white">{t('news.title')}</h2>
           </div>
         </div>
