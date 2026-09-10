@@ -48,68 +48,34 @@ export const NavButton = forwardRef<HTMLButtonElement, NavButtonProps>(
 
     const colors = getVariantColors();
 
-    const baseClasses = cn(
-      "nebrel-nav-button font-smallcaps relative overflow-hidden transition-all duration-200",
-      "w-16 rounded-[var(--border-radius)] text-white flex items-center justify-center",
-      label ? "py-2" : "h-16",
-      variant !== "ghost" && "border border-transparent",
-      "text-shadow-sm",
-      "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-1 focus-visible:ring-offset-black/20",
-    );
-
-    const activeStateClasses = cn(
-      variant !== "ghost" && "border",
-      "hover:brightness-110 active:brightness-95",
-    );
-    
-    // Active navigation uses the same inset edge as the content panels.
-    const activeStateStyles: React.CSSProperties = variant === "ghost" ? {} : {
-      backgroundImage: `linear-gradient(90deg, ${colors.main}59 0%, ${colors.main}1a 100%)`,
-      borderColor: `${colors.main}4d`,
-      boxShadow: `inset 0 -3px 0 ${colors.main}, 0 3px 0 #0005`,
-      color: colors.text,
-    };
-
-    const nonActiveStateClasses = cn(
-      variant !== "ghost" && "hover:bg-white/5",
-      "hover:brightness-110 active:brightness-95",
-    );
-
-    const nonActiveStateStyles: React.CSSProperties = {};
-    if (isActive) {
-      Object.assign(nonActiveStateStyles, activeStateStyles);
-    } else {
-      nonActiveStateStyles.color = `${colors.text}90`;
-    }
-
+    // The icon sits in its own tile and the label underneath it, so the active
+    // state is carried by the tile rather than by a band across the whole row.
     return (
       <button
         ref={ref || buttonRef}
         aria-current={isActive ? "page" : undefined}
         className={cn(
-          baseClasses,
-          isActive ? activeStateClasses : nonActiveStateClasses,
+          "nebrel-nav-button group flex w-full flex-col items-center gap-1.5 bg-transparent",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:rounded-[var(--border-radius)]",
           className,
         )}
-        style={isActive ? activeStateStyles : { ...nonActiveStateStyles, borderColor: "transparent" }}
         {...props}
       >
         <span
-          className={cn(
-            "absolute inset-0 bg-gradient-radial from-white/20 via-transparent to-transparent",
-            isActive
-              ? "opacity-10"
-              : "opacity-0 transition-opacity duration-300",
-          )}
-        />
-        <span className="relative z-10 flex flex-col items-center justify-center gap-1">
-          <span className="flex items-center justify-center w-8 h-8">{icon}</span>
-          {label && (
-            <span className="font-smallcaps text-xs leading-tight text-center whitespace-nowrap [text-shadow:none]">
-              {label}
-            </span>
-          )}
+          className="nebrel-nav-tile"
+          style={
+            isActive && variant !== "ghost"
+              ? { borderColor: `${colors.main}47`, color: colors.main }
+              : undefined
+          }
+        >
+          {icon}
         </span>
+        {label && (
+          <span className="nebrel-nav-label" title={typeof label === "string" ? label : undefined}>
+            {label}
+          </span>
+        )}
       </button>
     );
   },

@@ -38,7 +38,6 @@ export function VerticalNavbar({
   const tooltipRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [appVersion, setAppVersion] = useState<string | null>(null);
-  const accentColor = useThemeStore((state) => state.accentColor);
   const showNavLabels = useThemeStore((state) => state.showNavLabels);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [isMounted, setIsMounted] = useState(false);
@@ -124,7 +123,7 @@ export function VerticalNavbar({
       ref={(el) => (buttonRefs.current[item.id] = el)}
     >
       <NavButton
-        icon={<Icon icon={item.icon} className="w-8 h-8" />}
+        icon={<Icon icon={item.icon} className="w-[22px] h-[22px]" />}
         label={showNavLabels ? item.label : undefined}
         isActive={active === item.id}
         onClick={() => handleItemClick(item.id, item.isAction)}
@@ -140,23 +139,17 @@ export function VerticalNavbar({
       <div
         ref={navRef}
         className={cn(
-          "nebrel-sidebar flex flex-col py-6 backdrop-blur-lg",
+          "nebrel-sidebar flex flex-col backdrop-blur-lg",
           showNavLabels ? "nebrel-sidebar-expanded" : "nebrel-sidebar-compact",
           className,
         )}
-        style={{
-          // A dark glass column lit from the top, with a single hairline edge.
-          backgroundImage: `linear-gradient(180deg, ${accentColor.value}2e 0%, ${accentColor.value}0d 38%, transparent 100%)`,
-          backgroundColor: "rgba(10, 3, 9, 0.55)",
-          borderRight: `1px solid ${accentColor.value}2b`,
-        }}
       >
-        <div className="nebrel-nav-primary flex-1 flex flex-col items-center space-y-2 min-h-0 w-full">
+        <div className="nebrel-nav-primary flex-1 flex flex-col items-center space-y-1 min-h-0 w-full">
           {items.filter((item) => !item.isAction).map(renderItem)}
         </div>
 
         {items.some((item) => item.isAction) && (
-          <div className="nebrel-nav-utilities flex flex-col items-center space-y-2 mt-4 w-full">
+          <div className="nebrel-nav-utilities flex flex-col items-center space-y-1 mt-3 w-full">
             {items.filter((item) => item.isAction).map(renderItem)}
           </div>
         )}

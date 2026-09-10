@@ -73,14 +73,14 @@ export function AppLayout({
   const shouldShowEffects = !(isCustomMediaVisible && customMediaHideEffects);
 
   const navItems = [
-    { id: "play", icon: "ph:play-circle-duotone", label: t("nav.play") },
-    { id: "profiles", icon: "ph:identification-card-duotone", label: t("nav.profiles") },
-    { id: "mods", icon: "ph:puzzle-piece-duotone", label: t("nav.mods") },
-    { id: "skins", icon: "ph:person-duotone", label: t("nav.skins") },
-    { id: "capes", icon: "ph:storefront-duotone", label: t("nav.capes") },
+    { id: "play", icon: "ph:game-controller-fill", label: t("nav.play") },
+    { id: "profiles", icon: "ph:cube-fill", label: t("nav.profiles") },
+    { id: "mods", icon: "ph:puzzle-piece-fill", label: t("nav.mods") },
+    { id: "skins", icon: "ph:users-fill", label: t("nav.skins") },
+    { id: "capes", icon: "ph:storefront-fill", label: t("nav.capes") },
     // DISABLED: Advent Calendar (seasonal feature)
     // { id: "advent-calendar", icon: "solar:gift-bold", label: t("nav.advent") },
-    { id: "settings", icon: "ph:gear-six-duotone", label: t("nav.settings"), isAction: true },
+    { id: "settings", icon: "ph:gear-fill", label: t("nav.settings"), isAction: true },
   ];
   const { qualityLevel } = useQualitySettingsStore();
   const { isBackgroundAnimationEnabled, accentColor: themeAccentColor, accentColor } = useThemeStore();

@@ -603,19 +603,49 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
 .nebrel-shell { border-color: rgba(var(--accent-rgb), .35) !important; }
 .nebrel-titlebar { height: 58px; background: rgba(15,14,18,.9); border-bottom: 1px solid var(--nebrel-line); padding-inline: 24px; }
 .nebrel-titlebar h1 { font-size: 20px; letter-spacing: .12em !important; }
-.nebrel-sidebar { width: 116px; padding: 16px 12px; flex-shrink: 0; background: rgba(17,16,20,.94) !important; border-right: 1px solid var(--nebrel-line) !important; }
-.nebrel-sidebar-compact { width: 80px; }
+.nebrel-sidebar { width: 92px; padding: 14px 8px; flex-shrink: 0; background: rgba(17,16,20,.94) !important; border-right: 1px solid var(--nebrel-line) !important; }
+.nebrel-sidebar-compact { width: 68px; }
 .nebrel-brand { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .nebrel-brand-name { font-family: var(--font-smallcaps); font-size: 18px; letter-spacing: .08em; text-align: center; }
 .nebrel-brand-name span { display: block; color: #a99ab4; font: 9px/1.8 system-ui, sans-serif; letter-spacing: .18em; }
 .nebrel-sidebar .nav-item { width: 100%; }
-.nebrel-sidebar .nebrel-nav-button { width: 100%; min-height: 66px; padding: 9px 3px; border: 1px solid transparent; border-radius: var(--border-radius); transition: background-color .15s, border-color .15s, color .15s; }
-.nebrel-sidebar .nebrel-nav-button:hover:not([aria-current="page"]) { background-color: rgba(255,255,255,.05); }
-.nebrel-sidebar .nebrel-nav-button svg { width: 25px; height: 25px; }
-.nebrel-sidebar .nebrel-nav-button > span:last-child { gap: 4px; }
-.nebrel-sidebar .nebrel-nav-button > span:last-child > span:last-child { font-size: 12px; }
-.nebrel-sidebar .nebrel-nav-button[aria-current="page"] { background: rgba(var(--accent-rgb),.16); border-color: rgba(var(--accent-rgb),.42); color: white; }
-.nebrel-sidebar .nebrel-nav-button[aria-current="page"] svg { color: var(--accent); filter: brightness(1.5); }
+.nebrel-sidebar .nebrel-nav-button { padding: 6px 2px; }
+
+/* Rounded tile holding the icon. Only this lights up when active, which keeps
+   the rail calm even though every entry carries a label. */
+.nebrel-nav-tile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--border-radius) * 1.1);
+  color: rgba(255, 255, 255, .62);
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.nebrel-nav-tile svg { width: 22px; height: 22px; }
+.nebrel-nav-button:hover .nebrel-nav-tile { background-color: rgba(255, 255, 255, .06); color: #fff; }
+.nebrel-nav-button[aria-current="page"] .nebrel-nav-tile {
+  background-color: rgba(255, 255, 255, .08);
+  color: var(--accent);
+}
+
+/* Labels are cut with an ellipsis rather than wrapping, so the rail keeps one
+   line per entry no matter how long the translation is. */
+.nebrel-nav-label {
+  max-width: 100%;
+  font-family: var(--font-smallcaps);
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  color: rgba(255, 255, 255, .5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+.nebrel-nav-button:hover .nebrel-nav-label { color: rgba(255, 255, 255, .8); }
+.nebrel-nav-button[aria-current="page"] .nebrel-nav-label { color: #fff; }
 .nebrel-nav-primary { overflow-y: auto; scrollbar-width: thin; }
 .nebrel-nav-utilities { border-top: 1px solid var(--nebrel-line); padding-top: 12px; }
 .nebrel-nav-utilities .nebrel-nav-button { min-height: 58px; }
