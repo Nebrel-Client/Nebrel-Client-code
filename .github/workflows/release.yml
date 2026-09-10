@@ -24,11 +24,6 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
-    # The signing secrets live in this environment, not on the repository. A job
-    # that does not name it gets empty strings and fails deep in the build with
-    # "Missing comment in secret key", which reads like a broken key rather than
-    # a missing one.
-    environment: signing
     steps:
       - name: Check out the tag
         uses: actions/checkout@v4
@@ -78,11 +73,11 @@ jobs:
         shell: bash
         run: |
           if [ -z "$KEY" ]; then
-            echo "::error::TAURI_PRIVATE_KEY is empty. Check it exists in the 'signing' environment."
+            echo "::error::TAURI_PRIVATE_KEY is empty. Add it under Settings, Secrets and variables, Actions, Repository secrets."
             exit 1
           fi
           if [ -z "$PASSWORD" ]; then
-            echo "::error::TAURI_KEY_PASSWORD is empty. Check it exists in the 'signing' environment."
+            echo "::error::TAURI_KEY_PASSWORD is empty. Add it under Settings, Secrets and variables, Actions, Repository secrets."
             exit 1
           fi
           echo "Both secrets are present (${#KEY} characters of key)."
