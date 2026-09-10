@@ -75,6 +75,8 @@ export function AppLayout({
   const navItems = [
     { id: "play", icon: "ph:game-controller-fill", label: t("nav.play") },
     { id: "profiles", icon: "ph:cube-fill", label: t("nav.profiles") },
+    { id: "changelog", icon: "ph:lightbulb-filament-fill", label: t("nav.changelog") },
+    { id: "news", icon: "ph:newspaper-fill", label: t("nav.news") },
     { id: "mods", icon: "ph:puzzle-piece-fill", label: t("nav.mods") },
     { id: "skins", icon: "ph:users-fill", label: t("nav.skins") },
     { id: "capes", icon: "ph:storefront-fill", label: t("nav.capes") },

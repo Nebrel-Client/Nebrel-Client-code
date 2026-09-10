@@ -15,10 +15,12 @@
   }
 },
   "nav.play": "Spielen",
-  "nav.profiles": "Profile",
+  "nav.profiles": "Instanzen",
   "nav.mods": "Mods",
   "nav.skins": "Skins",
   "nav.capes": "Capes",
+  "nav.changelog": "Änderungen",
+  "nav.news": "Neuigkeiten",
   "nav.settings": "Einstellungen",
 
   "news.title": "Neuigkeiten",
@@ -2270,5 +2272,12 @@
   "modrinth.quick_profile.copy_from_existing": "Einstellungen aus vorhandenem Profil übernehmen",
   "modrinth.quick_profile.name_label": "Name des neuen Profils",
   "nebrel.profiles.title": "Deine Spielprofile",
-  "nebrel.profiles.description": "Versionen, Modpacks und deine eigenen Welten."
+  "nebrel.profiles.description": "Versionen, Modpacks und deine eigenen Welten.",
+  "nebrel.changelog.title": "Was sich geändert hat",
+  "nebrel.changelog.description": "Neue Funktionen und Korrekturen, Version für Version.",
+  "nebrel.changelog.empty": "Sobald eine neue Version erscheint, steht sie hier.",
+  "nebrel.news.title": "Neuigkeiten",
+  "nebrel.news.description": "Ankündigungen und Aktionen rund um Nebrel.",
+  "nebrel.news.empty": "Aktuell gibt es nichts Neues zu berichten.",
+  "news.read_more": "Mehr lesen"
 }

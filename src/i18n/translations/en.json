@@ -15,10 +15,12 @@
   }
 },
   "nav.play": "Play",
-  "nav.profiles": "Profiles",
+  "nav.profiles": "Instances",
   "nav.mods": "Mods",
   "nav.skins": "Skins",
   "nav.capes": "Capes",
+  "nav.changelog": "Changelog",
+  "nav.news": "News",
   "nav.settings": "Settings",
 
   "news.title": "News",
@@ -2288,5 +2290,12 @@
   "modrinth.quick_profile.copy_from_existing": "Copy settings from existing profile",
   "modrinth.quick_profile.name_label": "New profile name",
   "nebrel.profiles.title": "Your game profiles",
-  "nebrel.profiles.description": "Versions, modpacks and your own worlds."
+  "nebrel.profiles.description": "Versions, modpacks and your own worlds.",
+  "nebrel.changelog.title": "What changed",
+  "nebrel.changelog.description": "New features and fixes, version by version.",
+  "nebrel.changelog.empty": "The next release will show up here.",
+  "nebrel.news.title": "News",
+  "nebrel.news.description": "Announcements and events around Nebrel.",
+  "nebrel.news.empty": "Nothing new to report right now.",
+  "news.read_more": "Read more"
 }

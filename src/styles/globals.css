@@ -815,3 +815,77 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
 }
 .nebrel-profile-card { border: 1px solid var(--nebrel-line); background-color: var(--nebrel-surface); transition: background .15s, border-color .15s, transform .15s; }
 .nebrel-profile-card:hover { border-color: rgba(var(--accent-rgb),.45); background-color: var(--nebrel-surface-raised); transform: translateY(-1px); }
+
+/* News and changelog pages: a card grid that keeps images at a fixed ratio so
+   rows line up even when only some entries have artwork. */
+.nebrel-feed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+  padding-bottom: 8px;
+}
+.nebrel-feed-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--nebrel-line);
+  border-radius: var(--border-radius);
+  background: var(--nebrel-surface);
+  box-shadow: var(--nebrel-shadow);
+  transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+}
+.nebrel-feed-card[role="button"] { cursor: pointer; }
+.nebrel-feed-card[role="button"]:hover {
+  background: var(--nebrel-surface-raised);
+  border-color: rgba(var(--accent-rgb), .4);
+  transform: translateY(-2px);
+}
+.nebrel-feed-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.nebrel-feed-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: rgba(0, 0, 0, .35);
+  overflow: hidden;
+}
+.nebrel-feed-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nebrel-feed-thumb-fallback { position: absolute; inset: 0; display: grid; place-items: center; opacity: .5; }
+.nebrel-feed-thumb-fallback svg { width: 40px; height: 40px; }
+
+.nebrel-feed-body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
+.nebrel-feed-date {
+  font-family: var(--font-smallcaps);
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: rgba(255, 255, 255, .38);
+}
+.nebrel-feed-body h2 {
+  font-family: var(--font-minecraft);
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0;
+  /* Two lines, then cut: keeps every card the same height. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nebrel-feed-body p {
+  font-family: var(--font-minecraft);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .45);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nebrel-feed-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  font-family: var(--font-smallcaps);
+  font-size: 12px;
+}

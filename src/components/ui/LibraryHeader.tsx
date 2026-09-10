@@ -1,7 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { Compass, Shirt, Sparkles, Layers } from "lucide-react";
+import { Compass, Shirt, Sparkles, Layers, Lightbulb, Newspaper } from "lucide-react";
 
-const icons = { mods: Compass, skins: Shirt, capes: Sparkles, profiles: Layers };
+const icons = {
+  mods: Compass,
+  skins: Shirt,
+  capes: Sparkles,
+  profiles: Layers,
+  changelog: Lightbulb,
+  news: Newspaper,
+};
 
 /** Shared introduction for Nebrel's content libraries. */
 export function LibraryHeader({ section }: { section: keyof typeof icons }) {
