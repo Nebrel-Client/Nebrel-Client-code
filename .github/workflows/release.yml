@@ -1,0 +1,109 @@
+name: Release
+
+# Publishing a launcher version is one gesture: push a tag.
+#
+#   git tag v0.2.0 && git push origin v0.2.0
+#
+# The tag is the source of truth for the version. The job refuses to build if it
+# disagrees with tauri.conf.json, because the updater compares the release tag
+# against the version baked into the client: a mismatch means every client would
+# either never update or update in a loop.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build, e.g. v0.2.0"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Check out the tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Read the version and check it against the tag
+        id: version
+        shell: bash
+        run: |
+          tag="${{ github.event.inputs.tag || github.ref_name }}"
+          version="${tag#v}"
+          configured=$(node -p "require('./src-tauri/tauri.conf.json').version")
+
+          if [ "$version" != "$configured" ]; then
+            echo "::error::Tag $tag says $version but src-tauri/tauri.conf.json says $configured."
+            echo "::error::Update the config to match, or tag the version that is configured."
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Building $version"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache the Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build and sign
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        run: yarn tauri build
+
+      # The updater looks for one fixed name, so the version has to come out of
+      # the filename that Tauri generates.
+      - name: Rename the installer to the fixed release name
+        id: rename
+        shell: bash
+        run: |
+          nsis="src-tauri/target/release/bundle/nsis"
+          installer="$nsis/Nebrel Launcher_${{ steps.version.outputs.version }}_x64-setup.exe"
+
+          if [ ! -f "$installer" ]; then
+            echo "::error::No installer at $installer"
+            ls -la "$nsis" || true
+            exit 1
+          fi
+
+          # Without the signature the update route treats the release as absent,
+          # so a missing .sig must fail here rather than ship silently.
+          if [ ! -f "$installer.sig" ]; then
+            echo "::error::The installer is unsigned. Check TAURI_PRIVATE_KEY and TAURI_KEY_PASSWORD."
+            exit 1
+          fi
+
+          mkdir -p dist-release
+          cp "$installer" dist-release/nebrelclient-release.exe
+          cp "$installer.sig" dist-release/nebrelclient-release.exe.sig
+          ls -la dist-release
+
+      - name: Publish the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          name: Nebrel Launcher ${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            dist-release/nebrelclient-release.exe
+            dist-release/nebrelclient-release.exe.sig
