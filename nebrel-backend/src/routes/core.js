@@ -39,6 +39,8 @@ export default async function coreRoutes(app, { query = databaseQuery } = {}) {
   app.route({method: ["PUT", "POST"], url: "/core/notifications/read/all", handler: markAll});
   app.get("/core/stats/uniquePlayers24h", async () => {
     const [row] = await query("SELECT count(*)::int AS count FROM users WHERE last_seen > now() - interval '24 hours'");
-    return { unique_players: row.count };
+    // The client's UniquePlayersResponse is camelCase and wants all three
+    // fields; a partial or snake_case body fails to deserialise.
+    return { count: row.count, windowHours: 24, computedAtMs: Date.now() };
   });
 }

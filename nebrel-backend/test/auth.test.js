@@ -12,7 +12,7 @@ test('Mojang login verifies ownership, expires challenges and rejects replay', a
   await app.register(authRoutes,{storage:{set:async key=>ids.add(key),del:async key=>Number(ids.delete(key))},
     saveUser:async()=>{saved++;},sessionFetch:async()=>({status:200,json:async()=>profile})});
   try {
-    const challenge=async()=>(await app.inject({method:'POST',url:'/launcher/auth/request-server-id'})).json().server_id;
+    const challenge=async()=>(await app.inject({method:'POST',url:'/launcher/auth/request-server-id'})).json().serverId;
     const login=id=>app.inject({method:'POST',url:`/launcher/auth/validate/v2?username=Alice&server_id=${id}`});
     const id=await challenge(); const valid=await login(id);
     assert.equal(valid.statusCode,200);

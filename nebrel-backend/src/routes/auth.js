@@ -17,7 +17,9 @@ export default async function authRoutes(app, options = {}) {
   app.post("/launcher/auth/request-server-id", async () => {
     const serverId = `nbr-${crypto.randomBytes(12).toString("hex")}`;
     await storage.set(`serverid:${serverId}`, "1", "EX", SERVER_ID_TTL);
-    return { server_id: serverId, expires_in: SERVER_ID_TTL };
+    // camelCase, because the client deserialises this with
+    // #[serde(rename_all = "camelCase")] and rejects snake_case outright.
+    return { serverId, expiresIn: SERVER_ID_TTL };
   });
 
   app.post("/launcher/auth/validate/v2", async (request, reply) => {
