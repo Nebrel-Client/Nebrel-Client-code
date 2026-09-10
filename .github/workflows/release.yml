@@ -24,6 +24,11 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
+    # The signing secrets live in this environment, not on the repository. A job
+    # that does not name it gets empty strings and fails deep in the build with
+    # "Missing comment in secret key", which reads like a broken key rather than
+    # a missing one.
+    environment: signing
     steps:
       - name: Check out the tag
         uses: actions/checkout@v4
@@ -63,6 +68,24 @@ jobs:
 
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
+
+      # Catches an empty or unreachable secret here, where the message is clear,
+      # rather than 20 minutes later at the signing step.
+      - name: Check the signing secrets are readable
+        env:
+          KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "::error::TAURI_PRIVATE_KEY is empty. Check it exists in the 'signing' environment."
+            exit 1
+          fi
+          if [ -z "$PASSWORD" ]; then
+            echo "::error::TAURI_KEY_PASSWORD is empty. Check it exists in the 'signing' environment."
+            exit 1
+          fi
+          echo "Both secrets are present (${#KEY} characters of key)."
 
       - name: Build and sign
         env:
