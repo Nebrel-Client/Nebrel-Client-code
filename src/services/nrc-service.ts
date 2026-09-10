@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { BlogPost } from '../types/wordPress';
+import type { BlogPost, ChangelogRelease } from '../types/wordPress';
 import type { UpdateInfo } from '../types/updater';
 import type { Profile } from '../types/profile';
 import type { AdventCalendarDay, Reward } from '../types/advent';
@@ -344,3 +344,9 @@ export const getUniquePlayers24h = (): Promise<UniquePlayersResponse> => {
 
 // Re-export logging utilities for backward compatibility
 export { log as logMessage, logDebug as logMessageDebug, logInfo as logMessageInfo, logWarn as logMessageWarn, logError as logMessageError } from '../utils/logging-utils';
+/**
+ * Fetches the released versions from the changelog feed, newest first.
+ */
+export const fetchChangelogReleases = (): Promise<ChangelogRelease[]> => {
+  return invoke('get_changelog_releases_command');
+};

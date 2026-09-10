@@ -1,6 +1,6 @@
 use crate::error::{AppError, CommandError};
 use crate::minecraft::api::norisk_api::{AdventCalendarDay, CrashlogDto, NoRiskApi, ReferralInfo, Reward, UniquePlayersResponse, UserNotification};
-use crate::minecraft::api::wordpress_api::{BlogPost, WordPressApi};
+use crate::minecraft::api::wordpress_api::{BlogPost, ChangelogApi, ChangelogRelease, WordPressApi};
 use crate::minecraft::auth::minecraft_auth::Credentials;
 use crate::state::state_manager::State;
 use chrono::{Duration as ChronoDuration, Utc};
@@ -19,6 +19,13 @@ use crate::utils::updater_utils;
 pub async fn get_news_and_changelogs_command() -> Result<Vec<BlogPost>, CommandError> {
     info!("Executing get_news_and_changelogs_command");
     Ok(WordPressApi::get_news_and_changelogs().await?)
+}
+
+/// Fetches the released versions from the changelog feed.
+#[tauri::command]
+pub async fn get_changelog_releases_command() -> Result<Vec<ChangelogRelease>, CommandError> {
+    info!("Executing get_changelog_releases_command");
+    Ok(ChangelogApi::get_releases().await?)
 }
 
 #[tauri::command]

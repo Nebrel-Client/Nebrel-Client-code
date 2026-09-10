@@ -70,18 +70,24 @@ export function FeedTab({ section }: FeedTabProps) {
             body={t(`nebrel.${section}.empty`)}
           />
         ) : (
-          <div className="nebrel-feed-grid">
-            {posts.map((post) => (
-              <FeedCard key={post.id} post={post} />
-            ))}
-          </div>
+          <>
+            {/* Newest entry gets the full width, the rest tile below it. */}
+            <FeedCard post={posts[0]} featured />
+            {posts.length > 1 && (
+              <div className="nebrel-feed-grid mt-4">
+                {posts.slice(1).map((post) => (
+                  <FeedCard key={post.id} post={post} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
   );
 }
 
-function FeedCard({ post }: Readonly<{ post: BlogPost }>) {
+function FeedCard({ post, featured = false }: Readonly<{ post: BlogPost; featured?: boolean }>) {
   const { t } = useTranslation();
   const accentColor = useThemeStore((s) => s.accentColor);
   const seo = post.yoast_head_json;
@@ -106,7 +112,7 @@ function FeedCard({ post }: Readonly<{ post: BlogPost }>) {
 
   return (
     <article
-      className="nebrel-feed-card"
+      className={featured ? "nebrel-feed-card nebrel-feed-card-featured" : "nebrel-feed-card"}
       role={url ? "button" : undefined}
       tabIndex={url ? 0 : undefined}
       onClick={url ? open : undefined}

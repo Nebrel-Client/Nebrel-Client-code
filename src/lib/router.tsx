@@ -6,6 +6,7 @@ import ModrinthTabV2 from "../components/tabs/ModrinthTabV2";
 import { SkinsTab } from "../components/tabs/SkinsTab";
 import { StoreTab } from "../components/tabs/StoreTab";
 import { FeedTab } from "../components/tabs/FeedTab";
+import { ChangelogTab } from "../components/tabs/ChangelogTab";
 import { BrowseTabWrapper } from "../components/profiles/BrowseTabWrapper";
 import { ProfilesTabV2 } from "../components/tabs/ProfilesTabV2";
 import { ProfileDetailViewV2Wrapper } from "../components/profiles/ProfileDetailViewV2Wrapper";
@@ -65,7 +66,7 @@ export const router = createHashRouter([
       },
       {
         path: "changelog",
-        element: <FeedTab section="changelog" />,
+        element: <ChangelogTab />,
       },
       {
         path: "news",

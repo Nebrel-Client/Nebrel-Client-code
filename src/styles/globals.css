@@ -889,3 +889,101 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
   font-family: var(--font-smallcaps);
   font-size: 12px;
 }
+
+/* Changelog: one card per release, version left, date hard right, entries as
+   plain bullets so a long release stays scannable. */
+.nebrel-changelog-list { display: flex; flex-direction: column; gap: 16px; padding-bottom: 8px; }
+.nebrel-changelog-card {
+  border: 1px solid var(--nebrel-line);
+  border-radius: var(--border-radius);
+  background: var(--nebrel-surface);
+  padding: 22px 26px 24px;
+}
+.nebrel-changelog-head { display: flex; align-items: center; gap: 16px; }
+.nebrel-changelog-head h2 {
+  font-family: var(--font-minecraft);
+  font-size: 21px;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+.nebrel-changelog-rule { flex: 1; height: 1px; background: var(--nebrel-line); }
+.nebrel-changelog-head time {
+  font-family: var(--font-smallcaps);
+  font-size: 12px;
+  color: rgba(255, 255, 255, .4);
+  white-space: nowrap;
+}
+
+.nebrel-changelog-section { margin-top: 18px; }
+.nebrel-changelog-section:first-of-type { margin-top: 14px; }
+.nebrel-changelog-section h3 {
+  font-family: var(--font-minecraft);
+  font-size: 16px;
+  color: rgba(255, 255, 255, .72);
+  margin: 0 0 8px;
+}
+.nebrel-changelog-section ul { margin: 0; padding-left: 20px; list-style: disc; }
+.nebrel-changelog-section li {
+  font-family: var(--font-minecraft);
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .62);
+  padding-left: 2px;
+}
+.nebrel-changelog-section li::marker { color: rgba(255, 255, 255, .28); }
+
+/* Friends column on the play screen, in the slot the news used to occupy. */
+.nebrel-friends-panel { min-height: 0; }
+.nebrel-friends-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--nebrel-line);
+}
+.nebrel-friends-head h2 {
+  font-family: var(--font-smallcaps);
+  font-size: 15px;
+  letter-spacing: .1em;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+.nebrel-friends-count {
+  font-family: var(--font-smallcaps);
+  font-size: 11px;
+  color: rgba(255, 255, 255, .4);
+}
+.nebrel-friends-expand {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: calc(var(--border-radius) * .6);
+  background: transparent;
+  color: rgba(255, 255, 255, .45);
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.nebrel-friends-expand:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+
+/* Newest news entry, full width with the image behind the text. */
+.nebrel-feed-card-featured { position: relative; display: block; }
+.nebrel-feed-card-featured .nebrel-feed-thumb { aspect-ratio: 21 / 7; }
+.nebrel-feed-card-featured .nebrel-feed-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 26px 28px 24px;
+  /* Dark wash so the headline stays readable over any artwork. */
+  background: linear-gradient(to top, rgba(10, 9, 12, .95) 30%, rgba(10, 9, 12, .55) 65%, transparent);
+}
+.nebrel-feed-card-featured .nebrel-feed-body h2 { font-size: 26px; -webkit-line-clamp: 2; }
+.nebrel-feed-card-featured .nebrel-feed-body p { font-size: 13.5px; max-width: 70ch; -webkit-line-clamp: 2; }
+@media (max-width: 900px) {
+  .nebrel-feed-card-featured .nebrel-feed-thumb { aspect-ratio: 16 / 9; }
+  .nebrel-feed-card-featured .nebrel-feed-body h2 { font-size: 20px; }
+}

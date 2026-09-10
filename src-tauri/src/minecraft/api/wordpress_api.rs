@@ -127,3 +127,56 @@ impl WordPressApi {
         Self::get_blog_posts(Some("2"), Some(10), Some(1)).await
     }
 }
+
+/// One entry line of a release, e.g. "Added support for Minecraft 26.3".
+pub type ChangelogEntry = String;
+
+/// A named group inside a release, e.g. "New Features" or "Bugfixes".
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ChangelogSection {
+    /// Optional: a release may be a flat list with no headings at all.
+    pub title: Option<String>,
+    #[serde(default)]
+    pub entries: Vec<ChangelogEntry>,
+}
+
+/// One released version.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ChangelogRelease {
+    pub version: String,
+    pub date: String,
+    #[serde(default)]
+    pub sections: Vec<ChangelogSection>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+struct ChangelogFeed {
+    #[serde(default)]
+    releases: Vec<ChangelogRelease>,
+}
+
+/// The changelog, published as its own static file next to the news feed.
+pub struct ChangelogApi;
+
+impl ChangelogApi {
+    pub fn get_url() -> String {
+        String::from("https://nebrelblog.netlify.app/aenderung.json")
+    }
+
+    /// Fetches every released version, newest first.
+    pub async fn get_releases() -> Result<Vec<ChangelogRelease>> {
+        let url = Self::get_url();
+
+        info!("[Changelog] Fetching the changelog feed");
+        debug!("[Changelog] Full URL: {}", url);
+
+        let feed = nrc_get(url).json::<ChangelogFeed>("Nebrel changelog").await?;
+        let mut releases = feed.releases;
+
+        // Newest first, so the page does not have to sort.
+        releases.sort_by(|a, b| b.date.cmp(&a.date));
+
+        debug!("[Changelog] {} release(s)", releases.len());
+        Ok(releases)
+    }
+}

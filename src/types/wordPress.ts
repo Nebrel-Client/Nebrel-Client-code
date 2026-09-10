@@ -49,3 +49,16 @@ export interface BlogPost {
   // categories?: number[];
   // tags?: number[];
 } 
+/** A named group of entries inside a release, e.g. "New Features". */
+export interface ChangelogSection {
+  /** A release may be a flat list with no headings at all. */
+  title: string | null;
+  entries: string[];
+}
+
+/** One released version of the launcher. */
+export interface ChangelogRelease {
+  version: string;
+  date: string;
+  sections: ChangelogSection[];
+}
