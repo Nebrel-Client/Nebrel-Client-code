@@ -1,0 +1,5 @@
+# Replace ONLY the existing api.nebrel.de block in /etc/caddy/Caddyfile.
+# Keep your other sites. This upstream matches the current FeatherPanel allocation.
+api.nebrel.de {
+    reverse_proxy 62.68.75.171:4000
+}

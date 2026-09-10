@@ -35,3 +35,18 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .idea
 examples
+# Renamed artefacts staged for a GitHub release upload.
+release-upload/
+
+# Updater signing key. The private half must never be committed.
+nebrel.key
+nebrel.key.pub
+*.key
+
+# Deployment archives, rebuilt on demand rather than versioned.
+nebrel-backend-update.zip
+nebrel-backend-server-update.tar.gz
+nebrel-backend-update/
+
+# Sample feed staged for upload to the news host.
+news-site/
