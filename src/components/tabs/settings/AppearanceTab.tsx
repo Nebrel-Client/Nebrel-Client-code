@@ -6,9 +6,8 @@ import { SnowEffectToggle } from "../../ui/SnowEffectToggle";
 import { SettingsSection } from "../../ui/settings/SettingsSection";
 import { SettingRow } from "../../ui/settings/SettingRow";
 import { FontSelector } from "../../FontSelector";
-import EffectPreviewCard from "../../EffectPreviewCard";
 import { useThemeStore } from "../../../store/useThemeStore";
-import { BACKGROUND_EFFECTS, useBackgroundEffectStore } from "../../../store/background-effect-store";
+import { useBackgroundEffectStore } from "../../../store/background-effect-store";
 import { useQualitySettingsStore } from "../../../store/quality-settings-store";
 import { useSettingsConfig, useSettingsKeywords } from "./settings-context";
 import { open } from "@tauri-apps/plugin-dialog";
@@ -21,26 +20,12 @@ export function AppearanceTab() {
   const { saving } = useSettingsConfig();
   const { staticBackground, toggleStaticBackground, toggleBackgroundAnimation, showNavLabels, toggleNavLabels } =
     useThemeStore();
-  const { 
-    currentEffect, setCurrentEffect, 
+  const {
     customMediaUrl, customMediaOpacity, customMediaBlur, customMediaQuality, customMediaOnlyOnPlay, customMediaHideEffects,
     setCustomMedia, setCustomMediaOpacity, setCustomMediaBlur, setCustomMediaQuality, setCustomMediaOnlyOnPlay, setCustomMediaHideEffects
   } = useBackgroundEffectStore();
   const { qualityLevel, setQualityLevel, cosmeticRenderer3d, setCosmeticRenderer3d } =
     useQualitySettingsStore();
-
-  const backgroundOptions = [
-    { id: BACKGROUND_EFFECTS.MATRIX_RAIN, name: t("settings.background.matrix_rain"), icon: "solar:code-bold" },
-    { id: BACKGROUND_EFFECTS.ENCHANTMENT_PARTICLES, name: t("settings.background.enchantment_table"), icon: "solar:magic-stick-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_WAVES, name: t("settings.background.nebula_waves"), icon: "solar:soundwave-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_PARTICLES, name: t("settings.background.nebula_particles"), icon: "solar:star-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_GRID, name: t("settings.background.nebula_grid"), icon: "solar:widget-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_VOXELS, name: t("settings.background.nebula_voxels"), icon: "solar:asteroid-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_LIGHTNING, name: t("settings.background.nebula_lightning"), icon: "solar:bolt-bold" },
-    { id: BACKGROUND_EFFECTS.NEBULA_LIQUID_CHROME, name: t("settings.background.liquid_chrome"), icon: "solar:cloud-waterdrops-bold" },
-    { id: BACKGROUND_EFFECTS.RETRO_GRID, name: t("settings.background.retro_grid"), icon: "solar:widget-5-bold" },
-    { id: BACKGROUND_EFFECTS.PLAIN_BACKGROUND, name: t("settings.background.plain_color"), icon: "solar:palette-bold" },
-  ];
 
   return (
     <div className="space-y-6">
@@ -108,19 +93,6 @@ export function AppearanceTab() {
             <span className="text-xs text-white/60 font-minecraft">{t("settings.background.quality_high")}</span>
           </div>
         </SettingRow>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-4">
-          {backgroundOptions.map((option) => (
-            <EffectPreviewCard
-              key={option.id}
-              effectId={option.id}
-              name={option.name}
-              icon={option.icon}
-              isActive={currentEffect === option.id}
-              onClick={() => setCurrentEffect(option.id)}
-            />
-          ))}
-        </div>
       </SettingsSection>
 
       <SettingsSection

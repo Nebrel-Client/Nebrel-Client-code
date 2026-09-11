@@ -5,20 +5,13 @@ import { FriendsPanel } from "../friends/FriendsPanel";
 import { ErrorMessage } from "../ui/ErrorMessage";
 import { useMinecraftAuthStore } from "../../store/minecraft-auth-store";
 import { useProfileStore } from "../../store/profile-store";
-import { useThemeStore } from "../../store/useThemeStore";
 import { PlayerActionsDisplay } from "../launcher/PlayerActionsDisplay";
-import { RetroGridEffect } from "../effects/RetroGridEffect";
-import {
-  BACKGROUND_EFFECTS,
-  useBackgroundEffectStore,
-} from "../../store/background-effect-store";
 // DISABLED: Snow effect (seasonal feature)
 // import { SnowEffectToggle } from "../ui/SnowEffectToggle";
 import { ReferralBanner } from "../ui/ReferralBanner";
 import { ApplixirAdButton } from "../ui/ApplixirAdButton";
 import { ToggleSwitch } from "../ui/ToggleSwitch";
 import { useQualitySettingsStore } from "../../store/quality-settings-store";
-import { useLauncherTheme } from "../../hooks/useLauncherTheme";
 import { setDiscordState } from "../../utils/discordRpc";
 import { useTranslation } from "react-i18next";
 
@@ -33,10 +26,6 @@ export function PlayTab() {
   } = useProfileStore();
 
   const { activeAccount } = useMinecraftAuthStore();
-  const { staticBackground, accentColor } = useThemeStore();
-  const { currentEffect, customMediaUrl, customMediaHideEffects } = useBackgroundEffectStore();
-  const shouldShowEffects = !(customMediaUrl && customMediaHideEffects);
-  const { isThemeActive, selectedTheme } = useLauncherTheme();
   const { cosmeticRenderer3d, setCosmeticRenderer3d } = useQualitySettingsStore();
 
   useEffect(() => { setDiscordState("Idling"); }, []);
@@ -69,15 +58,6 @@ export function PlayTab() {
   return (
     <div className="nebrel-play flex h-full relative">
       <div className="nebrel-play-stage flex-grow flex flex-col items-center justify-center p-8 relative z-15">
-        {/* Only show RetroGrid effect if no theme background is active and effects are not hidden */}
-        {currentEffect === BACKGROUND_EFFECTS.RETRO_GRID && shouldShowEffects && !(isThemeActive && selectedTheme?.backgroundImage) && (
-          <RetroGridEffect
-            renderMode="both"
-            isAnimationEnabled={!staticBackground}
-            customGridLineColor={`${accentColor.value}80`}
-          />
-        )}
-
         {/* Referral Banner - Top Left */}
         <div className="absolute top-3 left-3 z-20">
           <ReferralBanner />
