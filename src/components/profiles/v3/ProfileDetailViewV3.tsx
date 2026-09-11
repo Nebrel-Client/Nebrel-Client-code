@@ -20,16 +20,16 @@ import { useTranslation } from "react-i18next";
 import { preloadIcons } from "../../../lib/icon-utils";
 
 preloadIcons([
-  "solar:gamepad-bold", "solar:box-bold", "solar:folder-bold",
-  "solar:widget-bold", "solar:user-bold", "solar:pen-linear",
-  "solar:lock-keyhole-minimalistic-bold",
-  "solar:play-bold", "solar:stop-bold", "solar:settings-bold",
-  "solar:refresh-bold",
-  "solar:arrow-left-linear", "solar:folder-linear", "solar:copy-linear",
-  "solar:upload-linear", "solar:menu-dots-bold",
-  "solar:clock-circle-bold", "solar:hourglass-bold", "solar:ssd-round-bold",
-  "solar:copy-bold", "solar:download-bold", "solar:archive-bold",
-  "solar:trash-bin-trash-bold",
+  "ph:game-controller-duotone", "ph:cube-duotone", "ph:folder-duotone",
+  "ph:squares-four-duotone", "ph:user-duotone", "ph:pencil-simple-bold",
+  "ph:lock-key-bold",
+  "ph:play-bold", "ph:stop-bold", "ph:gear-six-duotone",
+  "ph:arrows-clockwise-bold",
+  "ph:arrow-left-bold", "ph:folder-open-bold", "ph:copy-bold",
+  "ph:upload-simple-bold", "ph:dots-three-bold",
+  "ph:clock-duotone", "ph:hourglass-duotone", "ph:hard-drive-duotone",
+  "ph:copy-bold", "ph:download-simple-bold", "ph:archive-duotone",
+  "ph:trash-duotone",
 ]);
 
 import type { Profile } from "../../../types/profile";
@@ -82,17 +82,17 @@ interface ProfileDetailViewV3Props {
 
 // ─── Atoms ─────────────────────────────────────────────────────────────────
 const Chip: React.FC<{ icon?: string; children: React.ReactNode }> = ({ icon, children }) => (
-  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/30 border border-white/10 text-sm text-white/75 font-minecraft">
+  <span className="nebrel-detail-chip">
     {icon && <Icon icon={icon} className="w-4 h-4 flex-shrink-0" />}
     {children}
   </span>
 );
 
 const Stat: React.FC<{ icon: string; label: string; value: string; muted?: boolean }> = ({ icon, label, value, muted }) => (
-  <div className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-black/30 border border-white/10 hover:border-white/20 transition-colors min-w-[160px] max-w-[240px]">
-    <Icon icon={icon} className={`w-5 h-5 flex-shrink-0 ${muted ? "text-white/25" : "text-white/60"}`} />
+  <div className="nebrel-detail-stat">
+    <Icon icon={icon} className={`w-5 h-5 flex-shrink-0 ${muted ? "text-white/25" : ""}`} style={muted ? undefined : { color: "var(--accent)" }} />
     <div className="flex flex-col leading-tight min-w-0">
-      <span className="text-xs uppercase tracking-wider text-white/50 font-minecraft">{label}</span>
+      <span className="text-xs uppercase tracking-wider text-white/45 font-minecraft">{label}</span>
       <span className={`text-sm font-minecraft truncate ${muted ? "text-white/40" : "text-white/95"}`} title={value}>{value}</span>
     </div>
   </div>
@@ -263,37 +263,37 @@ export function ProfileDetailViewV3({
     {
       id: "edit",
       label: t('profiles.editProfile'),
-      icon: "solar:settings-bold",
+      icon: "ph:gear-six-duotone",
       onClick: () => onEdit(),
     },
     {
       id: "duplicate",
       label: t('profiles.duplicate'),
-      icon: "solar:copy-bold",
+      icon: "ph:copy-bold",
       onClick: () => handleDuplicateProfile(),
     },
     {
       id: "export",
       label: t('profiles.export'),
-      icon: "solar:download-bold",
+      icon: "ph:download-simple-bold",
       onClick: () => handleOpenExportModal(),
     },
     ...(currentProfile.modpack_info && modpackVersions ? [{
       id: "modpack-versions",
       label: t('profiles.modpackVersions'),
-      icon: "solar:archive-bold",
+      icon: "ph:archive-duotone",
       onClick: () => handleOpenModpackVersionsModal(),
     }] : []),
     {
       id: "open-folder",
       label: t('profiles.openFolder'),
-      icon: "solar:folder-bold",
+      icon: "ph:folder-duotone",
       onClick: () => handleOpenFolder(),
     },
     {
       id: "delete",
       label: t('profiles.delete'),
-      icon: "solar:trash-bin-trash-bold",
+      icon: "ph:trash-duotone",
       destructive: true,
       separator: true,
       onClick: () => handleDeleteProfile(),
@@ -401,7 +401,7 @@ export function ProfileDetailViewV3({
           onClick={onClose}
           className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
         >
-          <Icon icon="solar:arrow-left-linear" className="w-4 h-4" />
+          <Icon icon="ph:arrow-left-bold" className="w-4 h-4" />
           <span className="text-xs font-minecraft uppercase tracking-wider">{t('profiles.back')}</span>
           <span className="text-white/30">/</span>
           <span
@@ -416,7 +416,7 @@ export function ProfileDetailViewV3({
               onClick={handleOpenFolder}
               className="p-2 rounded hover:bg-white/5 text-white/50 hover:text-white transition-colors"
             >
-              <Icon icon="solar:folder-linear" className="w-4 h-4" />
+              <Icon icon="ph:folder-open-bold" className="w-4 h-4" />
             </button>
           </Tooltip>
           <Tooltip content={t('profiles.duplicate')} position="top" delay={0}>
@@ -424,7 +424,7 @@ export function ProfileDetailViewV3({
               onClick={handleDuplicateProfile}
               className="p-2 rounded hover:bg-white/5 text-white/50 hover:text-white transition-colors"
             >
-              <Icon icon="solar:copy-linear" className="w-4 h-4" />
+              <Icon icon="ph:copy-bold" className="w-4 h-4" />
             </button>
           </Tooltip>
           <Tooltip content={t('profiles.export')} position="top" delay={0}>
@@ -432,7 +432,7 @@ export function ProfileDetailViewV3({
               onClick={handleOpenExportModal}
               className="p-2 rounded hover:bg-white/5 text-white/50 hover:text-white transition-colors"
             >
-              <Icon icon="solar:upload-linear" className="w-4 h-4" />
+              <Icon icon="ph:upload-simple-bold" className="w-4 h-4" />
             </button>
           </Tooltip>
           <div className="w-px h-5 bg-white/10 mx-1" />
@@ -442,7 +442,7 @@ export function ProfileDetailViewV3({
               onClick={toggleContextMenu}
               className="p-2 rounded hover:bg-white/5 text-white/50 hover:text-white transition-colors"
             >
-              <Icon icon="solar:menu-dots-bold" className="w-4 h-4" />
+              <Icon icon="ph:dots-three-bold" className="w-4 h-4" />
             </button>
           </Tooltip>
 
@@ -461,8 +461,8 @@ export function ProfileDetailViewV3({
       </div>
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <div className="px-5 pt-5 pb-4 flex-shrink-0">
-        <div className="flex items-start gap-5">
+      <div className="px-5 pt-4 pb-4 flex-shrink-0">
+        <div className="nebrel-detail-hero flex items-start gap-5">
           {/* Icon + loader overlay */}
           <div className="relative flex-shrink-0">
             <ProfileIconV2 profile={currentProfile} size="lg" className="w-24 h-24 rounded-lg ring-1 ring-white/10" />
@@ -482,7 +482,7 @@ export function ProfileDetailViewV3({
             />
             <div className="flex flex-wrap items-center gap-1.5 mt-2">
               <EditableChipV3
-                icon="solar:gamepad-bold"
+                icon="ph:game-controller-duotone"
                 withSaveCancel={false}
                 width="w-64"
                 disabled={chipEditors.isLocked}
@@ -527,7 +527,7 @@ export function ProfileDetailViewV3({
                   : stripped || t("profiles.v3.chips.loaderVersion.latest");
                 return (
                   <EditableChipV3
-                    icon="solar:box-bold"
+                    icon="ph:cube-duotone"
                     withSaveCancel={false}
                     width="w-48"
                     disabled={chipEditors.isLocked}
@@ -554,7 +554,7 @@ export function ProfileDetailViewV3({
                 );
               })()}
               <EditableChipV3
-                icon="solar:folder-bold"
+                icon="ph:folder-duotone"
                 disabled={chipEditors.isLocked}
                 disabledReason={chipEditors.lockReason}
                 onSave={() => { void chipEditors.saveGroup(groupDraft); }}
@@ -592,12 +592,12 @@ export function ProfileDetailViewV3({
                           : "bg-black/30 border-white/10 text-white/75 hover:bg-black/40 hover:border-white/20 hover:text-white cursor-pointer"
                       }`}
                     >
-                      <Icon icon="solar:widget-bold" className="w-4 h-4 flex-shrink-0" />
+                      <Icon icon="ph:squares-four-duotone" className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate">{modpackLabel}</span>
                       {modpackVersionNumber && <span className="text-white/40 flex-shrink-0">· {modpackVersionNumber}</span>}
                       {versionsReady && (
                         <Icon
-                          icon="solar:pen-linear"
+                          icon="ph:pencil-simple-bold"
                           className="w-3.5 h-3.5 ml-0.5 flex-shrink-0 opacity-40 group-hover:opacity-80 transition-opacity"
                         />
                       )}
@@ -616,7 +616,7 @@ export function ProfileDetailViewV3({
                         style={{ imageRendering: 'pixelated' }}
                       />
                     ) : (
-                      <Icon icon="solar:user-bold" className="w-4 h-4 flex-shrink-0" />
+                      <Icon icon="ph:user-duotone" className="w-4 h-4 flex-shrink-0" />
                     )}
                     {preferredAccount.username}
                   </span>
@@ -633,7 +633,7 @@ export function ProfileDetailViewV3({
               size="lg"
               heightClassName="h-14"
               widthClassName="w-[200px]"
-              icon={<Icon icon={isLaunching ? "solar:stop-bold" : "solar:play-bold"} width="24" height="24" />}
+              icon={<Icon icon={isLaunching ? "ph:stop-bold" : "ph:play-bold"} width="24" height="24" />}
             >
               {isLaunching ? t('profiles.stop') : t('profiles.play')}
             </Button>
@@ -642,7 +642,7 @@ export function ProfileDetailViewV3({
                 onClick={onEdit}
                 className="h-14 w-12 rounded-lg bg-white/[0.03] hover:bg-white/10 border border-white/10 text-white/60 hover:text-white flex items-center justify-center transition-colors"
               >
-                <Icon icon="solar:settings-bold" className="w-5 h-5" />
+                <Icon icon="ph:gear-six-duotone" className="w-5 h-5" />
               </button>
             </Tooltip>
           </div>
@@ -669,18 +669,18 @@ export function ProfileDetailViewV3({
           ) : (
             <>
               <Stat
-                icon="solar:clock-circle-bold"
+                icon="ph:clock-duotone"
                 label={t('profiles.sort.lastPlayed')}
                 value={formatRelativeTime(currentProfile.last_played)}
               />
               <Stat
-                icon="solar:hourglass-bold"
+                icon="ph:hourglass-duotone"
                 label={t("profiles.v3.stats.playtime")}
                 value={formatPlaytime(currentProfile.playtime_seconds)}
                 muted={!currentProfile.playtime_seconds}
               />
               <Stat
-                icon="solar:ssd-round-bold"
+                icon="ph:hard-drive-duotone"
                 label={t("profiles.v3.stats.disk")}
                 value={diskSize == null ? "…" : formatBytes(diskSize)}
                 muted={diskSize == null || diskSize === 0}
@@ -701,7 +701,7 @@ export function ProfileDetailViewV3({
               itemTypeName={t('profiles.content.mod')}
               itemTypeNamePlural={t('profiles.content.mods')}
               addContentButtonText={t('profiles.content.addMods')}
-              emptyStateIconOverride="solar:bolt-bold-duotone"
+              emptyStateIconOverride="ph:puzzle-piece-duotone"
               onRefreshRequired={handleRefresh}
             />
           )}
@@ -714,7 +714,7 @@ export function ProfileDetailViewV3({
               itemTypeName={t('profiles.content.resourcePack')}
               itemTypeNamePlural={t('profiles.content.resourcePacks')}
               addContentButtonText={t('profiles.content.addResourcePacks')}
-              emptyStateIconOverride="solar:gallery-bold-duotone"
+              emptyStateIconOverride="ph:images-duotone"
               onRefreshRequired={handleRefresh}
             />
           )}
@@ -727,7 +727,7 @@ export function ProfileDetailViewV3({
               itemTypeName={t('profiles.content.shaderPack')}
               itemTypeNamePlural={t('profiles.content.shaderPacks')}
               addContentButtonText={t('profiles.content.addShaderPacks')}
-              emptyStateIconOverride="solar:sun-bold-duotone"
+              emptyStateIconOverride="ph:sun-duotone"
               onRefreshRequired={handleRefresh}
             />
           )}
@@ -740,7 +740,7 @@ export function ProfileDetailViewV3({
               itemTypeName={t('profiles.content.dataPack')}
               itemTypeNamePlural={t('profiles.content.dataPacks')}
               addContentButtonText={t('profiles.content.addDataPacks')}
-              emptyStateIconOverride="solar:database-bold-duotone"
+              emptyStateIconOverride="ph:database-duotone"
               onRefreshRequired={handleRefresh}
             />
           )}
@@ -753,7 +753,7 @@ export function ProfileDetailViewV3({
               itemTypeName={t('profiles.content.noriskMod')}
               itemTypeNamePlural={t('profiles.content.noriskMods')}
               addContentButtonText={t('profiles.content.addNoriskMods')}
-              emptyStateIconOverride="solar:shield-check-bold-duotone"
+              emptyStateIconOverride="ph:shield-check-duotone"
               onRefreshRequired={async () => {
                 try {
                   await fetchProfiles();

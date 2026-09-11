@@ -130,20 +130,20 @@ export function ContentTile({
           {iconUrl ? (
             <img src={iconUrl} alt="" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
           ) : (
-            <Icon icon="solar:bolt-bold-duotone" className="w-6 h-6 text-white/50" />
+            <Icon icon="ph:puzzle-piece-duotone" className="w-6 h-6 text-white/50" />
           )}
         </div>
         {noRiskStatus === "blocked" && (
           <div className="absolute top-0.5 left-0.5 z-10">
             <Tooltip content={t("profiles.v3.tile.noriskBlocked")}>
-              <Icon icon="solar:danger-triangle-bold" className="w-4 h-4 text-red-500 drop-shadow-lg" />
+              <Icon icon="ph:warning-duotone" className="w-4 h-4 text-red-500 drop-shadow-lg" />
             </Tooltip>
           </div>
         )}
         {noRiskStatus === "warning" && (
           <div className="absolute top-0.5 left-0.5 z-10">
             <Tooltip content={t("profiles.v3.tile.noriskWarning")}>
-              <Icon icon="solar:danger-triangle-bold" className="w-4 h-4 text-yellow-500 drop-shadow-lg" />
+              <Icon icon="ph:warning-duotone" className="w-4 h-4 text-yellow-500 drop-shadow-lg" />
             </Tooltip>
           </div>
         )}
@@ -172,13 +172,13 @@ export function ContentTile({
           )}
           {item.updates_enabled === false && (
             <Tooltip content={t("profiles.v3.tile.updateChecksPaused")}>
-              <Icon icon="solar:volume-cross-bold" className="w-3 h-3 text-white/30 flex-shrink-0" />
+              <Icon icon="ph:speaker-x-bold" className="w-3 h-3 text-white/30 flex-shrink-0" />
             </Tooltip>
           )}
           {item.modpack_origin && (
             <Tooltip content={t("profiles.v3.tile.fromModpackTooltip", { source: item.modpack_origin.split(":")[0] })}>
               <Icon
-                icon="solar:box-bold"
+                icon="ph:cube-duotone"
                 className="w-3 h-3 text-violet-300/70 flex-shrink-0"
               />
             </Tooltip>
@@ -222,7 +222,7 @@ export function ContentTile({
                 );
               })()}
               <span className="truncate">{isSwitchingVersion ? t("profiles.v3.tile.switching") : (versionText || "—")}</span>
-              {isSwitchable && !isSwitchingVersion && <Icon icon="solar:alt-arrow-down-linear" className="w-3 h-3 flex-shrink-0 opacity-60" />}
+              {isSwitchable && !isSwitchingVersion && <Icon icon="ph:caret-down-bold" className="w-3 h-3 flex-shrink-0 opacity-60" />}
             </button>
 
             <ThemedDropdown
@@ -260,9 +260,9 @@ export function ContentTile({
                     }`}
                   >
                     {isCurrent ? (
-                      <Icon icon="solar:check-circle-bold" className="w-3.5 h-3.5 flex-shrink-0" style={{ color: accentColor.value }} />
+                      <Icon icon="ph:check-circle-bold" className="w-3.5 h-3.5 flex-shrink-0" style={{ color: accentColor.value }} />
                     ) : (
-                      <Icon icon="solar:tag-linear" className="w-3.5 h-3.5 flex-shrink-0 text-white/40" />
+                      <Icon icon="ph:tag-bold" className="w-3.5 h-3.5 flex-shrink-0 text-white/40" />
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="truncate">{v.version_number}</div>
@@ -304,7 +304,7 @@ export function ContentTile({
             }`}
           >
             <Icon
-              icon={isQuickUpdating ? "solar:refresh-bold" : "solar:arrow-up-bold"}
+              icon={isQuickUpdating ? "ph:arrows-clockwise-bold" : "ph:arrow-up-bold"}
               className={`w-4 h-4 ${isQuickUpdating ? "animate-spin" : ""}`}
             />
           </button>
@@ -331,11 +331,11 @@ export function ContentTile({
           onClick={(e) => { e.stopPropagation(); onMenuToggle(!menuOpen); }}
           className="p-1.5 rounded text-white/40 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <Icon icon="solar:menu-dots-bold" className="w-4 h-4" />
+          <Icon icon="ph:dots-three-bold" className="w-4 h-4" />
         </button>
         <ThemedDropdown open={menuOpen} onClose={() => onMenuToggle(false)} width="w-52" triggerRef={menuButtonRef}>
           <ThemedDropdownItem
-            icon="solar:folder-linear"
+            icon="ph:folder-open-bold"
             onClick={() => { onOpenFolder(); onMenuToggle(false); }}
           >
             {t("profiles.v3.tile.openFolder")}
@@ -344,7 +344,7 @@ export function ContentTile({
             <>
               <ThemedDropdownDivider />
               <ThemedDropdownItem
-                icon={(item.updates_enabled ?? true) ? "solar:volume-cross-linear" : "solar:volume-loud-linear"}
+                icon={(item.updates_enabled ?? true) ? "ph:speaker-x-bold" : "ph:speaker-high-bold"}
                 onClick={() => { onToggleUpdateChecks(); onMenuToggle(false); }}
               >
                 {(item.updates_enabled ?? true) ? t("profiles.v3.tile.pauseUpdates") : t("profiles.v3.tile.resumeUpdates")}
@@ -355,7 +355,7 @@ export function ContentTile({
             <>
               <ThemedDropdownDivider />
               <ThemedDropdownItem
-                icon="solar:trash-bin-trash-linear"
+                icon="ph:trash-bold"
                 tone="danger"
                 onClick={() => { onDelete(); onMenuToggle(false); }}
               >

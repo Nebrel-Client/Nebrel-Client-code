@@ -46,19 +46,19 @@ export function ProfileLeftRailV3({ profile, activeNavItem, onNavChange }: Profi
     {
       labelKey: "profiles.tabs.content",
       items: [
-        { key: "mods",          icon: "solar:bolt-bold-duotone",         labelKey: "profiles.content.mods",          count: modCount },
-        { key: "resourcepacks", icon: "solar:gallery-bold-duotone",      labelKey: "profiles.content.resourcePacks" },
-        { key: "shaderpacks",   icon: "solar:sun-bold-duotone",          labelKey: "profiles.content.shaderPacks" },
-        { key: "datapacks",     icon: "solar:database-bold-duotone",     labelKey: "profiles.content.dataPacks" },
-        { key: "nrc",           icon: "solar:shield-check-bold-duotone", labelKey: "profiles.content.noriskClient" },
+        { key: "mods",          icon: "ph:puzzle-piece-duotone",         labelKey: "profiles.content.mods",          count: modCount },
+        { key: "resourcepacks", icon: "ph:images-duotone",      labelKey: "profiles.content.resourcePacks" },
+        { key: "shaderpacks",   icon: "ph:sun-duotone",          labelKey: "profiles.content.shaderPacks" },
+        { key: "datapacks",     icon: "ph:database-duotone",     labelKey: "profiles.content.dataPacks" },
+        { key: "nrc",           icon: "ph:shield-check-duotone", labelKey: "profiles.content.noriskClient" },
       ],
     },
     {
       labelKey: "profiles.tabs.worlds",
       items: [
-        { key: "worlds",      icon: "solar:planet-bold-duotone",      labelKey: "profiles.tabs.worlds" },
-        { key: "screenshots", icon: "solar:camera-bold-duotone",      labelKey: "profiles.tabs.screenshots" },
-        { key: "logs",        icon: "solar:code-square-bold-duotone", labelKey: "profiles.tabs.logs" },
+        { key: "worlds",      icon: "ph:planet-duotone",      labelKey: "profiles.tabs.worlds" },
+        { key: "screenshots", icon: "ph:camera-duotone",      labelKey: "profiles.tabs.screenshots" },
+        { key: "logs",        icon: "ph:terminal-window-duotone", labelKey: "profiles.tabs.logs" },
       ],
     },
   ];
