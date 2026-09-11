@@ -10,6 +10,8 @@ name: Release
 # either never update or update in a loop.
 on:
   push:
+    branches:
+      - main
     tags:
       - "v*"
   workflow_dispatch:
@@ -22,7 +24,31 @@ permissions:
   contents: write
 
 jobs:
+  # A tag push builds on an isolated ref: GitHub only lets a cache be restored
+  # on the ref it was saved on, or on the default branch. Since this workflow
+  # otherwise only ever ran on tags, no cache from any previous release build
+  # was ever reachable, and every single release rebuilt all ~825 dependencies
+  # from nothing — the 20-28 minute builds. This job runs on every push to
+  # main (a plain `cargo build`, no bundling or signing) purely to keep a
+  # cache warm under the default branch, which the release job below can then
+  # restore. `shared-key` pins both jobs to the same cache slot regardless of
+  # their different job names, which rust-cache otherwise keys separately by.
+  warm-cache:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+          shared-key: release-windows
+      - name: Pre-build the dependencies
+        working-directory: src-tauri
+        run: cargo build --release
+
   windows:
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
     runs-on: windows-latest
     steps:
       - name: Check out the tag
@@ -60,6 +86,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
+          shared-key: release-windows
 
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
