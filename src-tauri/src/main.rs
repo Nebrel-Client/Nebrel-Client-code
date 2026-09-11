@@ -538,6 +538,16 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            commands::hosting_command::hosting_versions,
+            commands::hosting_command::hosting_list,
+            commands::hosting_command::hosting_create,
+            commands::hosting_command::hosting_start,
+            commands::hosting_command::hosting_command,
+            commands::hosting_command::hosting_logs,
+            commands::hosting_command::hosting_folder,
+            commands::hosting_command::hosting_share,
+            commands::hosting_command::hosting_release,
+
             utils::mod_cache_cleanup::debug_list_expected_cache_filenames,
             utils::mod_cache_cleanup::clean_mod_cache_command,
             list_system_fonts,
@@ -804,7 +814,18 @@ async fn main() {
                 // Keep other run event handling if needed, e.g., for window events, exit requested, etc.
                 if let tauri::RunEvent::ExitRequested { api, .. } = event {
                     info!("Exit requested, preventing default to allow async tasks to finish if any.");
-                    // api.prevent_exit(); // Example: if you need to do cleanup before exit
+                    static SHUTDOWN_STATE: std::sync::atomic::AtomicU8 = std::sync::atomic::AtomicU8::new(0);
+                    if SHUTDOWN_STATE.load(std::sync::atomic::Ordering::SeqCst) != 2 {
+                        api.prevent_exit();
+                        if SHUTDOWN_STATE.compare_exchange(0, 1, std::sync::atomic::Ordering::SeqCst, std::sync::atomic::Ordering::SeqCst).is_ok() {
+                            let handle = app_handle.clone();
+                            tauri::async_runtime::spawn(async move {
+                                commands::hosting_command::shutdown_hosted_servers().await;
+                                SHUTDOWN_STATE.store(2, std::sync::atomic::Ordering::SeqCst);
+                                handle.exit(0);
+                            });
+                        }
+                    }
                 }
             },
         );

@@ -144,7 +144,7 @@ export function VerticalNavbar({
           className,
         )}
       >
-        <div className="nebrel-nav-primary flex-1 flex flex-col items-center space-y-1 min-h-0 w-full">
+        <div className="nebrel-nav-primary flex-1 flex flex-col items-center space-y-1 min-h-0 w-full overflow-y-auto">
           {items.filter((item) => !item.isAction).map(renderItem)}
         </div>
 

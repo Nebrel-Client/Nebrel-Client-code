@@ -1,6 +1,7 @@
 import { createHashRouter, Navigate } from "react-router-dom";
 import { App } from "../App";
 import { RouteErrorBoundary } from "../components/RouteErrorBoundary";
+import { ServerHostingTab } from "../components/tabs/ServerHostingTab";
 import { PlayTab } from "../components/tabs/PlayTab";
 import ModrinthTabV2 from "../components/tabs/ModrinthTabV2";
 import { SkinsTab } from "../components/tabs/SkinsTab";
@@ -27,6 +28,10 @@ export const router = createHashRouter([
       {
         path: "play",
         element: <PlayTab />,
+      },
+      {
+        path: "server-hosting",
+        element: <ServerHostingTab />,
       },
       {
         path: "profiles",

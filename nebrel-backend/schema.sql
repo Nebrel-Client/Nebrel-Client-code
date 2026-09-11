@@ -73,3 +73,12 @@ CREATE TABLE IF NOT EXISTS message_reactions (
   emoji TEXT NOT NULL CHECK(length(emoji) BETWEEN 1 AND 32),
   PRIMARY KEY(message_id, reactor, emoji)
 );
+
+-- Public names stay attached to their authenticated owner across reconnects.
+CREATE TABLE IF NOT EXISTS hosted_servers (
+ id uuid PRIMARY KEY,
+ owner_uuid uuid NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
+ slug text NOT NULL UNIQUE,
+ created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS hosted_servers_owner ON hosted_servers(owner_uuid);

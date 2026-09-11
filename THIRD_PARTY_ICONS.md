@@ -1,6 +1,6 @@
 # Third-party icon artwork
 
-The launcher bundles 312 icons from the sets below. The artwork is redistributed
+The launcher bundles 313 icons from the sets below. The artwork is redistributed
 unmodified; only the icons actually used are included, extracted from the `@iconify-json/*`
 packages by `scripts/generate-icon-bundle.mjs`.
 
@@ -26,7 +26,7 @@ GENERATED — run `yarn icons` to refresh.
 
 ## Phosphor (`ph`)
 
-- 82 icons used of 9072
+- 83 icons used of 9072
 - Author: [Phosphor Icons](https://github.com/phosphor-icons/core)
 - Licence: [MIT](https://github.com/phosphor-icons/core/blob/main/LICENSE) (`MIT`)
 

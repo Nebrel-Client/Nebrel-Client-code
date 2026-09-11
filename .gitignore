@@ -50,3 +50,6 @@ nebrel-backend-update/
 
 # Sample feed staged for upload to the news host.
 news-site/
+
+# Deployment archive, rebuilt from the backend sources on demand.
+nebrel-hosting-backend-update.tar.gz
