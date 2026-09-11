@@ -75,6 +75,64 @@ fn root() -> PathBuf {
 fn directory(id: Uuid) -> PathBuf {
     root().join(id.to_string())
 }
+/// Binds a hosted server's lifetime to this launcher process via a Windows Job
+/// Object with kill-on-close. If the launcher exits for any reason at all,
+/// including being force-terminated (Task Manager, a crash, a forced reboot),
+/// Windows closes the job handle and kills the Minecraft process with it.
+///
+/// Without this, `kill_on_drop` on the `Command` only helps when the launcher
+/// shuts itself down in the normal way and its own destructors get to run; a
+/// forced kill of the launcher orphans java.exe, which keeps the world's
+/// session.lock held and makes the next start attempt fail with "already
+/// locked by another process".
+///
+/// Best-effort: on failure this just leaves the child unbound to a job, which
+/// is exactly today's behaviour, so nothing regresses if a step here fails.
+#[cfg(windows)]
+fn attach_to_job(child: &tokio::process::Child) {
+    use windows_sys::Win32::System::JobObjects::{
+        AssignProcessToJobObject, CreateJobObjectW, JobObjectExtendedLimitInformation,
+        SetInformationJobObject, JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
+        JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE,
+    };
+
+    let Some(handle) = child.raw_handle() else {
+        return;
+    };
+
+    // Safety: all three calls are plain Win32 API calls on values we just
+    // constructed (a fresh job handle, a correctly-sized/zeroed limit struct,
+    // and the live child's own process handle). Every return value is
+    // checked before it is used.
+    unsafe {
+        let job = CreateJobObjectW(std::ptr::null(), std::ptr::null());
+        if job == 0 {
+            return;
+        }
+
+        let mut info: JOBOBJECT_EXTENDED_LIMIT_INFORMATION = std::mem::zeroed();
+        info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+
+        let configured = SetInformationJobObject(
+            job,
+            JobObjectExtendedLimitInformation,
+            &info as *const _ as *const _,
+            std::mem::size_of::<JOBOBJECT_EXTENDED_LIMIT_INFORMATION>() as u32,
+        );
+        if configured == 0 {
+            return;
+        }
+
+        // The process handle type here is `isize` (windows-sys' `HANDLE`);
+        // `AsRawHandle` gives the same value as a raw pointer.
+        AssignProcessToJobObject(job, handle as isize);
+
+        // Deliberately never closed: as long as the handle stays open the
+        // kill-on-close limit stays armed, and Windows closes every handle
+        // this process holds, this one included, the moment the launcher
+        // process itself ends for any reason.
+    }
+}
 fn client() -> reqwest::Client {
     reqwest::Client::builder()
         .user_agent("Nebrel-Hosting/0.2.0 (https://nebrel.de)")
@@ -358,6 +416,8 @@ pub async fn hosting_start(id: Uuid) -> Result<(), String> {
     command.creation_flags(0x08000000);
     drop(listener);
     let mut child = command.spawn().map_err(|e| e.to_string())?;
+    #[cfg(windows)]
+    attach_to_job(&child);
     let stdout = child.stdout.take().ok_or("Serverausgabe fehlt")?;
     let stderr = child.stderr.take().ok_or("Serverausgabe fehlt")?;
     let mut stdin = child.stdin.take().ok_or("Servereingabe fehlt")?;

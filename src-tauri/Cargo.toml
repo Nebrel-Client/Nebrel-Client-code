@@ -127,3 +127,16 @@ tauri-plugin-single-instance = { version = "2.3.7", features = ["deep-link"] }
 tauri-plugin-deep-link = "2"
 tauri-plugin-cli = "2"
 tauri = { version = "2.9.5", features = [ "tray-icon" ] }
+
+[target.'cfg(windows)'.dependencies]
+# Ties a hosted server's lifetime to the launcher's own: if the launcher exits
+# for any reason, including being force-killed, Windows tears down the Job
+# Object and kills the Minecraft process with it. Without this, a forced
+# termination orphans java.exe, which keeps the world's session.lock held and
+# makes the next start attempt fail with "already locked by another process".
+windows-sys = { version = "0.48", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_JobObjects",
+    "Win32_System_Threading",
+] }
