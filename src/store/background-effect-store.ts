@@ -53,7 +53,7 @@ export const useBackgroundEffectStore = create<BackgroundEffectState>()(
       setCustomMediaHideEffects: (hideEffects) => set({ customMediaHideEffects: hideEffects }),
     }),
     {
-      name: "norisk-background-effect-storage",
+      name: "nebrel-background-effect-storage",
     },
   ),
 );

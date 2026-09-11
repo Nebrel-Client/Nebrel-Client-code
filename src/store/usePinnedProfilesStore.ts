@@ -7,7 +7,7 @@ interface PinnedProfilesState {
   togglePin: (profileId: string) => void;
 }
 
-const STORAGE_KEY = "norisk-pinned-profiles";
+const STORAGE_KEY = "nebrel-pinned-profiles";
 
 export const usePinnedProfilesStore = create<PinnedProfilesState>()(
   persist(

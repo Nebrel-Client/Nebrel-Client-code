@@ -15,7 +15,7 @@ interface CapeFavoritesState {
   toggleFavoriteOptimistic: (capeId: string, noriskToken?: string) => Promise<void>;
 }
 
-const STORAGE_KEY = "norisk-cape-favorites";
+const STORAGE_KEY = "nebrel-cape-favorites";
 
 export const useCapeFavoritesStore = create<CapeFavoritesState>()(
   persist(

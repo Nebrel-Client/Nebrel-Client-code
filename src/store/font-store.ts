@@ -50,7 +50,7 @@ export const useFontStore = create<FontState>()(
       },
     }),
     {
-      name: "norisk-font-storage",
+      name: "nebrel-font-storage",
       version: 2,
       migrate: (persisted) => {
         const state = persisted as Partial<FontState>;

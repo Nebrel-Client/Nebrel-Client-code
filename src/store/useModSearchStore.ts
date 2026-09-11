@@ -127,7 +127,7 @@ export const useModSearchStore = create<ModSearchState>()(
         }),
     }),
     {
-      name: "norisk-mod-search",
+      name: "nebrel-mod-search",
       storage: createJSONStorage(() => sessionStorage),
     }
   )

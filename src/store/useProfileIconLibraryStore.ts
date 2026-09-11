@@ -20,7 +20,7 @@ interface ProfileIconLibraryState {
   removeCustomIcon: (id: string) => void;
 }
 
-const STORAGE_KEY = "norisk-profile-icon-library";
+const STORAGE_KEY = "nebrel-profile-icon-library";
 
 function genId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);

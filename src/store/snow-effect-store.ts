@@ -43,7 +43,7 @@ export const useSnowEffectStore = create<SnowEffectState>()(
       },
     }),
     {
-      name: "norisk-snow-effect-storage",
+      name: "nebrel-snow-effect-storage",
       // On rehydration, force disable if flag is set
       onRehydrateStorage: () => (state) => {
         if (!state) return;
@@ -57,7 +57,7 @@ export const useSnowEffectStore = create<SnowEffectState>()(
         // Check if this is the first time loading (no previous value)
         // If so, use default based on current month
         const stored = typeof window !== "undefined"
-          ? localStorage.getItem("norisk-snow-effect-storage")
+          ? localStorage.getItem("nebrel-snow-effect-storage")
           : null;
 
         // If no stored value or if it's the first load, use month-based default

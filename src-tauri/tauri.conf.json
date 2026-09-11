@@ -23,7 +23,7 @@
     "deep-link": {
       "desktop": {
         "schemes": [
-          "norisk"
+          "nebrel"
         ]
       }
     },
@@ -218,8 +218,7 @@
           "data:",
           "https://api.iconify.design",
           "https://*.modrinth.com",
-          "https://sessionserver.mojang.com",
-          "https://*.norisk.gg"
+          "https://sessionserver.mojang.com"
         ],
         "img-src": [
           "'self'",
@@ -227,7 +226,6 @@
           "http://asset.localhost",
           "https://*.modrinth.com",
           "https://cdn.modrinth.com",
-          "https://*.norisk.gg",
           "https://textures.minecraft.net",
           "http://textures.minecraft.net",
           "https://crafatar.com",
@@ -262,8 +260,8 @@
           "https://www.youtube.com",
           "https://www.youtube-nocookie.com",
           "https://player.vimeo.com",
-          "https://api.norisk.gg",
-          "https://api-staging.norisk.gg"
+          "https://api.nebrel.de",
+          "https://api-staging.nebrel.de"
         ]
       },
       "assetProtocol": {
@@ -279,7 +277,7 @@
   },
   "bundle": {
     "resources": [
-      "resources/norisk_modpacks.json",
+      "resources/nebrel_modpacks.json",
       "resources/mods/*.jar"
     ],
     "windows": {

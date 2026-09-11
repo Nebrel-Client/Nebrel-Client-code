@@ -568,7 +568,7 @@ export const useThemeStore = create<ThemeState>()(
         return true;
       },
     }),    {
-      name: "norisk-theme-storage",
+      name: "nebrel-theme-storage",
       version: 3,
       migrate: (persisted) => {
         const state = persisted as Partial<ThemeState>;

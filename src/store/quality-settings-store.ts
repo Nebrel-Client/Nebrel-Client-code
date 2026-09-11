@@ -19,7 +19,7 @@ export const useQualitySettingsStore = create<QualitySettingsState>()(
       setCosmeticRenderer3d: (enabled) => set({ cosmeticRenderer3d: enabled }),
     }),
     {
-      name: "norisk-quality-settings-storage",
+      name: "nebrel-quality-settings-storage",
     },
   ),
 );

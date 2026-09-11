@@ -13,14 +13,14 @@ use tokio::sync::Mutex;
 use tokio::sync::RwLock;
 
 // Default filename for the Norisk packs configuration
-const NORISK_PACKS_FILENAME: &str = "norisk_modpacks.json";
+const NEBREL_PACKS_FILENAME: &str = "nebrel_modpacks.json";
 
 /// Returns the path for the norisk packs config depending on experimental mode
 pub fn norisk_packs_path_for(is_experimental: bool) -> PathBuf {
     let filename = if is_experimental {
-        "norisk_modpacks_exp.json"
+        "nebrel_modpacks_exp.json"
     } else {
-        NORISK_PACKS_FILENAME
+        NEBREL_PACKS_FILENAME
     };
     LAUNCHER_DIRECTORY.root_dir().join(filename)
 }
@@ -81,7 +81,7 @@ impl NoriskPackManager {
             repositories: HashMap::new(),
         };
 
-        let Some(path) = crate::config::bundled_resource("norisk_modpacks.json") else {
+        let Some(path) = crate::config::bundled_resource("nebrel_modpacks.json") else {
             return empty;
         };
 
@@ -240,5 +240,5 @@ impl PostInitializationHandler for NoriskPackManager {
 
 /// Returns the default path for the norisk_modpacks.json file within the launcher directory.
 pub fn default_norisk_packs_path() -> PathBuf {
-    LAUNCHER_DIRECTORY.root_dir().join(NORISK_PACKS_FILENAME)
+    LAUNCHER_DIRECTORY.root_dir().join(NEBREL_PACKS_FILENAME)
 }
