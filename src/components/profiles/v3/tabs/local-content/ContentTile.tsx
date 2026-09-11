@@ -108,10 +108,8 @@ export function ContentTile({
   return (
     <div
       style={isSelected ? { backgroundColor: `${accentColor.value}1a`, borderColor: `${accentColor.value}66` } : undefined}
-      className={`group relative flex items-center gap-4 p-3 rounded-lg border transition-colors ${
-        isSelected
-          ? ""
-          : `bg-black/20 border-white/10 hover:border-white/20 hover:bg-black/30 ${!enabled ? "opacity-55" : ""}`
+      className={`nebrel-content-tile group relative flex items-center gap-4 transition-colors ${
+        isSelected ? "" : !enabled ? "opacity-55" : ""
       }`}
     >
       {/* Selection checkbox (on-hover, or permanent when selectMode aktiv) */}

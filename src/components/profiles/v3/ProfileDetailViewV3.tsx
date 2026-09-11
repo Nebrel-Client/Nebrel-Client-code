@@ -462,7 +462,8 @@ export function ProfileDetailViewV3({
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <div className="px-5 pt-4 pb-4 flex-shrink-0">
-        <div className="nebrel-detail-hero flex items-start gap-5">
+        <div className="nebrel-detail-hero flex flex-col gap-5">
+        <div className="flex items-start gap-5">
           {/* Icon + loader overlay */}
           <div className="relative flex-shrink-0">
             <ProfileIconV2 profile={currentProfile} size="lg" className="w-24 h-24 rounded-lg ring-1 ring-white/10" />
@@ -586,11 +587,7 @@ export function ProfileDetailViewV3({
                       type="button"
                       disabled={!versionsReady}
                       onClick={() => versionsReady && handleOpenModpackVersionsModal()}
-                      className={`group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm font-minecraft transition-colors max-w-[280px] ${
-                        !versionsReady
-                          ? "bg-black/20 border-white/5 text-white/30 cursor-wait"
-                          : "bg-black/30 border-white/10 text-white/75 hover:bg-black/40 hover:border-white/20 hover:text-white cursor-pointer"
-                      }`}
+                      className={`nebrel-detail-chip group max-w-[280px] ${!versionsReady ? "opacity-50 cursor-wait" : "cursor-pointer"}`}
                     >
                       <Icon icon="ph:squares-four-duotone" className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate">{modpackLabel}</span>
@@ -607,7 +604,7 @@ export function ProfileDetailViewV3({
               })()}
               {preferredAccount && (
                 <Tooltip content={t('profiles.launchWith', { account: preferredAccount.username })}>
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/30 border border-white/10 text-sm text-white/75 font-minecraft">
+                  <span className="nebrel-detail-chip">
                     {preferredAccountAvatarUrl ? (
                       <img
                         src={preferredAccountAvatarUrl}
@@ -648,12 +645,8 @@ export function ProfileDetailViewV3({
           </div>
         </div>
 
-        {/* Stats-Strip — waehrend Launch durch Status-Card ersetzt. IDENTISCHER
-            Wrapper (flex + gap-2 + flex-wrap) damit die Row-Hoehe stabil bleibt
-            auch wenn die Stats auf schmalen Viewports wrappen. Launch-Card
-            nutzt EXAKT das Stat-Padding/-Struktur (px-3 py-2 + gap-2.5 +
-            leading-tight) damit 1:1 gleiche Pixel. */}
-        <div className="flex items-center gap-2 flex-wrap mt-5">
+        {/* Stats-Strip — waehrend Launch durch Status-Card ersetzt. */}
+        <div className="flex items-center gap-2 flex-wrap border-t border-white/5 pt-4">
           {isLaunching && statusMessage ? (
             <div className="flex-1 flex items-center gap-3 px-4 py-2.5 rounded-lg bg-emerald-500/10 border border-emerald-400/25 min-w-[160px] animate-in fade-in duration-200">
               <Icon icon="svg-spinners:ring-resize" className="w-5 h-5 text-emerald-300 flex-shrink-0" />
@@ -687,6 +680,7 @@ export function ProfileDetailViewV3({
               />
             </>
           )}
+        </div>
         </div>
       </div>
 

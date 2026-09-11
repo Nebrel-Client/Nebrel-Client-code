@@ -1227,6 +1227,14 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
 }
 .nebrel-detail-stat:hover { border-color: rgba(255,255,255,.18); background: var(--nebrel-surface-raised); }
 
+.nebrel-content-tile {
+  padding: 12px;
+  border-radius: var(--border-radius);
+  background: var(--nebrel-surface);
+  border: 1px solid var(--nebrel-line);
+}
+.nebrel-content-tile:hover { border-color: rgba(255,255,255,.18); background: var(--nebrel-surface-raised); }
+
 .nebrel-detail-hero {
   border: 1px solid var(--nebrel-line);
   border-radius: calc(var(--border-radius) * 1.3);
