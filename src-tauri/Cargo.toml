@@ -1,6 +1,6 @@
 [package]
 name = "nebrel-launcher"
-version = "0.3.0"
+version = "0.3.1"
 description = "Nebrel Minecraft Launcher"
 authors = ["Nebrel"]
 edition = "2021"
