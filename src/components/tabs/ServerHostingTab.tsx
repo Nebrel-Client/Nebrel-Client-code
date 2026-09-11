@@ -22,9 +22,11 @@ import {
   Users,
   ArrowUpRight,
   ImagePlus,
+  Trash2,
 } from "lucide-react";
 import { useThemeStore } from "../../store/useThemeStore";
 import { openExternalUrl } from "../../services/tauri-service";
+import { useConfirmDialog } from "../../hooks/useConfirmDialog";
 import "./ServerHostingTab.css";
 
 type LocalServer = {
@@ -69,6 +71,7 @@ export function ServerHostingTab() {
     [creating, setCreating] = useState(false),
     [consoleId, setConsoleId] = useState<string | null>(null),
     [copied, setCopied] = useState("");
+  const { confirm, confirmDialog } = useConfirmDialog();
   const refresh = useCallback(async () => {
     try {
       setServers(await invoke<LocalServer[]>("hosting_list"));
@@ -98,6 +101,17 @@ export function ServerHostingTab() {
     } finally {
       setBusy("");
     }
+  };
+  const remove = async (id: string, name: string) => {
+    const ok = await confirm({
+      title: "Server löschen",
+      message: `„${name}" wird dauerhaft gelöscht, einschließlich der Welt und aller Einstellungen. Das kann nicht rückgängig gemacht werden.`,
+      confirmText: "Löschen",
+      cancelText: "Abbrechen",
+      type: "danger",
+    });
+    if (!ok) return;
+    await action(id, "hosting_delete");
   };
   const copy = async (value: string) => {
     try {
@@ -285,6 +299,15 @@ export function ServerHostingTab() {
                       ? "Freigabe beenden"
                       : "Für Freunde freigeben"}
                   </button>
+                  <button
+                    className="hosting-icon-button hosting-danger"
+                    title="Server löschen"
+                    aria-label="Server löschen"
+                    disabled={working}
+                    onClick={() => void remove(s.id, s.name)}
+                  >
+                    <Trash2 size={17} />
+                  </button>
                 </div>
                 {s.status === "running" && (
                   <button
@@ -320,6 +343,7 @@ export function ServerHostingTab() {
           onClose={() => setConsoleId(null)}
         />
       )}
+      {confirmDialog}
     </section>
   );
 }

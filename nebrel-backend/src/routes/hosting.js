@@ -187,7 +187,7 @@ export default async function hostingRoutes(
     port,
   }));
   app.get("/hosting/servers", { preHandler: requireAuth }, async (req) => {
-    const { rows } = await database.query(
+    const rows = await database.query(
       "SELECT id,slug FROM hosted_servers WHERE owner_uuid=$1 ORDER BY created_at",
       [req.user.uuid],
     );
@@ -225,7 +225,7 @@ export default async function hostingRoutes(
             await q("SELECT owner_uuid,slug FROM hosted_servers WHERE id=$1", [
               id,
             ])
-          ).rows[0];
+          )[0];
           if (existing) {
             if (existing.owner_uuid !== req.user.uuid || existing.slug !== slug)
               throw Object.assign(
@@ -239,7 +239,7 @@ export default async function hostingRoutes(
               "SELECT count(*)::int AS count FROM hosted_servers WHERE owner_uuid=$1",
               [req.user.uuid],
             )
-          ).rows[0].count;
+          )[0].count;
           if (count >= 5)
             throw Object.assign(
               Error("Maximal fünf öffentliche Server pro Account."),
@@ -266,7 +266,7 @@ export default async function hostingRoutes(
     async (req, reply) => {
       if (!validId(req.params.id))
         return reply.code(400).send({ error: "Invalid server ID" });
-      const { rows } = await database.query(
+      const rows = await database.query(
         "DELETE FROM hosted_servers WHERE id=$1 AND owner_uuid=$2 RETURNING slug",
         [req.params.id, req.user.uuid],
       );
@@ -293,7 +293,7 @@ export default async function hostingRoutes(
               "SELECT slug FROM hosted_servers WHERE id=$1 AND owner_uuid=$2",
               [req.params.id, req.user.uuid],
             )
-          ).rows[0];
+          )[0];
           if (!row) return reply.code(404).send({ error: "Server not found" });
           req.hostingSlug = row.slug;
         },

@@ -83,9 +83,9 @@ test(
         "Other",
       ]);
       const database = {
-        query: (...a) => db.query(...a),
+        query: async (...a) => (await db.query(...a)).rows,
         transaction: (fn) =>
-          db.transaction((tx) => fn((...a) => tx.query(...a))),
+          db.transaction((tx) => fn(async (...a) => (await tx.query(...a)).rows)),
       };
       await app.register(websocket, { options: { maxPayload: 8192 } });
       await app.register(hosting, { database, port, host: "127.0.0.1" });

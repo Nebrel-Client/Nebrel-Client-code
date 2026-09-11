@@ -547,6 +547,7 @@ async fn main() {
             commands::hosting_command::hosting_folder,
             commands::hosting_command::hosting_share,
             commands::hosting_command::hosting_release,
+            commands::hosting_command::hosting_delete,
 
             utils::mod_cache_cleanup::debug_list_expected_cache_filenames,
             utils::mod_cache_cleanup::clean_mod_cache_command,

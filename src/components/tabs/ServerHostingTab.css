@@ -248,6 +248,15 @@
   font-size: 11px;
   padding: 10px 12px;
 }
+/* Sits apart from Start/Console/Share via the inherited margin-left: auto,
+   so the destructive action never sits flush against the routine ones. */
+.hosting-actions .hosting-danger {
+  color: #f0505c;
+}
+.hosting-actions .hosting-danger:hover:not(:disabled) {
+  background: #f0505c1a;
+  color: #ff6b76;
+}
 .hosting-local {
   display: flex;
   align-items: center;

@@ -574,6 +574,38 @@ pub async fn hosting_release(id: Uuid) -> Result<(), String> {
     .await?;
     Ok(())
 }
+/// Permanently deletes a hosted server: stops it if running, releases the
+/// public name reservation if there is one, then removes the world and every
+/// other file on disk. Irreversible, so the frontend confirms before calling
+/// this.
+#[tauri::command]
+pub async fn hosting_delete(id: Uuid) -> Result<(), String> {
+    let run = RUNNING.lock().await.get(&id).cloned();
+    if let Some(run) = run {
+        if !matches!(run.status.lock().await.as_str(), "stopped" | "failed") {
+            let _ = run.tx.send("stop".into()).await;
+            for _ in 0..110 {
+                if matches!(run.status.lock().await.as_str(), "stopped" | "failed") {
+                    break;
+                }
+                tokio::time::sleep(Duration::from_millis(300)).await;
+            }
+        }
+        RUNNING.lock().await.remove(&id);
+    }
+    // Best-effort: the server may never have been shared, or the backend or
+    // the account session may be unavailable. None of that should block
+    // deleting the local files, which is the part the user actually asked for.
+    let _ = api(
+        reqwest::Method::DELETE,
+        &format!("/hosting/servers/{id}"),
+        Value::Null,
+    )
+    .await;
+    fs::remove_dir_all(directory(id))
+        .await
+        .map_err(|e| e.to_string())
+}
 
 pub async fn shutdown_hosted_servers() {
     let runs: Vec<_> = RUNNING.lock().await.values().cloned().collect();
