@@ -125,24 +125,24 @@ function LogFileSection({ id, title, icon, crash, loader }: LogFileSectionProps)
   return (
     <SettingsSection id={`settings-section-${id}`} title={title} icon={icon}>
       <div className="py-2">
-        <div className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
+        <div className="nebrel-settings-list overflow-hidden">
           {loading ? (
             <div className="p-8 text-center text-white/50">
               <Icon icon="svg-spinners:ring-resize" className="w-6 h-6 mx-auto mb-2" />
               {t("common.loading")}
             </div>
           ) : files.length === 0 ? (
-            <div className="p-8 text-center text-white/50 font-minecraft">{t("debug.no_files")}</div>
+            <div className="p-8 text-center text-white/50">{t("debug.no_files")}</div>
           ) : (
             <div className="divide-y divide-white/10">
               {files.map((file, i) => (
                 <div key={i} className="p-3 hover:bg-white/5 flex items-center gap-4">
                   <Icon
-                    icon={crash ? "solar:danger-triangle-bold" : "solar:document-text-bold"}
+                    icon={crash ? "ph:warning-duotone" : "ph:file-text-duotone"}
                     className={`w-5 h-5 flex-shrink-0 ${crash ? "text-red-400" : "text-white/60"}`}
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="text-white font-minecraft truncate">{file.name}</div>
+                    <div className="text-white truncate">{file.name}</div>
                     <div className="text-xs text-white/40 font-sans truncate">{file.path}</div>
                   </div>
                   <div className="text-sm text-white/50 font-sans whitespace-nowrap">
@@ -157,7 +157,7 @@ function LogFileSection({ id, title, icon, crash, loader }: LogFileSectionProps)
                       className="p-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
                       title={t("debug.copy_content")}
                     >
-                      <Icon icon="solar:copy-bold" className="w-4 h-4 text-white/70" />
+                      <Icon icon="ph:copy-bold" className="w-4 h-4 text-white/70" />
                     </button>
                     <button
                       onClick={() => handleUpload(file)}
@@ -168,7 +168,7 @@ function LogFileSection({ id, title, icon, crash, loader }: LogFileSectionProps)
                       {uploadingFile === file.path ? (
                         <Icon icon="svg-spinners:ring-resize" className="w-4 h-4 text-white/70" />
                       ) : (
-                        <Icon icon="solar:upload-bold" className="w-4 h-4 text-white/70" />
+                        <Icon icon="ph:upload-simple-bold" className="w-4 h-4 text-white/70" />
                       )}
                     </button>
                   </div>
@@ -363,10 +363,10 @@ function TestingPanel() {
 
   return (
     <div className="space-y-3">
-      <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
+      <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
         <Icon icon="ph:database-duotone" className="w-5 h-5 text-amber-300 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="text-white font-minecraft">{t("debug.testing.keepset_title")}</div>
+          <div className="text-white">{t("debug.testing.keepset_title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
             {t("debug.testing.keepset_desc")}
           </div>
@@ -374,25 +374,25 @@ function TestingPanel() {
         <button
           onClick={runExpectedCacheFilenames}
           disabled={loading}
-          className="px-3 py-2 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+          className="px-3 py-2 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
           title="Run debug_list_expected_cache_filenames"
         >
           {loading ? (
             <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
           ) : (
-            <Icon icon="solar:play-bold" className="w-4 h-4" />
+            <Icon icon="ph:play-bold" className="w-4 h-4" />
           )}
           {t("debug.testing.run")}
         </button>
       </div>
 
       {filenames !== null && (
-        <div className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
+        <div className="nebrel-settings-list overflow-hidden">
           <div className="px-4 py-2 text-xs text-white/50 font-sans border-b border-white/10">
             {t("debug.testing.filenames_count", { count: filenames.length })}
           </div>
           {filenames.length === 0 ? (
-            <div className="p-8 text-center text-white/50 font-minecraft">{t("debug.testing.empty")}</div>
+            <div className="p-8 text-center text-white/50">{t("debug.testing.empty")}</div>
           ) : (
             <div className="divide-y divide-white/10 max-h-96 overflow-y-auto">
               {filenames.map((name) => (
@@ -405,10 +405,10 @@ function TestingPanel() {
         </div>
       )}
 
-      <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
-        <Icon icon="solar:trash-bin-trash-bold" className="w-5 h-5 text-red-300 shrink-0" />
+      <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
+        <Icon icon="ph:trash-duotone" className="w-5 h-5 text-red-300 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="text-white font-minecraft">{t("debug.testing.clean_title")}</div>
+          <div className="text-white">{t("debug.testing.clean_title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
             {t("debug.testing.clean_desc")}
           </div>
@@ -416,22 +416,22 @@ function TestingPanel() {
         <button
           onClick={runCleanModCache}
           disabled={cleaning}
-          className="px-3 py-2 rounded-md bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+          className="px-3 py-2 rounded-md bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
           title="Run clean_mod_cache_command"
         >
           {cleaning ? (
             <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
           ) : (
-            <Icon icon="solar:trash-bin-trash-bold" className="w-4 h-4" />
+            <Icon icon="ph:trash-duotone" className="w-4 h-4" />
           )}
           {t("debug.testing.clean")}
         </button>
       </div>
 
-      <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
+      <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
         <Icon icon="ph:database-duotone" className="w-5 h-5 text-red-300 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="text-white font-minecraft">{t("debug.testing.clear_cache_title")}</div>
+          <div className="text-white">{t("debug.testing.clear_cache_title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
             {t("debug.testing.clear_cache_desc")}
           </div>
@@ -439,20 +439,20 @@ function TestingPanel() {
         <button
           onClick={runClearContentCache}
           disabled={clearingCache}
-          className="px-3 py-2 rounded-md bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+          className="px-3 py-2 rounded-md bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
           title="Run clear_content_cache_command"
         >
           {clearingCache ? (
             <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
           ) : (
-            <Icon icon="solar:trash-bin-trash-bold" className="w-4 h-4" />
+            <Icon icon="ph:trash-duotone" className="w-4 h-4" />
           )}
           {t("debug.testing.clear_cache")}
         </button>
       </div>
 
       {cleanStats !== null && (
-        <div className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
+        <div className="nebrel-settings-list overflow-hidden">
           <div className="px-4 py-2 text-xs text-white/50 font-sans border-b border-white/10">
             {t("debug.testing.stats", {
               scanned: cleanStats.scanned,
@@ -463,7 +463,7 @@ function TestingPanel() {
             {cleanStats.skipped_empty_keepset && t("debug.testing.stats_skipped")}
           </div>
           {cleanStats.deleted.length === 0 ? (
-            <div className="p-6 text-center text-white/50 font-minecraft">{t("debug.testing.no_orphans")}</div>
+            <div className="p-6 text-center text-white/50">{t("debug.testing.no_orphans")}</div>
           ) : (
             <div className="divide-y divide-white/10 max-h-96 overflow-y-auto">
               {cleanStats.deleted.map((name) => (
@@ -476,10 +476,10 @@ function TestingPanel() {
         </div>
       )}
 
-      <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
+      <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
         <Icon icon="ph:clock-counter-clockwise-duotone" className="w-5 h-5 text-emerald-300 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="text-white font-minecraft">{t("settings.backups.title")}</div>
+          <div className="text-white">{t("settings.backups.title")}</div>
           <div className="text-xs text-white/40 font-sans truncate">
             {t("settings.backups.description")}
           </div>
@@ -487,7 +487,7 @@ function TestingPanel() {
         <button
           onClick={loadBackups}
           disabled={loadingBackups}
-          className="px-3 py-2 rounded-md bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+          className="px-3 py-2 rounded-md bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
           title="Run list_profile_backups"
         >
           {loadingBackups ? (
@@ -500,12 +500,12 @@ function TestingPanel() {
       </div>
 
       {backups !== null && (
-        <div className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
+        <div className="nebrel-settings-list overflow-hidden">
           <div className="px-4 py-2 text-xs text-white/50 font-sans border-b border-white/10">
             {t("settings.backups.count", { count: backups.length })}
           </div>
           {backups.length === 0 ? (
-            <div className="p-8 text-center text-white/50 font-minecraft">
+            <div className="p-8 text-center text-white/50">
               {t("settings.backups.empty")}
             </div>
           ) : (
@@ -514,7 +514,7 @@ function TestingPanel() {
                 <div key={b.path} className="p-3 px-4 hover:bg-white/5 flex items-center gap-4">
                   <Icon icon="ph:archive-duotone" className="w-5 h-5 text-white/50 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-white font-minecraft truncate">
+                    <div className="text-white truncate">
                       {new Date(b.backup_time * 1000).toLocaleString()}
                     </div>
                     <div className="text-xs text-white/40 font-sans truncate">
@@ -527,12 +527,12 @@ function TestingPanel() {
                   <button
                     onClick={() => handleRestore(b)}
                     disabled={restoringPath !== null}
-                    className="px-3 py-2 rounded-md bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+                    className="px-3 py-2 rounded-md bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
                   >
                     {restoringPath === b.path ? (
                       <Icon icon="svg-spinners:ring-resize" className="w-4 h-4" />
                     ) : (
-                      <Icon icon="solar:restart-bold" className="w-4 h-4" />
+                      <Icon icon="ph:arrow-counter-clockwise-bold" className="w-4 h-4" />
                     )}
                     {t("settings.backups.restore")}
                   </button>
@@ -589,10 +589,10 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
 
   return (
     <div className="space-y-3">
-      <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
+      <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
         <Icon icon="ph:shield-star-duotone" className="w-5 h-5 text-white/60 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="text-white font-minecraft">
+          <div className="text-white">
             {t('debug.permissions.count', { n: nodes.length })}
           </div>
           {lastFetched && (
@@ -608,17 +608,17 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
           title={t('debug.permissions.refresh')}
         >
           <Icon
-            icon="solar:refresh-bold"
+            icon="ph:arrows-clockwise-bold"
             className={`w-4 h-4 text-white/70 ${refreshing ? "animate-spin" : ""}`}
           />
         </button>
       </div>
 
       {canTest && (
-        <div className="bg-black/20 rounded-lg border border-white/10 px-4 py-3 flex items-center gap-3">
+        <div className="nebrel-settings-list px-4 py-3 flex items-center gap-3">
           <Icon icon="ph:flask-duotone" className="w-5 h-5 text-amber-300 shrink-0" />
           <div className="flex-1 min-w-0">
-            <div className="text-white font-minecraft">{t("debug.testing.tester_queue")}</div>
+            <div className="text-white">{t("debug.testing.tester_queue")}</div>
             <div className="text-xs text-white/40 font-sans truncate">
               {queueCount === null
                 ? t("debug.testing.tester_open_hint")
@@ -630,7 +630,7 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
           <button
             onClick={handleOpenTester}
             disabled={opening}
-            className="px-3 py-2 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-minecraft text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="px-3 py-2 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
             title={t("debug.testing.tester_open_title")}
           >
             {opening ? (
@@ -643,9 +643,9 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
         </div>
       )}
 
-      <div className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
+      <div className="nebrel-settings-list overflow-hidden">
         {nodes.length === 0 ? (
-          <div className="p-8 text-center text-white/50 font-minecraft">
+          <div className="p-8 text-center text-white/50">
             {t('debug.permissions.empty')}
           </div>
         ) : (
@@ -655,7 +655,7 @@ function PermissionsList({ permissions, refreshing, onRefresh }: PermissionsList
                 key={node}
                 className="p-3 hover:bg-white/5 flex items-center gap-3"
               >
-                <Icon icon="solar:check-circle-bold" className="w-4 h-4 text-emerald-400/70 shrink-0" />
+                <Icon icon="ph:check-circle-bold" className="w-4 h-4 text-emerald-400/70 shrink-0" />
                 <div className="text-white/80 font-mono text-sm truncate">{node}</div>
               </div>
             ))}

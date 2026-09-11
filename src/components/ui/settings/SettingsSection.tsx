@@ -58,18 +58,18 @@ export function SettingsSection({
     <section id={id} className={cn("nebrel-settings-section scroll-mt-4", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h3 className="flex items-center gap-2.5 font-smallcaps text-xl leading-none tracking-wide text-white">
+          <h3 className="flex items-center gap-2 font-smallcaps text-lg leading-none tracking-wide text-white">
             {icon && (
               <Icon
                 icon={icon}
-                className="w-5 h-5 flex-shrink-0"
+                className="w-4 h-4 flex-shrink-0"
                 style={{ color: accentColor.value }}
               />
             )}
             {title}
           </h3>
           {description && (
-            <p className="font-minecraft text-xs text-white/40 mt-2.5 leading-relaxed">
+            <p className="text-xs text-white/45 mt-1.5 leading-relaxed">
               {description}
             </p>
           )}

@@ -13,7 +13,7 @@ import { Modal } from ".././ui/Modal";
 import { SearchWithFilters } from ".././ui/SearchWithFilters";
 import { SettingsSearchContext } from ".././ui/settings/SettingsSearchContext";
 import { openLauncherDirectory } from "../../services/tauri-service";
-import { DebugSection, getDebugTabs } from "./DebugSection";
+import { DebugSection } from "./DebugSection";
 import { GeneralTab } from "./settings/GeneralTab";
 import { AppearanceTab } from "./settings/AppearanceTab";
 import { AdvancedTab } from "./settings/AdvancedTab";
@@ -38,13 +38,12 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
     "general",
   );
 
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [sidebarSearch, setSidebarSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   useEffect(() => {
-    const id = setTimeout(() => setDebouncedSearch(sidebarSearch), 150);
+    const id = setTimeout(() => setDebouncedSearch(searchValue), 150);
     return () => clearTimeout(id);
-  }, [sidebarSearch]);
+  }, [searchValue]);
   const sidebarQuery = debouncedSearch.trim().toLowerCase();
 
   useEffect(() => { setDiscordState("Configuring Settings"); }, []);
@@ -53,93 +52,19 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
     if (contentRef.current) contentRef.current.scrollTop = 0;
   }, [activeTab, sidebarQuery]);
 
-  const sectionDefs: Record<SettingsTabId, { id: string; label: string }[]> = {
-    general: [
-      { id: "language", label: t("settings.language") },
-      { id: "accent", label: t("settings.accent_color.title") },
-      { id: "behaviour", label: t("settings.sections.behaviour") },
-      { id: "interface", label: t("settings.sections.interface") },
-    ],
-    appearance: [
-      { id: "font", label: t("settings.font.title") },
-      { id: "background", label: t("settings.background.title") },
-      { id: "custom-background", label: t("settings.custom_background.title") },
-    ],
-    advanced: [
-      { id: "login_cache", label: t("settings.sections.login_cache") },
-      { id: "gamedir", label: t("settings.game_data_dir.title") },
-      { id: "hooks", label: t("settings.hooks.title") },
-      { id: "licenses", label: t("settings.licenses.title") },
-    ],
-    debug: getDebugTabs(t),
-  };
-
-  const tabConfig: {
-    id: SettingsTabId;
-    label: string;
-    icon: string;
-    children?: { id: string; label: string }[];
-  }[] = [
-    { id: "general", label: t("settings.tabs.general"), icon: "ph:sliders-horizontal-duotone", children: sectionDefs.general },
-    { id: "appearance", label: t("settings.tabs.appearance"), icon: "ph:paint-brush-broad-duotone", children: sectionDefs.appearance },
-    { id: "advanced", label: t("settings.tabs.advanced"), icon: "ph:wrench-duotone", children: sectionDefs.advanced },
-    { id: "debug", label: t("settings.tabs.debug"), icon: "ph:bug-duotone", children: sectionDefs.debug },
+  const tabConfig: { id: SettingsTabId; label: string; icon: string }[] = [
+    { id: "general", label: t("settings.tabs.general"), icon: "ph:sliders-horizontal-duotone" },
+    { id: "appearance", label: t("settings.tabs.appearance"), icon: "ph:paint-brush-broad-duotone" },
+    { id: "advanced", label: t("settings.tabs.advanced"), icon: "ph:wrench-duotone" },
+    { id: "debug", label: t("settings.tabs.debug"), icon: "ph:bug-duotone" },
   ];
 
   const selectTab = (id: SettingsTabId) => {
-    setSidebarSearch("");
+    setSearchValue("");
     setActiveTab(id);
   };
   const contentRef = useRef<HTMLDivElement>(null);
-  const sidebarListRef = useRef<HTMLDivElement>(null);
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    if (!activeSection) return;
-    const el = sidebarListRef.current?.querySelector(`[data-section-id="${activeSection}"]`);
-    el?.scrollIntoView({ block: "nearest" });
-  }, [activeSection]);
-
-  const spySuppressRef = useRef(false);
-  const spyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(`settings-section-${id}`);
-    if (!el) return;
-    spySuppressRef.current = true;
-    setActiveSection(id);
-    if (spyTimeoutRef.current) clearTimeout(spyTimeoutRef.current);
-    spyTimeoutRef.current = setTimeout(() => {
-      spySuppressRef.current = false;
-    }, 500);
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  useEffect(() => {
-    if (sidebarQuery) return;
-    const root = contentRef.current;
-    const defs = sectionDefs[activeTab];
-    if (!root || !defs) {
-      setActiveSection(null);
-      return;
-    }
-    const onScroll = () => {
-      if (spySuppressRef.current) return;
-      const rootTop = root.getBoundingClientRect().top;
-      const line = 80;
-      let current = defs[0].id;
-      for (const d of defs) {
-        const el = document.getElementById(`settings-section-${d.id}`);
-        if (!el) continue;
-        if (el.getBoundingClientRect().top - rootTop <= line) current = d.id;
-      }
-      setActiveSection(current);
-    };
-    onScroll();
-    root.addEventListener("scroll", onScroll, { passive: true });
-    return () => root.removeEventListener("scroll", onScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, sidebarQuery, config, tempConfig]);
 
   const isResettingRef = useRef<boolean>(false);
   const { accentColor } = useThemeStore();
@@ -323,104 +248,60 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
         />
       }
     >
-      <div className="nebrel-settings-layout flex h-full p-5 gap-5">
-        <div className="nebrel-settings-nav w-64 flex flex-col flex-shrink-0">
-          <div className="px-1 pb-4">
-            <h2 className="font-smallcaps text-xl text-white leading-none">
-              {t("nav.settings")}
-            </h2>
-            <p className="font-minecraft text-xs text-white/40 mt-2 leading-relaxed">
-              {t("settings.nav_hint")}
-            </p>
+      <div className="nebrel-settings-layout flex flex-col h-full min-h-0">
+        <div className="nebrel-settings-toolbar flex items-center gap-4 flex-wrap flex-shrink-0">
+          <div className="nebrel-settings-tabstrip flex items-center gap-1 flex-wrap">
+            {tabConfig.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  className={cn(
+                    "nebrel-settings-pill flex items-center gap-2",
+                    isActive ? "text-white" : "text-white/55 hover:text-white/90",
+                  )}
+                  style={
+                    isActive
+                      ? { backgroundColor: `${accentColor.value}1f`, borderColor: `${accentColor.value}5c` }
+                      : undefined
+                  }
+                  onClick={() => selectTab(tab.id)}
+                >
+                  <Icon
+                    icon={tab.icon}
+                    className="w-4 h-4 flex-shrink-0 transition-colors duration-200"
+                    style={{ color: isActive ? accentColor.value : undefined }}
+                  />
+                  <span className="font-smallcaps text-base transition-colors duration-200">
+                    {tab.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-          <div className="px-1 pb-4">
+
+          <div className="ml-auto w-full sm:w-72">
             <SearchWithFilters
               placeholder={t("settings.search_placeholder")}
-              searchValue={sidebarSearch}
-              onSearchChange={setSidebarSearch}
+              searchValue={searchValue}
+              onSearchChange={setSearchValue}
               showSort={false}
               showFilter={false}
               compact
               className="w-full"
             />
           </div>
-          <div ref={sidebarListRef} className="space-y-0 flex-1 overflow-y-auto custom-scrollbar">
-            {tabConfig.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <div key={tab.id} className="mb-2">
-                  <button
-                    className={cn(
-                      "nebrel-settings-pill w-full text-left flex items-center gap-3",
-                      isActive
-                        ? "text-white"
-                        : "text-white/55 hover:text-white/90",
-                    )}
-                    style={
-                      isActive
-                        ? {
-                            backgroundColor: `${accentColor.value}1f`,
-                            borderColor: `${accentColor.value}5c`,
-                          }
-                        : undefined
-                    }
-                    onClick={() => selectTab(tab.id)}
-                  >
-                    <Icon
-                      icon={tab.icon}
-                      className="w-5 h-5 flex-shrink-0 transition-colors duration-200"
-                      style={{ color: isActive ? accentColor.value : undefined }}
-                    />
-                    <span
-                      className={cn(
-                        "font-smallcaps text-lg transition-colors duration-200",
-                        isActive && "font-medium",
-                      )}
-                    >
-                      {tab.label}
-                    </span>
-                  </button>
-
-                  {isActive && !sidebarQuery && tab.children && (
-                    <div className="flex flex-col mt-2 mb-1 ml-7 border-l border-white/10">
-                      {tab.children.map((child) => {
-                        const childActive = activeSection === child.id;
-                        return (
-                          <button
-                            key={child.id}
-                            data-section-id={child.id}
-                            className={cn(
-                              "w-full text-left pl-4 pr-2 py-1.5 -ml-px border-l-2 outline-none font-smallcaps text-base transition-[color,border-color] duration-150",
-                              childActive
-                                ? "text-white"
-                                : "border-transparent text-white/40 hover:text-white/75",
-                            )}
-                            style={childActive ? { borderColor: accentColor.value } : undefined}
-                            onClick={() => scrollToSection(child.id)}
-                          >
-                            {child.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
         </div>
 
-        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          <div
-            ref={contentRef}
-            className="flex-1 py-3 px-6 overflow-y-auto overflow-x-hidden custom-scrollbar min-w-0"
-          >
-            <SettingsConfigProvider value={{ config, tempConfig, setTempConfig, saving }}>
-              <SettingsSearchContext.Provider value={sidebarQuery}>
-                {renderTabContent()}
-              </SettingsSearchContext.Provider>
-            </SettingsConfigProvider>
-          </div>
+        <div
+          ref={contentRef}
+          className="nebrel-settings-content flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar"
+        >
+          <SettingsConfigProvider value={{ config, tempConfig, setTempConfig, saving }}>
+            <SettingsSearchContext.Provider value={sidebarQuery}>
+              {renderTabContent()}
+            </SettingsSearchContext.Provider>
+          </SettingsConfigProvider>
         </div>
       </div>
     </Modal>

@@ -102,7 +102,7 @@ export function AdvancedTab() {
             type="text"
             value={tempConfig?.custom_game_directory || ""}
             placeholder={t("settings.game_data_dir.placeholder")}
-            className="flex-1 p-3 rounded-md bg-black/40 border border-[#ffffff20] text-white placeholder-white/40 font-minecraft focus:outline-none focus:ring-2 focus:ring-white/30"
+            className="flex-1 p-2.5 rounded-md bg-black/25 border border-white/10 text-white text-sm placeholder-white/35 focus:outline-none focus:border-white/25"
             disabled={saving}
             readOnly
           />
@@ -121,7 +121,7 @@ export function AdvancedTab() {
               }}
               title={t("settings.game_data_dir.reset_tooltip")}
             >
-              <Icon icon="solar:close-circle-bold" className="w-5 h-5 text-red-400" />
+              <Icon icon="ph:x-circle-duotone" className="w-5 h-5 text-red-400" />
             </Button>
           )}
           <Button
@@ -166,7 +166,7 @@ export function AdvancedTab() {
             onClick={() => setIsHooksExpanded((v) => !v)}
             icon={
               <Icon
-                icon={isHooksExpanded ? "solar:alt-arrow-up-bold" : "solar:alt-arrow-down-bold"}
+                icon={isHooksExpanded ? "ph:caret-up-bold" : "ph:caret-down-bold"}
                 className="w-5 h-5"
               />
             }
@@ -177,7 +177,7 @@ export function AdvancedTab() {
       >
         {isHooksExpanded && (
           <div className="space-y-6 py-3">
-            <div className="p-4 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
+            <div className="nebrel-settings-preview p-3.5 hover:border-white/20 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Icon icon="ph:play-circle-duotone" className="w-5 h-5 text-white" />
@@ -207,7 +207,7 @@ export function AdvancedTab() {
                   }}
                   icon={
                     <Icon
-                      icon={isPreLaunchEditEnabled ? "solar:lock-unlocked-bold" : "solar:lock-keyhole-bold"}
+                      icon={isPreLaunchEditEnabled ? "ph:lock-key-open-bold" : "ph:lock-key-bold"}
                       className="w-4 h-4"
                     />
                   }
@@ -215,7 +215,7 @@ export function AdvancedTab() {
                   {isPreLaunchEditEnabled ? t("settings.hooks.disable_editing") : t("settings.hooks.enable_editing")}
                 </Button>
               </div>
-              <p className="text-sm text-white/60 font-minecraft mb-4">
+              <p className="text-sm text-white/60 mb-4">
                 {t("settings.hooks.pre_launch.description")}
               </p>
               <input
@@ -233,13 +233,13 @@ export function AdvancedTab() {
                   }
                 }}
                 placeholder={t("settings.hooks.pre_launch.placeholder")}
-                className="w-full p-3 rounded-md bg-black/40 border border-[#ffffff20] text-white placeholder-white/40 font-minecraft focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="w-full p-2.5 rounded-md bg-black/25 border border-white/10 text-white text-sm placeholder-white/35 focus:outline-none focus:border-white/25"
                 disabled={saving || !isPreLaunchEditEnabled}
                 title={!isPreLaunchEditEnabled ? t("settings.hooks.pre_launch.disabled_tooltip") : undefined}
               />
             </div>
 
-            <div className="p-4 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
+            <div className="nebrel-settings-preview p-3.5 hover:border-white/20 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Icon icon="ph:shield-check-duotone" className="w-5 h-5 text-white" />
@@ -269,7 +269,7 @@ export function AdvancedTab() {
                   }}
                   icon={
                     <Icon
-                      icon={isWrapperEditEnabled ? "solar:lock-unlocked-bold" : "solar:lock-keyhole-bold"}
+                      icon={isWrapperEditEnabled ? "ph:lock-key-open-bold" : "ph:lock-key-bold"}
                       className="w-4 h-4"
                     />
                   }
@@ -277,7 +277,7 @@ export function AdvancedTab() {
                   {isWrapperEditEnabled ? t("settings.hooks.disable_editing") : t("settings.hooks.enable_editing")}
                 </Button>
               </div>
-              <p className="text-sm text-white/60 font-minecraft mb-4">
+              <p className="text-sm text-white/60 mb-4">
                 {t("settings.hooks.wrapper.description")}
               </p>
               <input
@@ -295,16 +295,16 @@ export function AdvancedTab() {
                   }
                 }}
                 placeholder={t("settings.hooks.wrapper.placeholder")}
-                className="w-full p-3 rounded-md bg-black/40 border border-[#ffffff20] text-white placeholder-white/40 font-minecraft focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="w-full p-2.5 rounded-md bg-black/25 border border-white/10 text-white text-sm placeholder-white/35 focus:outline-none focus:border-white/25"
                 disabled={saving || !isWrapperEditEnabled}
                 title={!isWrapperEditEnabled ? t("settings.hooks.wrapper.disabled_tooltip") : undefined}
               />
             </div>
 
-            <div className="p-4 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
+            <div className="nebrel-settings-preview p-3.5 hover:border-white/20 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Icon icon="solar:stop-circle-bold" className="w-5 h-5 text-white" />
+                  <Icon icon="ph:stop-circle-duotone" className="w-5 h-5 text-white" />
                   <h5 className="font-smallcaps text-base text-white">{t("settings.hooks.post_exit.title")}</h5>
                 </div>
                 <Button
@@ -331,7 +331,7 @@ export function AdvancedTab() {
                   }}
                   icon={
                     <Icon
-                      icon={isPostExitEditEnabled ? "solar:lock-unlocked-bold" : "solar:lock-keyhole-bold"}
+                      icon={isPostExitEditEnabled ? "ph:lock-key-open-bold" : "ph:lock-key-bold"}
                       className="w-4 h-4"
                     />
                   }
@@ -339,7 +339,7 @@ export function AdvancedTab() {
                   {isPostExitEditEnabled ? t("settings.hooks.disable_editing") : t("settings.hooks.enable_editing")}
                 </Button>
               </div>
-              <p className="text-sm text-white/60 font-minecraft mb-4">
+              <p className="text-sm text-white/60 mb-4">
                 {t("settings.hooks.post_exit.description")}
               </p>
               <input
@@ -357,7 +357,7 @@ export function AdvancedTab() {
                   }
                 }}
                 placeholder={t("settings.hooks.post_exit.placeholder")}
-                className="w-full p-3 rounded-md bg-black/40 border border-[#ffffff20] text-white placeholder-white/40 font-minecraft focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="w-full p-2.5 rounded-md bg-black/25 border border-white/10 text-white text-sm placeholder-white/35 focus:outline-none focus:border-white/25"
                 disabled={saving || !isPostExitEditEnabled}
                 title={!isPostExitEditEnabled ? t("settings.hooks.post_exit.disabled_tooltip") : undefined}
               />
@@ -370,7 +370,7 @@ export function AdvancedTab() {
                   <h4 className="text-sm font-smallcaps text-orange-300 mb-2">
                     {t("settings.hooks.warning.title")}
                   </h4>
-                  <p className="text-sm text-orange-200/80 font-minecraft">
+                  <p className="text-sm text-orange-200/80">
                     {t("settings.hooks.warning.description")}
                   </p>
                 </div>
@@ -384,7 +384,7 @@ export function AdvancedTab() {
                   <h4 className="text-sm font-smallcaps text-blue-300 mb-2">
                     {t("settings.hooks.examples.title")}
                   </h4>
-                  <div className="space-y-2 text-sm text-blue-200/80 font-minecraft">
+                  <div className="space-y-2 text-sm text-blue-200/80">
                     <p><strong>Pre-Launch:</strong> <code>echo "Starting game..."</code></p>
                     <p><strong>Wrapper:</strong> <code>firejail</code> or <code>gamemoderun</code></p>
                     <p><strong>Post-Exit:</strong> <code>notify-send "Game finished"</code></p>

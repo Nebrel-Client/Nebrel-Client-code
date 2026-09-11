@@ -85,8 +85,8 @@ export function GeneralTab() {
           </>
         }
       >
-        <div className="flex items-center gap-6 py-3">
-          <div className="flex-1">
+        <div className="flex items-center gap-4 py-2">
+          <div className="flex-1 min-w-0">
             <ColorPicker shape="square" size="md" showCustomOption={false} disabled={isAccentColorDisabled} />
           </div>
 
@@ -101,30 +101,26 @@ export function GeneralTab() {
               }
             }}
             className={cn(
-              "group flex items-center gap-3 px-4 py-3 rounded-lg border-2 border-dashed border-[#ffffff30] transition-all duration-200",
+              "group flex items-center gap-2.5 pl-2 pr-3 py-2 rounded-lg border transition-colors duration-150 flex-shrink-0",
               isAccentColorDisabled
-                ? "opacity-40 cursor-not-allowed"
-                : "hover:border-[#ffffff50] cursor-pointer"
+                ? "opacity-40 cursor-not-allowed border-white/10"
+                : "border-white/10 hover:border-white/25 hover:bg-white/[0.04] cursor-pointer"
             )}
             title={isAccentColorDisabled ? t("settings.accent_color.custom_tooltip_disabled") : t("settings.accent_color.custom_tooltip")}
             disabled={isAccentColorDisabled}
           >
             <div
-              className="w-8 h-8 rounded-md border-2 border-white/20 shadow-lg group-hover:scale-105 transition-transform"
+              className="nebrel-settings-preview w-7 h-7 flex-shrink-0"
               style={{ backgroundColor: accentColor.value }}
             />
-            <div className="flex flex-col items-start">
-              <span className="font-minecraft text-base text-white/80 group-hover:text-white transition-colors">
+            <div className="flex flex-col items-start leading-tight">
+              <span className="text-sm text-white/85 group-hover:text-white transition-colors">
                 {t("settings.accent_color.custom")}
               </span>
-              <span className="text-xs text-white/60 font-minecraft">
+              <span className="text-[11px] text-white/45 uppercase tracking-wide">
                 {accentColor.value}
               </span>
             </div>
-            <Icon
-              icon="ph:palette-duotone"
-              className="w-5 h-5 text-white/60 group-hover:text-white transition-colors"
-            />
           </button>
         </div>
       </SettingsSection>

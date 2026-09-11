@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import { ToggleSwitch } from "../../ui/ToggleSwitch";
 import { SnowEffectToggle } from "../../ui/SnowEffectToggle";
+import { RangeSlider } from "../../ui/RangeSlider";
 import { SettingsSection } from "../../ui/settings/SettingsSection";
 import { SettingRow } from "../../ui/settings/SettingRow";
 import { FontSelector } from "../../FontSelector";
@@ -11,8 +12,12 @@ import { useBackgroundEffectStore } from "../../../store/background-effect-store
 import { useQualitySettingsStore } from "../../../store/quality-settings-store";
 import { useSettingsConfig, useSettingsKeywords } from "./settings-context";
 import { open } from "@tauri-apps/plugin-dialog";
+import { convertFileSrc } from "@tauri-apps/api/core";
 import { Button } from "../../ui/buttons/Button";
 import { Icon } from "@iconify/react";
+
+const QUALITY_LEVELS = ["low", "medium", "high"] as const;
+type QualityLevel = (typeof QUALITY_LEVELS)[number];
 
 export function AppearanceTab() {
   const { t } = useTranslation();
@@ -73,25 +78,25 @@ export function AppearanceTab() {
         <SettingRow label={t("settings.background.snow")} searchKeywords={kw("settings.background.snow", "snow", "schnee", "winter")} disabled={saving}>
           <SnowEffectToggle showLabel={false} size="md" disabled={saving} />
         </SettingRow>
-        <SettingRow label={t("settings.background.quality")} searchKeywords={kw("settings.background.quality", "quality", "qualität", "performance", "leistung", "fps")} disabled={saving}>
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-white/60 font-minecraft">{t("settings.background.quality_low")}</span>
-            <input
-              type="range"
-              min="0"
-              max="2"
-              step="1"
-              value={qualityLevel === "low" ? 0 : qualityLevel === "medium" ? 1 : 2}
-              onChange={(e) => {
-                const value = parseInt(e.target.value);
-                const levels = ["low", "medium", "high"] as const;
-                setQualityLevel(levels[value] || "medium");
-              }}
-              className="w-24 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white hover:accent-white/80 transition-colors"
-              disabled={saving}
-            />
-            <span className="text-xs text-white/60 font-minecraft">{t("settings.background.quality_high")}</span>
-          </div>
+        <SettingRow
+          label={t("settings.background.quality")}
+          searchKeywords={kw("settings.background.quality", "quality", "qualität", "performance", "leistung", "fps")}
+          disabled={saving}
+          vertical
+        >
+          <RangeSlider
+            value={QUALITY_LEVELS.indexOf(qualityLevel as QualityLevel)}
+            onChange={(v) => setQualityLevel(QUALITY_LEVELS[v] ?? "medium")}
+            min={0}
+            max={2}
+            step={1}
+            disabled={saving}
+            variant="flat"
+            size="sm"
+            showValue={false}
+            minLabel={t("settings.background.quality_low")}
+            maxLabel={t("settings.background.quality_high")}
+          />
         </SettingRow>
       </SettingsSection>
 
@@ -102,6 +107,27 @@ export function AppearanceTab() {
         keywords={kw("settings.custom_background.title", "custom", "background", "video", "image", "bild", "hintergrund", "mp4", "gif")}
         description={t("settings.custom_background.description")}
       >
+        {customMediaUrl && (
+          <div className="nebrel-settings-preview relative w-full aspect-[16/6] mb-3">
+            {customMediaUrl.match(/\.(mp4|webm)$/i) ? (
+              <video
+                key={customMediaUrl}
+                src={convertFileSrc(customMediaUrl)}
+                className="w-full h-full object-cover"
+                style={{ opacity: customMediaOpacity, filter: `blur(${customMediaBlur}px)` }}
+                autoPlay muted loop playsInline
+              />
+            ) : (
+              <img
+                src={convertFileSrc(customMediaUrl)}
+                alt=""
+                className="w-full h-full object-cover"
+                style={{ opacity: customMediaOpacity, filter: `blur(${customMediaBlur}px)` }}
+              />
+            )}
+          </div>
+        )}
+
         <SettingRow label={t("settings.custom_background.select")} searchKeywords={kw("settings.custom_background.select", "select", "auswählen", "datei")}>
           <div className="flex items-center gap-2">
             {customMediaUrl && (
@@ -109,7 +135,7 @@ export function AppearanceTab() {
                 variant="secondary"
                 size="sm"
                 onClick={() => setCustomMedia(null, null)}
-                icon={<Icon icon="solar:trash-bin-trash-bold" />}
+                icon={<Icon icon="ph:trash-duotone" />}
               >
                 {t("settings.custom_background.clear")}
               </Button>
@@ -140,56 +166,46 @@ export function AppearanceTab() {
         
         {customMediaUrl && (
           <>
-            <SettingRow label={t("settings.custom_background.opacity")} searchKeywords={kw("settings.custom_background.opacity", "opacity", "transparenz", "sichtbarkeit")}>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-white/60 font-minecraft-ten">0%</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="1"
-                  value={Math.round(customMediaOpacity * 100)}
-                  onChange={(e) => setCustomMediaOpacity(parseInt(e.target.value) / 100)}
-                  className="w-24 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white hover:accent-white/80 transition-colors"
-                />
-                <span className="text-xs text-white/60 font-minecraft-ten">100%</span>
-              </div>
+            <SettingRow label={t("settings.custom_background.opacity")} searchKeywords={kw("settings.custom_background.opacity", "opacity", "transparenz", "sichtbarkeit")} vertical>
+              <RangeSlider
+                value={Math.round(customMediaOpacity * 100)}
+                onChange={(v) => setCustomMediaOpacity(v / 100)}
+                min={0}
+                max={100}
+                step={1}
+                variant="flat"
+                size="sm"
+                unit="%"
+              />
             </SettingRow>
 
-            <SettingRow label={t("settings.custom_background.blur")} searchKeywords={kw("settings.custom_background.blur", "blur", "unscharf", "weichzeichnen")}>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-white/60 font-minecraft-ten">0</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="20"
-                  step="1"
-                  value={customMediaBlur}
-                  onChange={(e) => setCustomMediaBlur(parseInt(e.target.value))}
-                  className="w-24 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white hover:accent-white/80 transition-colors"
-                />
-                <span className="text-xs text-white/60 font-minecraft-ten">20</span>
-              </div>
+            <SettingRow label={t("settings.custom_background.blur")} searchKeywords={kw("settings.custom_background.blur", "blur", "unscharf", "weichzeichnen")} vertical>
+              <RangeSlider
+                value={customMediaBlur}
+                onChange={setCustomMediaBlur}
+                min={0}
+                max={20}
+                step={1}
+                variant="flat"
+                size="sm"
+                minLabel="0"
+                maxLabel="20"
+              />
             </SettingRow>
 
-            <SettingRow label={t("settings.background.quality")} searchKeywords={kw("settings.background.quality", "quality", "qualität", "performance", "leistung", "fps")}>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-white/60 font-minecraft-ten">{t("settings.background.quality_low")}</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="2"
-                  step="1"
-                  value={customMediaQuality === "low" ? 0 : customMediaQuality === "medium" ? 1 : 2}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value);
-                    const levels = ["low", "medium", "high"] as const;
-                    setCustomMediaQuality(levels[value] || "medium");
-                  }}
-                  className="w-24 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white hover:accent-white/80 transition-colors"
-                />
-                <span className="text-xs text-white/60 font-minecraft-ten">{t("settings.background.quality_high")}</span>
-              </div>
+            <SettingRow label={t("settings.background.quality")} searchKeywords={kw("settings.background.quality", "quality", "qualität", "performance", "leistung", "fps")} vertical>
+              <RangeSlider
+                value={QUALITY_LEVELS.indexOf(customMediaQuality as QualityLevel)}
+                onChange={(v) => setCustomMediaQuality(QUALITY_LEVELS[v] ?? "medium")}
+                min={0}
+                max={2}
+                step={1}
+                variant="flat"
+                size="sm"
+                showValue={false}
+                minLabel={t("settings.background.quality_low")}
+                maxLabel={t("settings.background.quality_high")}
+              />
             </SettingRow>
 
             <SettingRow label={t("settings.custom_background.only_on_play")} searchKeywords={kw("settings.custom_background.only_on_play", "play", "tab", "only")}>
