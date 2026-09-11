@@ -86,8 +86,8 @@ export function PlayTab() {
         {/* Watch Ad + 3D Render Toggle - Top Right */}
         <div className="absolute top-6 right-6 z-20 flex flex-col items-end gap-3">
           <ApplixirAdButton />
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white/70 font-minecraft">{t("settings.background.skin_animation")}</span>
+          <div className="nebrel-play-toggle">
+            <span>{t("settings.background.skin_animation")}</span>
             <ToggleSwitch
               checked={cosmeticRenderer3d}
               onChange={() => setCosmeticRenderer3d(!cosmeticRenderer3d)}
