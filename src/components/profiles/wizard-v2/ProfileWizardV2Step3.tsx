@@ -212,7 +212,7 @@ export function ProfileWizardV2Step3({
                 // Check if any Nebrel mod exists and is compatible with the selected version/loader
                 const hasCompatibleNoRiskClient = mods.some((mod: NoriskModEntryDefinition) => {
                     // Check if this is a Nebrel mod
-                    if (mod.id === "noriskclient-client" || mod.id === "nrc-client") {
+                    if (mod.id === "noriskclient-client" || mod.id === "nrc-client" || mod.id === "nebrelmod") {
                         // Check if it has compatibility for the selected version and loader
                         const versionCompat = mod.compatibility?.[selectedMinecraftVersion];
                         const loaderCompat = versionCompat?.[selectedLoader];

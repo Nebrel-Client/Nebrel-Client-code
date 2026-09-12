@@ -15,7 +15,7 @@ export function extractNrcCompatibility(
     if (!pack?.mods) continue;
 
     for (const mod of pack.mods) {
-      if (mod.id === "noriskclient-client" || mod.id === "nrc-client") {
+      if (mod.id === "noriskclient-client" || mod.id === "nrc-client" || mod.id === "nebrelmod") {
         if (mod.compatibility) {
           for (const [version, loaderMap] of Object.entries(mod.compatibility)) {
             compatibleVersions.add(version);
