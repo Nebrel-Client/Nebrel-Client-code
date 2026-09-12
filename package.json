@@ -1,7 +1,7 @@
 {
   "name": "nebrel-launcher",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "GPL-3.0-only",
   "author": "Paul Reitz <manager@nebrel.de>",
   "repository": "https://github.com/Nebrel-Client/Nebrel-Client-code",
