@@ -4,7 +4,7 @@ import path from "node:path";
 import { requireAuth } from "../token.js";
 import { fail, uuid } from "../social.js";
 
-const TEMPLATE_DIR = path.join(process.cwd(), "data", "cape-templates");
+const DEFAULT_TEMPLATE_DIR = path.join(process.cwd(), "data", "cape-templates");
 const MAX_CAPE_BYTES = 2 * 1024 * 1024; // generous for a cape texture; keeps uploads off disk-filling territory
 
 const dto = (row) => ({
@@ -27,7 +27,7 @@ const isPng = (buf) =>
  * Cape/cosmetic hosting, served from our own database instead of a CDN.
  * Mounted under /api/v1/cosmetics to match the Rust client's `CapeApi::get_api_base`.
  */
-export default async function cosmeticsRoutes(app, { query, transaction } = {}) {
+export default async function cosmeticsRoutes(app, { query, transaction, templateDir = DEFAULT_TEMPLATE_DIR } = {}) {
   // Raw-PNG upload body: the launcher posts bytes with no (or a generic)
   // Content-Type, so every content type in this plugin is read as a buffer.
   // Only the upload route actually has a body; GET/DELETE routes ignore it.
@@ -68,6 +68,24 @@ export default async function cosmeticsRoutes(app, { query, transaction } = {}) 
         totalPages: Math.max(1, Math.ceil(count / pageSize)),
       },
     };
+  });
+
+  // Public, unauthenticated lookup: the Minecraft mod isn't logged into a
+  // Nebrel account, it just sees a player's UUID in the world and needs to
+  // ask "does this person have a cape". A UUID isn't a secret - this is the
+  // same trust model as Mojang's own public profile/skin lookup.
+  app.get("/cosmetics/cape/public/:uuid", async (request, reply) => {
+    let playerUuid;
+    try { playerUuid = uuid(request.params.uuid); } catch { return reply.code(400).send({ error: "Invalid UUID" }); }
+    const [user] = await query("SELECT equipped_cape FROM users WHERE uuid = $1", [playerUuid]);
+    if (!user?.equipped_cape) return reply.code(204).send();
+    const [cape] = await query(
+      "SELECT hash, elytra FROM cosmetic_capes WHERE hash = $1 AND review_state = 'ACCEPTED'",
+      [user.equipped_cape],
+    );
+    if (!cape) return reply.code(204).send();
+    reply.header("cache-control", "public, max-age=60");
+    return { hash: cape.hash, elytra: cape.elytra, imageUrl: `/cosmetics/cape/image/prod/${cape.hash}.png` };
   });
 
   app.get("/cosmetics/cape/user/:uuid", { preHandler: requireAuth }, async (request) => {
@@ -184,7 +202,7 @@ export default async function cosmeticsRoutes(app, { query, transaction } = {}) 
   for (const file of ["template.png", "template_no_elytra.png"]) {
     app.get(`/cosmetics/cape/${file}`, async (request, reply) => {
       try {
-        const bytes = await readFile(path.join(TEMPLATE_DIR, file));
+        const bytes = await readFile(path.join(templateDir, file));
         reply.type("image/png").header("cache-control", "public, max-age=86400");
         return bytes;
       } catch {

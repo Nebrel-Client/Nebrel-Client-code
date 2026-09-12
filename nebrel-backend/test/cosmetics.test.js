@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import Fastify from "fastify";
 import { PGlite } from "@electric-sql/pglite";
 process.env.JWT_SECRET = "h".repeat(96);
@@ -28,7 +31,10 @@ async function setup() {
     transaction: (fn) => db.transaction((tx) => fn(async (...a) => (await tx.query(...a)).rows)),
   };
   const app = Fastify();
-  await app.register(cosmetics, { query: database.query, transaction: database.transaction });
+  // An empty temp dir, not the real data/cape-templates/ (which may or may not
+  // have real artwork on this machine) - keeps this test independent of that.
+  const templateDir = mkdtempSync(path.join(tmpdir(), "cape-templates-"));
+  await app.register(cosmetics, { query: database.query, transaction: database.transaction, templateDir });
   await app.ready();
   const call = (method, url, payload, user = me) =>
     app.inject({ method, url, payload, headers: { authorization: `Bearer ${issueToken("Paul", user)}` } });
@@ -87,6 +93,13 @@ test("equip, unequip, favorites, and ownership boundaries", async () => {
 
   // Someone with no equipped cape gets an empty list, not an error.
   assert.deepEqual((await call("GET", `/cosmetics/cape/user/${other}`)).json(), []);
+
+  // The public lookup (for the Minecraft mod, which has no Nebrel login) needs no auth header at all.
+  const publicLookup = await app.inject({ method: "GET", url: `/cosmetics/cape/public/${me}` });
+  assert.equal(publicLookup.statusCode, 200);
+  assert.deepEqual(publicLookup.json(), { hash, elytra: true, imageUrl: `/cosmetics/cape/image/prod/${hash}.png` });
+  assert.equal((await app.inject({ method: "GET", url: `/cosmetics/cape/public/${other}` })).statusCode, 204);
+  assert.equal((await app.inject({ method: "GET", url: "/cosmetics/cape/public/not-a-uuid" })).statusCode, 400);
 
   assert.equal((await call("DELETE", "/cosmetics/cape/unequip")).statusCode, 200);
   assert.deepEqual((await call("GET", `/cosmetics/cape/user/${me}`)).json(), []);
