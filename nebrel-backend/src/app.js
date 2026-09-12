@@ -9,6 +9,7 @@ import launcherRoutes from "./routes/launcher.js";
 import hostingRoutes from "./routes/hosting.js";
 import coreRoutes from "./routes/core.js";
 import cosmeticsRoutes from "./routes/cosmetics.js";
+import modsRoutes from "./routes/mods.js";
 import * as db from "./db.js";
 
 export async function buildApp({database=db,logger=true,includeCore=true}={}) {
@@ -28,7 +29,7 @@ export async function buildApp({database=db,logger=true,includeCore=true}={}) {
   });
   app.get("/health",async()=>{await database.query("SELECT 1"); if(includeCore) await db.redis.ping(); return {ok:true};});
   await app.register(async api=> {
-    if(includeCore) {await api.register(authRoutes); await api.register(launcherRoutes); await api.register(coreRoutes); await api.register(hostingRoutes,{database}); await api.register(cosmeticsRoutes,{query:database.query,transaction:database.transaction});}
+    if(includeCore) {await api.register(authRoutes); await api.register(launcherRoutes); await api.register(coreRoutes); await api.register(hostingRoutes,{database}); await api.register(cosmeticsRoutes,{query:database.query,transaction:database.transaction}); await api.register(modsRoutes);}
     await api.register(socialRoutes,{social});
     await api.register(friendsWebsocket,{social});
   },{prefix:"/api/v1"});
