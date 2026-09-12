@@ -1,6 +1,6 @@
 [package]
 name = "nebrel-launcher"
-version = "0.3.7"
+version = "1.0.0"
 description = "Nebrel Minecraft Launcher"
 authors = ["Paul Reitz <manager@nebrel.de>"]
 license = "GPL-3.0-only"
