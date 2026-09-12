@@ -93,7 +93,7 @@ export default async function cosmeticsRoutes(app, { query, transaction, templat
     );
     if (!cape) return reply.code(204).send();
     reply.header("cache-control", "public, max-age=60");
-    return { hash: cape.hash, elytra: cape.elytra, imageUrl: `/cosmetics/cape/image/prod/${cape.hash}.png` };
+    return { hash: cape.hash, elytra: cape.elytra, imageUrl: `/api/v1/cosmetics/cape/image/prod/${cape.hash}.png` };
   });
 
   app.get("/cosmetics/cape/user/:uuid", { preHandler: requireAuth }, async (request) => {

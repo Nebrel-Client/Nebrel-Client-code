@@ -97,7 +97,7 @@ test("equip, unequip, favorites, and ownership boundaries", async () => {
   // The public lookup (for the Minecraft mod, which has no Nebrel login) needs no auth header at all.
   const publicLookup = await app.inject({ method: "GET", url: `/cosmetics/cape/public/${me}` });
   assert.equal(publicLookup.statusCode, 200);
-  assert.deepEqual(publicLookup.json(), { hash, elytra: true, imageUrl: `/cosmetics/cape/image/prod/${hash}.png` });
+  assert.deepEqual(publicLookup.json(), { hash, elytra: true, imageUrl: `/api/v1/cosmetics/cape/image/prod/${hash}.png` });
   assert.equal((await app.inject({ method: "GET", url: `/cosmetics/cape/public/${other}` })).statusCode, 204);
   assert.equal((await app.inject({ method: "GET", url: "/cosmetics/cape/public/not-a-uuid" })).statusCode, 400);
 
