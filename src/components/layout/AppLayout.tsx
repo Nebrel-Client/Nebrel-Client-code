@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, Suspense, lazy, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Icon } from "@iconify/react";
 
@@ -14,17 +14,16 @@ import CustomMediaBackground from "../effects/CustomMediaBackground";
 import { Snowfall } from "../../features/snow-effect/Snowfall";
 import { useSnowEffectStore } from "../../store/snow-effect-store";
 import * as ConfigService from "../../services/launcher-config-service";
-import { SocialsModal } from "../modals/SocialsModal";
 import { FriendsSidebar } from "../friends/FriendsSidebar";
 import { useFriendsWebSocket } from "../../hooks/useFriendsWebSocket";
 import { useFriendsStore } from "../../store/friends-store";
 import { useChatStore } from "../../store/chat-store";
 import { checkUpdateAvailable, downloadAndInstallUpdate } from "../../services/nrc-service";
 import type { UpdateInfo } from "../../types/updater";
-import { ProfileWizardV2Modal } from "../modals/ProfileWizardV2Modal";
-import { ProfileSettingsModal } from "../modals/ProfileSettingsModal";
-import { SettingsModal } from "../modals/SettingsModal";
-import { ProfileDuplicateModal } from "../modals/ProfileDuplicateModal";
+const ProfileWizardV2Modal = lazy(() => import("../modals/ProfileWizardV2Modal").then((m) => ({ default: m.ProfileWizardV2Modal })));
+const ProfileSettingsModal = lazy(() => import("../modals/ProfileSettingsModal").then((m) => ({ default: m.ProfileSettingsModal })));
+const SettingsModal = lazy(() => import("../modals/SettingsModal").then((m) => ({ default: m.SettingsModal })));
+const ProfileDuplicateModal = lazy(() => import("../modals/ProfileDuplicateModal").then((m) => ({ default: m.ProfileDuplicateModal })));
 import { exit, relaunch } from '@tauri-apps/plugin-process';
 import { Tooltip } from "../ui/Tooltip";
 import { HeaderInfoCarousel } from "../header/HeaderInfoCarousel";
@@ -213,11 +212,12 @@ export function AppLayout({
         </div>
       </div>
       {/* Global Modals Portal */}
-      <SocialsModal />
-      <ProfileWizardV2Modal />
-      <ProfileSettingsModal />
-      <SettingsModal />
-      <ProfileDuplicateModal />
+      <Suspense fallback={null}>
+        <ProfileWizardV2Modal />
+        <ProfileSettingsModal />
+        <SettingsModal />
+        <ProfileDuplicateModal />
+      </Suspense>
       <FriendsSidebar />
     </div>
   );

@@ -200,7 +200,7 @@ pub fn emit_status(
     let payload = UpdaterStatusPayload {
         message,
         status: status.to_string(),
-        progress: progress_info.map(|(chunk, total)| (chunk * 100 / total.max(1))),
+        progress: progress_info.map(|(chunk, total)| chunk * 100 / total.max(1)),
         total: progress_info.map(|(_, total)| total),
         chunk: progress_info.map(|(chunk, _)| chunk),
     };

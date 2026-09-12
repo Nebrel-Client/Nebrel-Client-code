@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, Suspense, lazy, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from ".././ui/buttons/Button";
 import type { LauncherConfig } from "../../types/launcherConfig";
@@ -13,7 +13,7 @@ import { Modal } from ".././ui/Modal";
 import { SearchWithFilters } from ".././ui/SearchWithFilters";
 import { SettingsSearchContext } from ".././ui/settings/SettingsSearchContext";
 import { openLauncherDirectory } from "../../services/tauri-service";
-import { DebugSection } from "./DebugSection";
+const DebugSection = lazy(() => import("./DebugSection").then((m) => ({ default: m.DebugSection })));
 import { GeneralTab } from "./settings/GeneralTab";
 import { AppearanceTab } from "./settings/AppearanceTab";
 import { AdvancedTab } from "./settings/AdvancedTab";
@@ -212,7 +212,13 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
       );
     }
 
-    if (activeTab === "debug") return <DebugSection />;
+    if (activeTab === "debug") {
+      return (
+        <Suspense fallback={<Icon icon="svg-spinners:ring-resize" className="w-8 h-8 text-white/50 mx-auto my-12" />}>
+          <DebugSection />
+        </Suspense>
+      );
+    }
     return bodyOf[activeTab] ?? null;
   };
 

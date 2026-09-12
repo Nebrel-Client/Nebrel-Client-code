@@ -154,8 +154,8 @@ pub struct LoaderPolicy {
 #[serde(rename_all = "snake_case")]
 pub enum LoaderStrategy {
     Exact,
-    Latest_compatible,
-    Min_compatible,
+    LatestCompatible,
+    MinCompatible,
 }
 
 /// Definition of a desired/allowed loader version.
