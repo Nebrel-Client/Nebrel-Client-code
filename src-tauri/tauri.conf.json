@@ -216,6 +216,8 @@
           "asset:",
           "http://asset.localhost",
           "data:",
+          "https://api.nebrel.de",
+          "https://api-staging.nebrel.de",
           "https://api.iconify.design",
           "https://*.modrinth.com",
           "https://sessionserver.mojang.com"
@@ -224,6 +226,8 @@
           "'self'",
           "asset:",
           "http://asset.localhost",
+          "https://api.nebrel.de",
+          "https://api-staging.nebrel.de",
           "https://*.modrinth.com",
           "https://cdn.modrinth.com",
           "https://textures.minecraft.net",
