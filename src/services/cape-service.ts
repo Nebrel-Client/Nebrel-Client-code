@@ -2,13 +2,15 @@ import { invoke } from '@tauri-apps/api/core';
 import type { CapesBrowseResponse, BrowseCapesOptions, GetPlayerCapesPayloadOptions, CosmeticCape, OwnedCapesResponse } from '../types/noriskCapes';
 import type { MinecraftProfile } from '../types/minecraft';
 
+// Served straight from our own backend (nebrel-backend/src/routes/cosmetics.js)
+// instead of a separate CDN - one less piece of infrastructure to keep alive.
 export const getCapeImageUrl = (hash: string, isExperimental: boolean): string => {
-  const base = isExperimental ? 'https://cdn.nebrel.de/capes-staging/prod' : 'https://cdn.nebrel.de/capes/prod';
+  const base = isExperimental ? 'https://api-staging.nebrel.de/api/v1/cosmetics/cape/image/prod' : 'https://api.nebrel.de/api/v1/cosmetics/cape/image/prod';
   return `${base}/${hash}.png`;
 };
 
 export const getCapeReviewImageUrl = (hash: string, isExperimental: boolean): string => {
-  const base = isExperimental ? 'https://cdn.nebrel.de/capes-staging/review' : 'https://cdn.nebrel.de/capes/review';
+  const base = isExperimental ? 'https://api-staging.nebrel.de/api/v1/cosmetics/cape/image/review' : 'https://api.nebrel.de/api/v1/cosmetics/cape/image/review';
   return `${base}/${hash}.png`;
 };
 

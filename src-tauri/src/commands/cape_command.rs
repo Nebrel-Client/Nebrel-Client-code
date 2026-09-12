@@ -807,10 +807,12 @@ pub async fn download_template_and_open_explorer(
     debug!("Using experimental mode: {}", is_experimental);
 
     let template_file = if with_elytra { "template.png" } else { "template_no_elytra.png" };
+    // Served by our own backend (nebrel-backend/src/routes/cosmetics.js) instead
+    // of a separate CDN.
     let template_url = if is_experimental {
-        format!("https://cdn.nebrel.de/capes-staging/{}", template_file)
+        format!("https://api-staging.nebrel.de/api/v1/cosmetics/cape/{}", template_file)
     } else {
-        format!("https://cdn.nebrel.de/capes/{}", template_file)
+        format!("https://api.nebrel.de/api/v1/cosmetics/cape/{}", template_file)
     };
     debug!("Template URL: {}", template_url);
 

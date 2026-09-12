@@ -82,3 +82,29 @@ CREATE TABLE IF NOT EXISTS hosted_servers (
  created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS hosted_servers_owner ON hosted_servers(owner_uuid);
+
+-- Cosmetic capes: user-uploaded textures, held for review before they are
+-- shown to anyone but their uploader. The image itself lives in the row
+-- (small PNGs, no separate object storage needed) and is served straight
+-- back out by cosmetics.js instead of a CDN.
+CREATE TABLE IF NOT EXISTS cosmetic_capes (
+  hash              TEXT PRIMARY KEY,
+  owner_uuid        UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
+  image             BYTEA NOT NULL,
+  review_state      TEXT NOT NULL DEFAULT 'IN_REVIEW' CHECK (review_state IN ('IN_REVIEW','ACCEPTED','DENIED')),
+  elytra            BOOLEAN NOT NULL DEFAULT true,
+  uses              INT NOT NULL DEFAULT 0,
+  moderator_message TEXT NOT NULL DEFAULT 'In Review',
+  blur_hash         TEXT,
+  created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS cosmetic_capes_owner_idx ON cosmetic_capes(owner_uuid);
+CREATE INDEX IF NOT EXISTS cosmetic_capes_accepted_idx ON cosmetic_capes(review_state, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS cape_favorites (
+  uuid       UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
+  cape_hash  TEXT NOT NULL REFERENCES cosmetic_capes(hash) ON DELETE CASCADE,
+  PRIMARY KEY(uuid, cape_hash)
+);
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS equipped_cape TEXT REFERENCES cosmetic_capes(hash) ON DELETE SET NULL;
