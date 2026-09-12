@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import cors from "@fastify/cors";
 import { requireAuth } from "../token.js";
 import { fail, uuid } from "../social.js";
 
@@ -28,6 +29,13 @@ const isPng = (buf) =>
  * Mounted under /api/v1/cosmetics to match the Rust client's `CapeApi::get_api_base`.
  */
 export default async function cosmeticsRoutes(app, { query, transaction, templateDir = DEFAULT_TEMPLATE_DIR } = {}) {
+  // The image/template routes are loaded by <img crossOrigin="anonymous">
+  // (CapeImage.tsx draws them into a canvas, which needs that attribute to
+  // avoid tainting it) - without a CORS response the browser refuses the
+  // load outright instead of just restricting pixel access, which is what
+  // was actually behind every cape thumbnail showing "Error".
+  await app.register(cors, { origin: true, methods: ["GET"] });
+
   // Raw-PNG upload body: the launcher posts bytes with no (or a generic)
   // Content-Type, so every content type in this plugin is read as a buffer.
   // Only the upload route actually has a body; GET/DELETE routes ignore it.
