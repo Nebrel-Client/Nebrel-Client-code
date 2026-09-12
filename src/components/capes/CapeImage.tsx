@@ -10,22 +10,15 @@ interface CapeImageProps {
   className?: string;
 }
 
-// Constants for cape layout (scaled for a common cape texture size like 64x32, but source image is expected to be larger and detailed)
-// The Svelte example used a 512x256 source assumption with SCALE_FACTOR = 8
-// For a typical 64x32 Minecraft cape texture, parts are:
-// Front: x=1, y=1, w=10, h=16 (scaled from texture pixels)
-// Back:  x=12, y=1, w=10, h=16 (scaled from texture pixels)
-// We need to ensure these source coordinates (sx, sy, sWidth, sHeight) correctly sample from the actual image.
-// The provided svelte code assumes a source image where these parts are at a larger scale.
-// Let's stick to the Svelte's scaled coordinates if the source images are indeed high-resolution like that.
-
-const SVELTE_SCALE_FACTOR = 8; // Re-introduce Svelte's scale factor
-const CAPE_PART_SRC_WIDTH = 10 * SVELTE_SCALE_FACTOR; // 80
-const CAPE_PART_SRC_HEIGHT = 16 * SVELTE_SCALE_FACTOR; // 128
-const FRONT_X = 1 * SVELTE_SCALE_FACTOR;  // 8
-const FRONT_Y = 1 * SVELTE_SCALE_FACTOR;  // 8
-const BACK_X = 12 * SVELTE_SCALE_FACTOR; // 96 (1 + 10 + 1 offset in Svelte example)
-const BACK_Y = 1 * SVELTE_SCALE_FACTOR;  // 8
+// The vanilla Minecraft cape UV layout, as fractions of the texture's own
+// size (front at 1,1 w10 h16 / back at 12,1 w10 h16 out of a 64x32 texture).
+// Expressed as ratios rather than fixed pixel offsets so this works for a
+// cape PNG of any resolution that keeps the standard 64:32 aspect ratio -
+// earlier this assumed every upload was pre-scaled 8x to ~512x256, which
+// silently cropped the wrong region for anything not that exact size.
+const CAPE_PART_ASPECT = 16 / 10; // height:width of one cape face
+const FRONT_UV = { x: 1 / 64, y: 1 / 32, w: 10 / 64, h: 16 / 32 };
+const BACK_UV = { x: 12 / 64, y: 1 / 32, w: 10 / 64, h: 16 / 32 };
 
 
 export const CapeImage = React.memo(function CapeImage({
@@ -39,7 +32,7 @@ export const CapeImage = React.memo(function CapeImage({
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Calculate height based on width and cape aspect ratio (10:16 for the part)
-  const height = useMemo(() => Math.round(width * (CAPE_PART_SRC_HEIGHT / CAPE_PART_SRC_WIDTH)), [width]);
+  const height = useMemo(() => Math.round(width * CAPE_PART_ASPECT), [width]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -84,15 +77,18 @@ export const CapeImage = React.memo(function CapeImage({
       }
 
       try {
-        const sx = part === 'back' ? BACK_X : FRONT_X;
-        const sy = part === 'back' ? BACK_Y : FRONT_Y;
-        
+        const uv = part === 'back' ? BACK_UV : FRONT_UV;
+        const sx = uv.x * img.naturalWidth;
+        const sy = uv.y * img.naturalHeight;
+        const sw = uv.w * img.naturalWidth;
+        const sh = uv.h * img.naturalHeight;
+
         currentCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         currentCtx.imageSmoothingEnabled = false; // Pixelated look
 
         currentCtx.drawImage(
           img,
-          sx, sy, CAPE_PART_SRC_WIDTH, CAPE_PART_SRC_HEIGHT, // Source rectangle
+          sx, sy, sw, sh, // Source rectangle, proportional to the image's real size
           0, 0, canvasRef.current.width, canvasRef.current.height  // Destination rectangle
         );
         // console.log(`[CapeImage] Drawn ${part} part.`);
