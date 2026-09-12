@@ -135,9 +135,14 @@ export default async function cosmeticsRoutes(app, { query, transaction, templat
 
       const hash = crypto.createHash("sha256").update(image).digest("hex").slice(0, 32);
       const elytra = request.query.elytra !== "false";
+      // Re-uploading identical bytes hashes to the same row. Refresh it
+      // (image + back to review) instead of a silent no-op, so a cape that
+      // got stored broken by some earlier bug isn't stuck broken forever -
+      // the only way to fix it would otherwise be a manual DB edit.
       await query(
         `INSERT INTO cosmetic_capes(hash, owner_uuid, image, elytra) VALUES($1,$2,$3,$4)
-         ON CONFLICT(hash) DO NOTHING`,
+         ON CONFLICT(hash) DO UPDATE SET image = EXCLUDED.image, elytra = EXCLUDED.elytra, review_state = 'IN_REVIEW'
+         WHERE cosmetic_capes.owner_uuid = EXCLUDED.owner_uuid`,
         [hash, request.user.uuid, image, elytra],
       );
       reply.type("text/plain");
