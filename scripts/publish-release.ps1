@@ -19,6 +19,32 @@ $version = node -p "require('./src-tauri/tauri.conf.json').version"
 if ([string]::IsNullOrWhiteSpace($version)) {
     throw "Could not read the version from src-tauri/tauri.conf.json"
 }
+
+$versionParts = $version.Split(".")
+if ($versionParts.Count -ne 3) {
+    throw "Expected a semantic version like 1.0.2, got $version"
+}
+$candidateVersion = $version
+while (git tag --list "v$candidateVersion") {
+    $candidateVersion = "$($versionParts[0]).$($versionParts[1]).$([int]$versionParts[2] + 1)"
+    $versionParts[2] = [int]$versionParts[2] + 1
+}
+
+if ($candidateVersion -ne $version) {
+    Write-Host "==> $version is already released; advancing to $candidateVersion" -ForegroundColor Yellow
+    foreach ($file in @("src-tauri\tauri.conf.json", "package.json")) {
+        $path = Join-Path $root $file
+        $content = [IO.File]::ReadAllText($path)
+        $updated = [regex]::Replace(
+            $content,
+            '("version"\s*:\s*")[^"]+(")',
+            "`${1}$candidateVersion`${2}",
+            1
+        )
+        [IO.File]::WriteAllText($path, $updated, [Text.UTF8Encoding]::new($false))
+    }
+    $version = $candidateVersion
+}
 $tag = "v$version"
 
 Write-Host "==> Running frontend build" -ForegroundColor Cyan
@@ -33,11 +59,6 @@ if ($LASTEXITCODE -ne 0) {
     Invoke-Checked "git" @("commit", "-m", "Release $tag")
 } else {
     Write-Host "==> No file changes to commit" -ForegroundColor Yellow
-}
-
-$existingTag = git tag --list $tag
-if (-not [string]::IsNullOrWhiteSpace($existingTag)) {
-    throw "Tag $tag already exists locally. Increase the version before publishing again."
 }
 
 Write-Host "==> Pushing the current branch" -ForegroundColor Cyan
