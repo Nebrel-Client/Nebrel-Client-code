@@ -1,5 +1,5 @@
-use crate::error::{AppError, CommandError};
-use log::{debug, error, info, warn};
+use crate::error::CommandError;
+use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::sync::RwLock;

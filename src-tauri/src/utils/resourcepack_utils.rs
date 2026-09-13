@@ -1,19 +1,13 @@
 use crate::error::{AppError, Result};
-use crate::integrations::modrinth;
 use crate::state::profile_state::Profile;
 use crate::state::state_manager::State;
-use crate::utils::hash_utils;
 use crate::utils::profile_utils::{
     ContentType, GenericModrinthInfo, LoadItemsParams, LocalContentLoader,
 };
-use futures::future::join_all;
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
 use tokio::fs;
-use tokio::sync::Semaphore;
 
 /// Represents a resourcepack found in the profile directory
 #[derive(Serialize, Deserialize, Debug, Clone)]

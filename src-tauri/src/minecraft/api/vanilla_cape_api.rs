@@ -60,7 +60,7 @@ impl VanillaCapeApi {
     }
 
     fn initialize_cape_info() -> HashMap<String, VanillaCapeInfo> {
-        let mut info = HashMap::new();
+        let info = HashMap::new();
         info
     }
 

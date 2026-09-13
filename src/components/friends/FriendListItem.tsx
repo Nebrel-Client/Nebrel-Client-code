@@ -122,7 +122,7 @@ export const FriendListItem = memo(function FriendListItem({ friend }: FriendLis
 
   return (
     <div
-      className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 cursor-pointer"
+      className="nebrel-friend-row flex items-center gap-3 p-3 rounded-xl transition-all duration-200 cursor-pointer"
       style={{
         backgroundColor: isHovered ? `${accentColor.value}25` : `${accentColor.value}15`,
         border: `1px solid ${isHovered ? `${accentColor.value}60` : `${accentColor.value}40`}`,

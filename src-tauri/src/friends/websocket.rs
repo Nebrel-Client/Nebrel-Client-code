@@ -4,7 +4,6 @@ use crate::friends::models::{
 };
 use crate::minecraft::api::norisk_api::NoRiskApi;
 use futures_util::{SinkExt, StreamExt};
-use log::error;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::time::Duration;
@@ -57,7 +56,7 @@ impl FriendsWebSocket {
         &mut self,
         app_handle: Arc<tauri::AppHandle>,
         uuid: Uuid,
-        username: String,
+        _username: String,
         token: String,
         is_experimental: bool,
     ) -> Result<()> {

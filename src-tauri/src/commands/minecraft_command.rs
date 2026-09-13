@@ -14,7 +14,6 @@ use crate::state::state_manager::State;
 use crate::utils::mc_utils;
 use log::{debug, error, info};
 use std::path::PathBuf;
-use std::sync::Arc;
 use tauri_plugin_dialog::DialogExt;
 use uuid::Uuid;
 
@@ -681,7 +680,7 @@ pub async fn add_skin_locally(
     );
 
     let mut final_skin_name = payload.target_skin_name.clone();
-    let mut final_skin_variant = payload.target_skin_variant.clone();
+    let final_skin_variant = payload.target_skin_variant.clone();
 
     // Extract base64 data using the reusable function
     let base64_data = get_base64_from_skin_source(&payload.source).await?;

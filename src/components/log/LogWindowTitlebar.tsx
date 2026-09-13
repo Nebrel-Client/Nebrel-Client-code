@@ -28,7 +28,7 @@ export function LogWindowTitlebar({ title }: LogWindowTitlebarProps) {
 
   return (
     <div
-      className="flex items-center justify-between h-10 px-3 select-none"
+      className="nebrel-log-titlebar flex items-center justify-between h-10 px-3 select-none"
       data-tauri-drag-region
     >
       {/* Left: Title */}

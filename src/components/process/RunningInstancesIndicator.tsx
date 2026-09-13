@@ -145,13 +145,13 @@ export function RunningInstancesIndicator({
           variant={hasInstances ? "success" : "flat"}
           size="sm"
           onClick={handleOpenLogWindow}
-          icon={<Icon icon="solar:monitor-bold" className="w-4 h-4" />}
-          className="h-10"
+          icon={<Icon icon="solar:clipboard-list-bold" className="w-4 h-4" />}
+          className="h-10 nebrel-activity-button"
         >
           {isLoading && instanceCount === 0
             ? t('instances.loading')
             : instanceCount === 0
-              ? t('instances.no_instances')
+              ? t('instances.logs')
               : `${instanceCount} ${t('common.instance', { count: instanceCount })}`}
         </Button>
       </div>

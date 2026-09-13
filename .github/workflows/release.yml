@@ -140,6 +140,9 @@ jobs:
           mkdir -p dist-release
           cp "$installer" dist-release/nebrelclient-release.exe
           cp "$installer.sig" dist-release/nebrelclient-release.exe.sig
+          # Compatibility alias requested for manual downloads. The updater
+          # continues using the matching canonical .exe.sig asset above.
+          cp "$installer.sig" dist-release/nebrel-release.exe.sig
           ls -la dist-release
 
       - name: Publish the release
@@ -152,3 +155,4 @@ jobs:
           files: |
             dist-release/nebrelclient-release.exe
             dist-release/nebrelclient-release.exe.sig
+            dist-release/nebrel-release.exe.sig

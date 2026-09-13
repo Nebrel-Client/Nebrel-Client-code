@@ -5,7 +5,7 @@ use crate::utils::disk_space_utils::DiskSpaceUtils;
 use futures::stream::StreamExt;
 use log::{debug, error, info, warn};
 use reqwest::Response;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
 use crate::utils::string_utils::safe_truncate;

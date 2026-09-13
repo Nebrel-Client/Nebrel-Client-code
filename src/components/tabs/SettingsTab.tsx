@@ -235,6 +235,7 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
       onClose={onClose}
       width="xl"
       className="nebrel-settings !max-w-6xl h-[88vh] min-h-0 flex flex-col"
+      headerClassName="nebrel-settings-header"
       headerActions={
         <ActionButton
           id="open-directory"
@@ -257,6 +258,7 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
       <div className="nebrel-settings-layout flex flex-col h-full min-h-0">
         <div className="nebrel-settings-toolbar flex items-center gap-4 flex-wrap flex-shrink-0">
           <div className="nebrel-settings-tabstrip flex items-center gap-1 flex-wrap">
+            <div className="nebrel-settings-nav-label">LAUNCHER CONFIG</div>
             {tabConfig.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -264,13 +266,9 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
                   key={tab.id}
                   className={cn(
                     "nebrel-settings-pill flex items-center gap-2",
-                    isActive ? "text-white" : "text-white/55 hover:text-white/90",
+                    isActive ? "is-active text-white" : "is-inactive text-white/55 hover:text-white/90",
                   )}
-                  style={
-                    isActive
-                      ? { backgroundColor: `${accentColor.value}1f`, borderColor: `${accentColor.value}5c` }
-                      : undefined
-                  }
+                  aria-current={isActive ? "page" : undefined}
                   onClick={() => selectTab(tab.id)}
                 >
                   <Icon
@@ -303,11 +301,17 @@ export function SettingsTab({ onClose }: SettingsTabProps) {
           ref={contentRef}
           className="nebrel-settings-content flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar"
         >
+          <div className="nebrel-settings-workspace">
+            <div className="nebrel-settings-workspace-kicker">
+              <span>{tabConfig.find((tab) => tab.id === activeTab)?.label}</span>
+              <span className="nebrel-settings-save-state">{saving ? "SAVING..." : "LOCAL SETTINGS"}</span>
+            </div>
           <SettingsConfigProvider value={{ config, tempConfig, setTempConfig, saving }}>
             <SettingsSearchContext.Provider value={sidebarQuery}>
               {renderTabContent()}
             </SettingsSearchContext.Provider>
           </SettingsConfigProvider>
+          </div>
         </div>
       </div>
     </Modal>

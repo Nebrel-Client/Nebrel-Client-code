@@ -1,6 +1,4 @@
 "use client";
-import { LibraryHeader } from "../ui/LibraryHeader";
-
 import { useCallback, useEffect, useMemo } from "react";
 import { ModrinthSearchV2 } from "../modrinth/v2/ModrinthSearchV2";
 import type { Profile } from "../../types/profile";
@@ -55,7 +53,6 @@ export function ModrinthTabV2({
 
   return (
     <div className="nebrel-library nebrel-mods h-full flex flex-col overflow-hidden relative">
-      <LibraryHeader section="mods" />
       {error && <ErrorMessage message={error} />}
 
       <div className="flex-1 overflow-hidden flex space-x-4">

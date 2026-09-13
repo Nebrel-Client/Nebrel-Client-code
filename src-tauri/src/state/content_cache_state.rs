@@ -19,7 +19,7 @@ use sqlx::Row;
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::Arc;
-use tokio::sync::{Mutex, OnceCell};
+use tokio::sync::Mutex;
 
 const TTL_METADATA_MS: u64 = 30 * 60 * 1000;
 const TTL_IMMUTABLE_MS: u64 = 30 * 24 * 60 * 60 * 1000;

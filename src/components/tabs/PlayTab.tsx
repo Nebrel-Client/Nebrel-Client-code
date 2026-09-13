@@ -14,9 +14,12 @@ import { ToggleSwitch } from "../ui/ToggleSwitch";
 import { useQualitySettingsStore } from "../../store/quality-settings-store";
 import { setDiscordState } from "../../utils/discordRpc";
 import { useTranslation } from "react-i18next";
+import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
 
 export function PlayTab() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     profiles,
     selectedProfile: storeSelectedProfile,
@@ -58,13 +61,33 @@ export function PlayTab() {
   return (
     <div className="nebrel-play flex h-full relative">
       <div className="nebrel-play-stage flex-grow flex flex-col items-center justify-center p-8 relative z-15">
-        {/* Referral Banner - Top Left */}
-        <div className="absolute top-3 left-3 z-20">
-          <ReferralBanner />
+        <div className="nebrel-play-grid absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+        <div className="nebrel-play-toolbar absolute top-6 left-7 right-7 z-20 flex items-center justify-between gap-4">
+          <div className="nebrel-play-kicker">
+            <span className="nebrel-play-kicker-mark">
+              <img
+                src="/nebrel_badge.png"
+                alt=""
+                className="h-6 w-6 object-contain"
+              />
+            </span>
+            <div>
+              <span className="nebrel-play-eyebrow">NEBREL / PLAYSPACE</span>
+              <span className="nebrel-play-caption">{t("nav.play")}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="nebrel-play-online-status">
+              <span className="nebrel-play-status-dot" />
+              <span>ONLINE</span>
+            </div>
+            <ReferralBanner />
+          </div>
         </div>
 
-        {/* Watch Ad + 3D Render Toggle - Top Right */}
-        <div className="absolute top-6 right-6 z-20 flex flex-col items-end gap-3">
+        <div className="absolute top-24 right-7 z-20 flex items-center gap-3">
           <ApplixirAdButton />
           <div className="nebrel-play-toggle">
             <span>{t("settings.background.skin_animation")}</span>
@@ -76,31 +99,68 @@ export function PlayTab() {
           </div>
         </div>
 
-        {/* <VersionInfo
-          profileId={currentDisplayProfile?.id || ""}
-          className="absolute top-6 left-6 z-10"
-        /> */}
-
-        <div className="nebrel-player-stage relative z-10">
+        <div className="nebrel-play-hero relative z-10">
           {profilesError && !loading && (
             <ErrorMessage
               message={profilesError || "An unknown error occurred"}
             />
           )}
 
-          <PlayerActionsDisplay
-            displayMode="playerName"
-            playerName={
-              activeAccount?.minecraft_username || activeAccount?.username
-            }
-            launchButtonDefaultVersion={
-              storeSelectedProfile?.id || versions[0]?.id || ""
-            }
-            onLaunchVersionChange={handleVersionChange}
-            launchButtonVersions={versions}
-            className=""
-            outline={outline}
-          />
+          <div className="nebrel-player-stage relative z-10">
+            <PlayerActionsDisplay
+              displayMode="playerName"
+              playerName={
+                activeAccount?.minecraft_username || activeAccount?.username
+              }
+              launchButtonDefaultVersion={
+                storeSelectedProfile?.id || versions[0]?.id || ""
+              }
+              onLaunchVersionChange={handleVersionChange}
+              launchButtonVersions={versions}
+              className=""
+              outline={outline}
+            />
+          </div>
+        </div>
+
+        <div className="nebrel-play-quick-actions absolute bottom-7 left-7 right-7 z-20">
+          <button
+            type="button"
+            className="nebrel-play-action-card"
+            onClick={() => navigate("/profiles")}
+          >
+            <span className="nebrel-play-action-icon">
+              <Icon icon="ph:cube-duotone" className="w-5 h-5" />
+            </span>
+            <span className="min-w-0 text-left">
+              <strong>PROFILE LIBRARY</strong>
+              <small>{profiles.length} available profile{profiles.length === 1 ? "" : "s"}</small>
+            </span>
+            <Icon icon="ph:arrow-up-right-bold" className="w-4 h-4 ml-auto opacity-50" />
+          </button>
+          <button
+            type="button"
+            className="nebrel-play-action-card"
+            onClick={() => navigate("/mods")}
+          >
+            <span className="nebrel-play-action-icon">
+              <Icon icon="ph:puzzle-piece-duotone" className="w-5 h-5" />
+            </span>
+            <span className="min-w-0 text-left">
+              <strong>MOD WORKSHOP</strong>
+              <small>Shape your next session</small>
+            </span>
+            <Icon icon="ph:arrow-up-right-bold" className="w-4 h-4 ml-auto opacity-50" />
+          </button>
+          <div className="nebrel-play-session-card">
+            <span className="nebrel-play-session-icon">
+              <Icon icon="ph:sparkle-duotone" className="w-5 h-5" />
+            </span>
+            <span className="min-w-0 text-left">
+              <strong>READY WHEN YOU ARE</strong>
+              <small>{currentDisplayProfile?.loader || "Select a profile"} · Nebrel client</small>
+            </span>
+          </div>
         </div>
       </div>
 

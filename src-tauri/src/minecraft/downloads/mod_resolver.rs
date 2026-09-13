@@ -6,7 +6,6 @@ use crate::state::profile_state::{
 use log::{debug, info, warn};
 use std::collections::HashMap;
 use std::path::PathBuf;
-use tauri::command;
 use uuid::Uuid;
 use crate::config::{ProjectDirsExt, LAUNCHER_DIRECTORY};
 use tokio::fs;
@@ -307,9 +306,9 @@ pub async fn resolve_target_mods(
 
                     // Handle Maven Mods
                     } else if let NoriskModSourceDefinition::Maven {
-                        repository_ref,
-                        group_id,
-                        artifact_id,
+                        repository_ref: _,
+                        group_id: _,
+                        artifact_id: _,
                     } = &mod_entry.source
                     {
                         if let Some(target) = mod_entry

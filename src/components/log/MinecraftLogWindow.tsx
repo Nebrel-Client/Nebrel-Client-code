@@ -18,6 +18,9 @@ interface MinecraftLogWindowProps {
 export function MinecraftLogWindow({ crashedProcess }: MinecraftLogWindowProps) {
   const { t } = useTranslation();
   const accentColor = useThemeStore((state) => state.accentColor);
+  const isBackgroundAnimationEnabled = useThemeStore(
+    (state) => state.isBackgroundAnimationEnabled,
+  );
   const [selectedInstanceId, setSelectedInstanceId] = useState<string | null>(null);
 
   const { processes } = useProcessEvents({ autoFetch: true });
@@ -114,15 +117,17 @@ export function MinecraftLogWindow({ crashedProcess }: MinecraftLogWindowProps) 
 
   return (
     <div
-      className="h-screen flex flex-col"
+      className={`nebrel-log-window h-screen flex flex-col ${
+        isBackgroundAnimationEnabled ? "nebrel-log-window-animated" : ""
+      }`}
       style={{
         background: `linear-gradient(135deg, ${accentColor.value}20 0%, ${accentColor.value}10 50%, ${accentColor.value}18 100%)`,
       }}
     >
       <LogWindowTitlebar />
 
-      <div className="flex-1 flex min-h-0 p-3 gap-3">
-        <div className="flex-[7] flex flex-col min-w-0">
+      <div className="nebrel-log-shell flex-1 flex min-h-0 p-3 gap-3">
+        <div className="nebrel-log-viewer flex-[7] flex flex-col min-w-0">
           {!selectedInstanceId ? (
             <div className="flex-1 flex items-center justify-center rounded-lg bg-black/60 backdrop-blur-sm text-white/30">
               <div className="text-center">
@@ -142,7 +147,7 @@ export function MinecraftLogWindow({ crashedProcess }: MinecraftLogWindowProps) 
           )}
         </div>
 
-        <div className="flex-[3] min-w-[280px] max-w-[350px]">
+        <div className="nebrel-log-sidebar flex-[3] min-w-[280px] max-w-[350px]">
           <InstanceSidebar
             selectedInstanceId={selectedInstanceId || undefined}
             onSelectInstance={handleSelectInstance}

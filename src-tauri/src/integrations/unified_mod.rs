@@ -1,12 +1,12 @@
 use crate::integrations::curseforge;
 use crate::integrations::curseforge::ModpackManifest;
 use crate::integrations::modrinth;
-use crate::state::profile_state::{ModPackSource, ProfileManager, Profile};
+use crate::state::profile_state::ModPackSource;
 use crate::state::state_manager::State;
 use uuid::Uuid;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use log::{debug, error, info, warn};
+use log::{error, info, warn};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum ModPlatform {

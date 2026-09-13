@@ -122,8 +122,8 @@ impl FabricLibrariesDownloadService {
 
     fn create_library_from_maven(&self, maven: &str) -> FabricLibrary {
         let parts: Vec<&str> = maven.split(':').collect();
-        let (group, artifact, version) = (parts[0], parts[1], parts[2]);
-        let group_path = group.replace('.', "/");
+        let (group, _artifact, _version) = (parts[0], parts[1], parts[2]);
+        let _group_path = group.replace('.', "/");
 
         // Only set the base URL, the rest will be built in download_library
         let url = "https://maven.fabricmc.net/".to_string();

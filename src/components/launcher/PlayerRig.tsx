@@ -10,7 +10,6 @@ import { SkinViewer } from './SkinViewer';
 import { useActiveSkinTexture } from '../../hooks/useActiveSkinTexture';
 import { useEquippedCosmetics } from '../../hooks/useEquippedCosmetics';
 import { useIdleEmote } from '../../hooks/useIdleEmote';
-import { useSelectedIcon } from '../../hooks/useSelectedIcon';
 import { useSkinPreview } from '../../hooks/useSkinPreview';
 import { useWindowFocus } from '../../hooks/useWindowFocus';
 import { useMinecraftAuthStore } from '../../store/minecraft-auth-store';
@@ -63,7 +62,6 @@ export function PlayerRig({ playerName, outline }: PlayerRigProps) {
   const { textureUrl, variant, loading: skinLoading } = useActiveSkinTexture();
   const { cosmetics: equippedCosmetics, loading: cosmeticsLoading } =
     useEquippedCosmetics(activeAccount?.id);
-  const selectedIcon = useSelectedIcon(activeAccount?.id);
   const idleEmote = useIdleEmote();
   const animated = useQualitySettingsStore((s) => s.cosmeticRenderer3d);
   const isWindowFocused = useWindowFocus();
@@ -87,11 +85,11 @@ export function PlayerRig({ playerName, outline }: PlayerRigProps) {
       playerName
         ? {
             text: playerName.toString(),
-            iconUrl: selectedIcon.url,
-            iconPlus: selectedIcon.plus,
+            iconUrl: "/nebrel_badge.png",
+            iconPlus: false,
           }
         : null,
-    [playerName, selectedIcon.url, selectedIcon.plus],
+    [playerName],
   );
 
   const rigTextureUrl = hasAccount ? textureUrl : NO_ACCOUNT_SKIN_URL;

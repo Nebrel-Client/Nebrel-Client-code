@@ -112,7 +112,7 @@ export function MinecraftAccountManager({
 
   if (isInDropdown) {
     return (
-      <div className="flex flex-col max-h-[400px]">
+      <div className="nebrel-account-menu flex flex-col max-h-[400px]">
         <DropdownHeader title={t('auth.minecraftAccounts')}>
           <button
             onClick={onClose}
@@ -143,7 +143,7 @@ export function MinecraftAccountManager({
               </p>
             </div>
           ) : (
-            <div className="p-2 space-y-2">
+            <div className="nebrel-account-list p-2 space-y-2">
               {accounts.map((account) => (
                 <AccountItem
                   key={account.id}
@@ -331,7 +331,7 @@ function AccountItem({
   return (
     <div
       ref={itemRef}
-      className={`flex items-center justify-between rounded-md ${
+      className={`nebrel-account-item flex items-center justify-between rounded-md ${
         account.active ? "bg-white/10" : "bg-black/40 hover:bg-white/5"
       } border border-white/10 hover:border-white/20 transition-colors overflow-hidden ${
         !account.active && !effectiveIsLoading

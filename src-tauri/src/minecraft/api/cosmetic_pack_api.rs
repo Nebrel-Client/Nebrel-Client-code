@@ -3,7 +3,7 @@ use crate::error::Result;
 use crate::utils::http_client::nrc_get;
 use crate::minecraft::dto::cosmetic_outfit::CosmeticSettings;
 use serde::Serialize;
-use serde_json::{json, Value};
+use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 

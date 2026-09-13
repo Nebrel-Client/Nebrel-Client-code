@@ -1,4 +1,4 @@
-use crate::config::{ProjectDirsExt, HTTP_CLIENT, LAUNCHER_DIRECTORY};
+use crate::config::HTTP_CLIENT;
 use crate::error::{AppError, Result};
 use crate::minecraft::dto::{JavaDistribution, ZuluApiResponse};
 use crate::state::State;
@@ -8,11 +8,8 @@ use async_zip::tokio::read::seek::ZipFileReader;
 use flate2::read::GzDecoder;
 use futures::future::try_join_all;
 use log::{debug, error, info};
-use std::fs::File;
 use std::io::Cursor;
 use std::path::PathBuf;
-use std::sync::Arc;
-use std::sync::Mutex;
 use tar::Archive;
 use tokio::fs;
 use tokio::io::BufReader;
@@ -188,7 +185,7 @@ impl JavaDownloadService {
                     AppError::JavaDownload(format!("ZIP Open error for listing: {}", e))
                 })?;
                 let mut buf_reader_listing = BufReader::new(file_for_listing);
-                let mut zip_lister = ZipFileReader::with_tokio(&mut buf_reader_listing)
+                let zip_lister = ZipFileReader::with_tokio(&mut buf_reader_listing)
                     .await
                     .map_err(|e| {
                         error!("Failed to read Java ZIP for listing: {}", e);

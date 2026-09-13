@@ -2524,7 +2524,7 @@ pub fn check_mod_update_by_file_index(
         .iter()
         .find(|idx| idx.fileId == installed_file_id);
 
-    if let Some(index) = installed_file_index {
+    if let Some(_index) = installed_file_index {
         log::debug!("Mod {}: Found installed file ID {} in latestFilesIndexes", mod_data.name, installed_file_id);
     } else {
         log::debug!("Mod {}: Installed file ID {} NOT found in latestFilesIndexes - will return first compatible file from latestFilesIndexes", mod_data.name, installed_file_id);
@@ -2555,7 +2555,7 @@ pub fn check_mod_update_by_file_index(
 
         // If we found the installed file, skip older files (higher indices)
         // Note: In CurseForge latestFilesIndexes, newer versions appear at LOWER indices!
-        if let Some(installed_index) = installed_file_index {
+        if let Some(_installed_index) = installed_file_index {
             let installed_index_pos = mod_data.latestFilesIndexes
                 .iter()
                 .position(|idx| idx.fileId == installed_file_id)

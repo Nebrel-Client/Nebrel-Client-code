@@ -18,6 +18,7 @@ interface ModalProps {
   width?: "sm" | "md" | "lg" | "xl" | "full";
   closeOnClickOutside?: boolean;
   headerActions?: React.ReactNode;
+  headerClassName?: string;
   variant?: "default" | "flat" | "3d";
   className?: string;
   contentClassName?: string;
@@ -33,6 +34,7 @@ export function Modal({
   width = "md",
   closeOnClickOutside = true,
   headerActions,
+  headerClassName,
   variant = "default",
   className,
   contentClassName,
@@ -146,7 +148,10 @@ export function Modal({
 
         <div
           ref={headerRef}
-          className="flex items-center justify-between px-7 py-5 border-b flex-shrink-0"
+          className={cn(
+            "flex items-center justify-between px-7 py-5 border-b flex-shrink-0",
+            headerClassName,
+          )}
           style={{
             borderColor: "rgba(255,255,255,0.07)",
             backgroundColor: "rgba(255,255,255,0.02)",

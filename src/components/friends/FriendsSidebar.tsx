@@ -114,7 +114,7 @@ export function FriendsSidebar() {
           }}
         >
           <div className="p-4" style={{ borderBottom: `1px solid ${accentColor.value}30` }}>
-            <div className="flex items-center justify-between mb-4">
+            <div className="nebrel-friends-toolbar flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <button
                   onClick={openSettings}
@@ -170,7 +170,7 @@ export function FriendsSidebar() {
 
           <div className="p-3" style={{ borderBottom: `1px solid ${accentColor.value}30` }}>
             <div
-              className="flex rounded-xl p-1"
+              className="nebrel-friends-tabs flex rounded-xl p-1"
               style={{ backgroundColor: `${accentColor.value}15`, border: `1px solid ${accentColor.value}40` }}
             >
               <button
@@ -213,7 +213,7 @@ export function FriendsSidebar() {
 
             {activeTab === "friends" && (
               <div
-                className="flex items-center gap-3 px-4 py-3 rounded-xl mt-3"
+                className="nebrel-friends-search flex items-center gap-3 px-4 py-3 rounded-xl mt-3"
                 style={{
                   backgroundColor: `${accentColor.value}15`,
                   border: `1px solid ${accentColor.value}40`,

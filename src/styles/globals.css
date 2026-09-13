@@ -693,6 +693,220 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
 }
 /* Capped at a comfortable reading measure instead of stretching to the window. */
 .nebrel-library-header p { color: #a79fb0; font-size: 14px; margin: 0; max-width: 62ch; }
+.nebrel-library {
+  position: relative;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(var(--accent-rgb), .12), transparent 34%),
+    linear-gradient(135deg, rgba(13, 10, 18, .98), rgba(7, 7, 10, .98));
+}
+.nebrel-library-header {
+  position: relative;
+  min-height: 112px;
+  padding: 8px 20px 26px 0;
+  border-bottom-color: rgba(var(--accent-rgb), .22);
+}
+.nebrel-library-heading h1 {
+  font-size: clamp(30px, 3vw, 46px);
+  letter-spacing: -.03em;
+  text-shadow: 0 0 28px rgba(var(--accent-rgb), .18);
+}
+.nebrel-eyebrow b {
+  margin-left: 12px;
+  color: var(--accent);
+  font-size: 9px;
+  letter-spacing: .12em;
+  font-weight: 400;
+}
+.nebrel-library-symbol {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(var(--accent-rgb), .2), rgba(255,255,255,.03));
+  box-shadow: inset 0 0 22px rgba(var(--accent-rgb), .08), 0 14px 30px rgba(0,0,0,.24);
+}
+.nebrel-library-symbol img { width: 46px; height: 46px; object-fit: contain; }
+.nebrel-library-header-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  align-self: center;
+  padding: 9px 12px;
+  color: rgba(255,255,255,.45);
+  border: 1px solid var(--nebrel-line);
+  border-radius: 999px;
+  background: rgba(0,0,0,.22);
+  font: 9px var(--font-smallcaps);
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+.nebrel-library-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #69e69a;
+  box-shadow: 0 0 12px #69e69a;
+}
+.nebrel-library .left-content-area > div:first-child {
+  padding: 14px 16px 10px;
+  border: 1px solid var(--nebrel-line);
+  border-radius: 16px;
+  background: rgba(18, 15, 23, .72);
+  box-shadow: 0 14px 40px rgba(0,0,0,.16);
+}
+.nebrel-library .left-content-area > div:first-child button {
+  border-radius: 11px;
+}
+.nebrel-library .filters-sidebar {
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(27,23,34,.9), rgba(15,13,20,.84));
+  box-shadow: 0 18px 38px rgba(0,0,0,.2);
+}
+.nebrel-library .search-results-area {
+  padding: 12px 6px 20px 0;
+}
+.nebrel-project-card {
+  border-radius: 16px !important;
+  background: linear-gradient(110deg, rgba(31,28,38,.94), rgba(20,18,26,.94)) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.16);
+}
+.nebrel-project-card:hover {
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), .1);
+  transform: translateY(-2px) !important;
+}
+
+/* Library v2: deliberately asymmetric studio layout. */
+.nebrel-library {
+  padding: 22px 28px 20px;
+  background:
+    linear-gradient(115deg, rgba(20, 9, 28, .98) 0%, rgba(8, 12, 18, .98) 58%, rgba(5, 21, 25, .98) 100%);
+}
+.nebrel-library::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(rgba(255,255,255,.22) .7px, transparent .7px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(120deg, black, transparent 55%);
+}
+.nebrel-library-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "heading symbol"
+    "heading note";
+  align-items: center;
+  gap: 0 22px;
+  min-height: 92px;
+  margin-bottom: 18px;
+  padding: 8px 0 22px;
+  border-bottom: 0;
+}
+.nebrel-library-heading { grid-area: heading; }
+.nebrel-library-symbol {
+  grid-area: symbol;
+  order: initial;
+  width: 54px;
+  height: 54px;
+  margin: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #f0f1ff;
+  box-shadow: 8px 8px 0 rgba(var(--accent-rgb), .35);
+  transform: rotate(4deg);
+}
+.nebrel-library-symbol img { width: 38px; height: 38px; filter: brightness(.4) contrast(1.4); }
+.nebrel-library-header-note {
+  grid-area: note;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 8px;
+  justify-content: flex-end;
+}
+.nebrel-library .modrinth-search-v2 {
+  position: relative;
+  z-index: 1;
+  gap: 28px;
+}
+.nebrel-library .left-content-area { order: 1; }
+.nebrel-library .filters-sidebar {
+  order: 2;
+  width: 238px;
+  padding: 6px 0 6px 18px;
+  border: 0;
+  border-left: 1px solid rgba(255,255,255,.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.nebrel-library .filters-sidebar > div {
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 6px;
+  background: rgba(4, 8, 13, .55);
+}
+.nebrel-library .left-content-area > div:first-child {
+  padding: 0 0 14px;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.nebrel-library .left-content-area > div:first-child > div:first-child {
+  gap: 6px;
+}
+.nebrel-library .left-content-area > div:first-child > div:first-child button {
+  border-width: 1px;
+  border-radius: 4px;
+  background: rgba(0,0,0,.28);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.nebrel-library .left-content-area > div:first-child > div:nth-child(2) {
+  margin-top: 12px;
+}
+.nebrel-library .search-results-area {
+  padding: 18px 4px 24px 0;
+}
+.nebrel-library .search-results-area .space-y-1 > * + * { margin-top: 14px; }
+.nebrel-project-card {
+  min-height: 132px;
+  border: 0 !important;
+  border-left: 3px solid rgba(255,255,255,.12) !important;
+  border-radius: 5px !important;
+  background: rgba(8, 12, 18, .72) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 12px 24px rgba(0,0,0,.24);
+}
+.nebrel-project-card:hover {
+  border-left-color: var(--accent) !important;
+  background: rgba(24, 22, 34, .9) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.14), 0 16px 32px rgba(0,0,0,.32);
+}
+.nebrel-project-card .w-20 {
+  width: 88px;
+  height: 88px;
+  border-radius: 4px;
+  border-color: rgba(255,255,255,.18) !important;
+}
+.nebrel-project-card .text-lg {
+  font-size: 23px;
+  letter-spacing: .01em;
+}
+.nebrel-project-card button {
+  border-radius: 3px !important;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+@media (max-width: 900px) {
+  .nebrel-library-header { grid-template-columns: 1fr auto; }
+  .nebrel-library-header-note { display: none; }
+  .nebrel-library .filters-sidebar { width: 190px; padding-left: 12px; }
+}
 
 .nebrel-library > .flex-1 { min-height: 0; }
 .nebrel-library .modrinth-search-v2 { gap: 22px; }
@@ -827,6 +1041,153 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
     var(--nebrel-panel);
   overflow: hidden;
 }
+.nebrel-play-grid {
+  opacity: .28;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+}
+.nebrel-play-toolbar { pointer-events: none; }
+.nebrel-play-toolbar > * { pointer-events: auto; }
+.nebrel-play-kicker { display: flex; align-items: center; gap: 10px; }
+.nebrel-play-kicker-mark,
+.nebrel-play-action-icon,
+.nebrel-play-session-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), .35);
+  border-radius: 10px;
+  background: rgba(var(--accent-rgb), .1);
+}
+.nebrel-play-kicker-mark img { width: 24px; height: 24px; object-fit: contain; }
+.nebrel-play-eyebrow {
+  display: block;
+  color: rgba(255,255,255,.82);
+  font: 11px/1.2 var(--font-smallcaps);
+  letter-spacing: .18em;
+}
+.nebrel-play-caption {
+  display: block;
+  margin-top: 3px;
+  color: rgba(255,255,255,.38);
+  font: 10px/1.2 var(--font-minecraft);
+  letter-spacing: .08em;
+}
+.nebrel-play-online-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  color: rgba(255,255,255,.58);
+  border: 1px solid var(--nebrel-line);
+  border-radius: 999px;
+  background: rgba(10, 9, 12, .46);
+  font: 10px var(--font-smallcaps);
+  letter-spacing: .13em;
+}
+.nebrel-play-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #58e6a5;
+  box-shadow: 0 0 12px #58e6a5;
+}
+.nebrel-play-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 620px);
+  margin-top: 40px;
+}
+.nebrel-play-hero-copy {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+.nebrel-play-hero-line {
+  display: inline-block;
+  width: 34px;
+  height: 2px;
+  margin-bottom: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 16px rgba(var(--accent-rgb), .8);
+}
+.nebrel-play-hero-label {
+  display: block;
+  color: rgba(255,255,255,.42);
+  font: 10px var(--font-smallcaps);
+  letter-spacing: .24em;
+}
+.nebrel-play-hero h1 {
+  margin: 5px 0 0;
+  color: white;
+  font: 28px/1.1 var(--font-smallcaps);
+  letter-spacing: .08em;
+  text-shadow: 0 3px 18px rgba(0,0,0,.5);
+}
+.nebrel-play-hero p {
+  margin: 7px 0 0;
+  color: rgba(255,255,255,.48);
+  font: 12px var(--font-minecraft);
+}
+.nebrel-play-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.nebrel-play-action-card,
+.nebrel-play-session-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 62px;
+  padding: 10px 12px;
+  color: white;
+  text-align: left;
+  border: 1px solid var(--nebrel-line);
+  border-radius: 12px;
+  background: rgba(12, 11, 16, .62);
+  backdrop-filter: blur(12px);
+  transition: border-color .18s ease, background-color .18s ease, transform .18s ease;
+}
+.nebrel-play-action-card { cursor: pointer; }
+.nebrel-play-action-card:hover {
+  border-color: rgba(var(--accent-rgb), .55);
+  background: rgba(var(--accent-rgb), .1);
+  transform: translateY(-2px);
+}
+.nebrel-play-action-card strong,
+.nebrel-play-session-card strong {
+  display: block;
+  overflow: hidden;
+  color: rgba(255,255,255,.86);
+  font: 11px/1.2 var(--font-smallcaps);
+  letter-spacing: .08em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nebrel-play-action-card small,
+.nebrel-play-session-card small {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: rgba(255,255,255,.4);
+  font: 10px/1.2 var(--font-minecraft);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nebrel-play-session-card { border-color: rgba(var(--accent-rgb), .26); }
+.nebrel-play-session-icon { color: #58e6a5; border-color: rgba(88,230,165,.28); background: rgba(88,230,165,.08); }
 .nebrel-news {
   order: 0;
   width: 320px;
@@ -852,6 +1213,16 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
   .nebrel-news { width: 220px; }
   .nebrel-library .filters-sidebar { width: 165px; }
   .nebrel-library-header p { font-size: 13px; }
+  .nebrel-play-quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nebrel-play-session-card { display: none; }
+}
+@media (max-width: 680px) {
+  .nebrel-play-toolbar { left: 16px; right: 16px; }
+  .nebrel-play-toolbar .nebrel-play-online-status { display: none; }
+  .nebrel-play-stage { padding: 16px; }
+  .nebrel-play-hero { margin-top: 72px; }
+  .nebrel-play-quick-actions { left: 16px; right: 16px; grid-template-columns: 1fr; }
+  .nebrel-play-action-card { min-height: 52px; }
 }
 @media (max-height: 760px) {
   .nebrel-sidebar { padding-top: 12px; }
@@ -1023,6 +1394,162 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
 }
 .nebrel-friends-expand:hover { background: rgba(255, 255, 255, .07); color: #fff; }
 
+/* Friends drawer refresh: quieter chrome, clearer hierarchy, denser rows. */
+.nebrel-social-list {
+  width: 420px !important;
+  background: #0d0b14 !important;
+  border-left: 1px solid rgba(var(--accent-rgb), .55) !important;
+  box-shadow: -24px 0 70px rgba(0,0,0,.48) !important;
+}
+.nebrel-social-list > .p-4 {
+  padding: 22px 22px 18px !important;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), .16), transparent 65%);
+  border-bottom: 1px solid rgba(255,255,255,.1) !important;
+}
+.nebrel-friends-toolbar h2 {
+  font-size: 20px !important;
+  letter-spacing: .04em;
+}
+.nebrel-friends-toolbar button,
+.nebrel-social-list > .p-4 button {
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.04) !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+.nebrel-social-list > .p-3 {
+  padding: 16px 22px !important;
+  border-bottom: 1px solid rgba(255,255,255,.1) !important;
+}
+.nebrel-friends-tabs {
+  gap: 4px;
+  padding: 4px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  background: rgba(255,255,255,.035) !important;
+}
+.nebrel-friends-tabs button {
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+}
+.nebrel-friends-tabs button[style*="white"] {
+  background: var(--accent) !important;
+  box-shadow: 0 5px 16px rgba(var(--accent-rgb), .25);
+}
+.nebrel-friends-search {
+  padding: 11px 14px !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 9px !important;
+  background: rgba(0,0,0,.28) !important;
+}
+.nebrel-friends-search input { font-size: 13px !important; }
+.nebrel-social-list .nebrel-friend-row {
+  margin: 0 22px 9px;
+  padding: 11px 12px !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  border-left: 3px solid rgba(255,255,255,.16) !important;
+  border-radius: 9px !important;
+  background: rgba(255,255,255,.035) !important;
+}
+.nebrel-social-list .nebrel-friend-row:hover {
+  border-left-color: var(--accent) !important;
+  background: rgba(var(--accent-rgb), .12) !important;
+  transform: translateX(3px) !important;
+}
+.nebrel-social-list .nebrel-friend-row img,
+.nebrel-social-list .nebrel-friend-row img + div {
+  border-radius: 8px !important;
+}
+.nebrel-social-list .nebrel-friend-row button {
+  width: 31px;
+  height: 31px;
+  padding: 6px !important;
+  border-radius: 8px !important;
+}
+
+/* Settings console layout: navigation rail + focused workspace. */
+.nebrel-settings-layout {
+  flex-direction: row !important;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(var(--accent-rgb), .1), transparent 34%),
+    var(--settings-bg-0) !important;
+}
+.nebrel-settings-toolbar {
+  width: 214px;
+  flex: 0 0 214px;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 18px !important;
+  padding: 24px 14px !important;
+  border-right: 1px solid var(--settings-line);
+  border-bottom: 0;
+  background: rgba(8,7,12,.52);
+}
+.nebrel-settings-tabstrip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill {
+  justify-content: flex-start;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill svg { width: 18px; height: 18px; }
+.nebrel-settings-tabstrip .nebrel-settings-pill[style] {
+  background: rgba(var(--accent-rgb), .18) !important;
+  border-color: rgba(var(--accent-rgb), .55) !important;
+  box-shadow: inset 3px 0 var(--accent);
+}
+.nebrel-settings-toolbar > div:last-child {
+  width: 100% !important;
+  margin: auto 0 0 !important;
+}
+.nebrel-settings-toolbar > div:last-child > div {
+  min-height: 38px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.35);
+}
+.nebrel-settings-content {
+  flex: 1;
+  padding: 28px 34px 36px !important;
+  background: transparent;
+}
+.nebrel-settings-content > .space-y-6 {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.nebrel-settings-section {
+  padding: 20px 22px;
+  border-radius: 12px;
+  background: rgba(24,22,31,.78);
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+}
+.nebrel-settings-section + .nebrel-settings-section { margin-top: 16px; }
+.nebrel-settings-section h3 { font-size: 15px; letter-spacing: .08em; }
+.nebrel-setting-row {
+  margin-top: 6px;
+  padding: 15px 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+@media (max-width: 720px) {
+  .nebrel-settings-layout { flex-direction: column !important; }
+  .nebrel-settings-toolbar {
+    width: 100%;
+    flex-basis: auto;
+    padding: 12px !important;
+  }
+  .nebrel-settings-tabstrip { flex-direction: row; overflow-x: auto; }
+  .nebrel-settings-tabstrip .nebrel-settings-pill { flex: 0 0 auto; }
+  .nebrel-settings-toolbar > div:last-child { margin: 0 !important; }
+  .nebrel-settings-content { padding: 18px !important; }
+}
+
 /* Newest news entry, full width with the image behind the text. */
 .nebrel-feed-card-featured { position: relative; display: block; }
 .nebrel-feed-card-featured .nebrel-feed-thumb { aspect-ratio: 21 / 7; }
@@ -1097,4 +1624,541 @@ button:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2
   border-radius: calc(var(--border-radius) * 1.3);
   background: linear-gradient(160deg, rgba(var(--accent-rgb), .06), transparent 55%), var(--nebrel-panel);
   padding: 22px 22px 20px;
+}
+
+/* Settings command center: reserve the accent for the selected navigation item. */
+.nebrel-settings {
+  --settings-bg-0: #0d1117;
+  --settings-bg-1: #111821;
+  --settings-bg-2: #17212b;
+  --settings-line: rgba(173, 192, 211, .14);
+  --settings-muted: #8291a3;
+  background: #0d1117 !important;
+}
+.nebrel-settings-layout {
+  gap: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.025), transparent 38%), #0d1117 !important;
+}
+.nebrel-settings-toolbar {
+  width: 248px;
+  flex-basis: 248px;
+  padding: 30px 18px 22px !important;
+  border-right: 1px solid var(--settings-line);
+  background: #10161e !important;
+}
+.nebrel-settings-tabstrip {
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.nebrel-settings-nav-label {
+  margin: 0 10px 12px;
+  color: var(--settings-muted);
+  font: 400 10px/1 var(--settings-font);
+  letter-spacing: .18em;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill {
+  position: relative;
+  min-height: 48px;
+  padding: 12px 14px !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  color: var(--settings-muted) !important;
+  box-shadow: none !important;
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill:hover,
+.nebrel-settings-tabstrip .nebrel-settings-pill.is-inactive:hover {
+  background: rgba(255,255,255,.055) !important;
+  border-color: var(--settings-line) !important;
+  color: #e8eef5 !important;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill.is-active {
+  background: rgba(var(--accent-rgb), .14) !important;
+  border-color: rgba(var(--accent-rgb), .62) !important;
+  color: #ffffff !important;
+  box-shadow: inset 3px 0 var(--accent) !important;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill.is-inactive svg {
+  color: var(--settings-muted) !important;
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill.is-active svg {
+  color: var(--accent) !important;
+}
+.nebrel-settings-toolbar > div:last-child {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+.nebrel-settings-toolbar > div:last-child > div {
+  border: 1px solid var(--settings-line);
+  background: #0b1016;
+}
+.nebrel-settings-content {
+  padding: 34px 42px 48px !important;
+  background: radial-gradient(circle at 95% 0%, rgba(var(--accent-rgb), .08), transparent 30%);
+}
+.nebrel-settings-workspace {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.nebrel-settings-workspace-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--settings-line);
+  color: #e8eef5;
+  font: 400 12px/1 var(--settings-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.nebrel-settings-save-state {
+  color: var(--settings-muted);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+.nebrel-settings-section {
+  padding: 22px 24px !important;
+  border: 1px solid var(--settings-line) !important;
+  border-radius: 8px !important;
+  background: #121a23 !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,.16) !important;
+}
+.nebrel-settings-section:hover {
+  border-color: rgba(173, 192, 211, .24) !important;
+}
+.nebrel-setting-row {
+  border-top-color: var(--settings-line) !important;
+}
+.nebrel-settings-header {
+  min-height: 104px;
+  padding: 22px 30px !important;
+  border-bottom: 1px solid rgba(173, 192, 211, .16) !important;
+  background:
+    linear-gradient(90deg, rgba(var(--accent-rgb), .12), transparent 42%),
+    #0f151d !important;
+}
+.nebrel-settings-header > div:first-child {
+  gap: 16px;
+}
+.nebrel-settings-header > div:first-child > span {
+  display: grid !important;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(var(--accent-rgb), .55);
+  border-radius: 12px;
+  background: rgba(var(--accent-rgb), .12);
+  box-shadow: 0 0 24px rgba(var(--accent-rgb), .14);
+}
+.nebrel-settings-header h2 {
+  font-family: var(--settings-font) !important;
+  font-size: 17px !important;
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.nebrel-settings-header h2::after {
+  content: "  /  CONTROL DECK";
+  color: var(--settings-muted);
+  font-size: 9px;
+  letter-spacing: .16em;
+  vertical-align: middle;
+}
+.nebrel-settings-header h2 + div {
+  margin-top: 7px !important;
+  color: var(--settings-muted) !important;
+  font: 12px/1.3 var(--settings-font);
+}
+.nebrel-settings-header > div:last-child {
+  gap: 10px;
+}
+.nebrel-settings-header > div:last-child > button:first-child {
+  border: 1px solid var(--settings-line) !important;
+  background: rgba(255,255,255,.04) !important;
+  color: #c9d5e2 !important;
+}
+@media (max-width: 720px) {
+  .nebrel-settings-toolbar {
+    width: 100%;
+    flex-basis: auto;
+    padding: 16px !important;
+  }
+  .nebrel-settings-nav-label { display: none; }
+  .nebrel-settings-tabstrip { flex-direction: row; overflow-x: auto; }
+  .nebrel-settings-tabstrip .nebrel-settings-pill { flex: 0 0 auto; }
+  .nebrel-settings-content { padding: 20px !important; }
+  .nebrel-settings-workspace-kicker { align-items: flex-start; flex-direction: column; }
+}
+
+/* Full settings refresh: top command bar instead of a fixed side rail. */
+.nebrel-settings-layout {
+  flex-direction: column !important;
+  background:
+    linear-gradient(180deg, #101821 0, #0d1117 180px),
+    #0d1117 !important;
+}
+.nebrel-settings-toolbar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  align-items: center !important;
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  padding: 14px 30px !important;
+  border-right: 0;
+  border-bottom: 1px solid var(--settings-line);
+  background: rgba(13,17,23,.82) !important;
+}
+.nebrel-settings-tabstrip {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+  gap: 6px;
+}
+.nebrel-settings-nav-label {
+  flex: 0 0 auto;
+  margin: 0 16px 0 0;
+  padding-right: 18px;
+  border-right: 1px solid var(--settings-line);
+}
+.nebrel-settings-tabstrip .nebrel-settings-pill {
+  min-height: 38px;
+  padding: 8px 13px !important;
+  white-space: nowrap;
+}
+.nebrel-settings-toolbar > div:last-child {
+  margin: 0 !important;
+  justify-self: end;
+  width: 280px !important;
+}
+.nebrel-settings-content {
+  padding: 30px 42px 52px !important;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(var(--accent-rgb), .07), transparent 40%),
+    transparent;
+}
+.nebrel-settings-workspace {
+  max-width: 1120px;
+}
+.nebrel-settings-workspace-kicker {
+  margin-bottom: 22px;
+  padding: 0 0 16px;
+  border-bottom: 0;
+  font-size: 13px;
+}
+.nebrel-settings-workspace-kicker::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  margin-right: 10px;
+  border-radius: 4px;
+  background: var(--accent);
+  vertical-align: middle;
+}
+.nebrel-settings-save-state {
+  padding: 6px 9px;
+  border: 1px solid var(--settings-line);
+  border-radius: 4px;
+  background: rgba(255,255,255,.025);
+}
+.nebrel-settings-section {
+  border-radius: 5px !important;
+  background: rgba(18,26,35,.86) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,.2) !important;
+}
+.nebrel-settings-section + .nebrel-settings-section {
+  margin-top: 14px;
+}
+@media (max-width: 760px) {
+  .nebrel-settings-toolbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+  }
+
+  /* Final settings pass: restrained product UI with one spacing system and no
+     decorative labels competing with the actual settings. */
+  .nebrel-settings-header {
+    min-height: 88px;
+    padding: 18px 28px !important;
+    background: #111820 !important;
+  }
+  .nebrel-settings-header > div:first-child > span {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  .nebrel-settings-header h2 {
+    font-size: 18px !important;
+    letter-spacing: .12em;
+  }
+  .nebrel-settings-header h2::after {
+    content: none;
+  }
+  .nebrel-settings-header h2 + div {
+    margin-top: 4px !important;
+    font-size: 11px;
+  }
+  .nebrel-settings-toolbar {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    min-height: 68px;
+    padding: 12px 28px !important;
+    background: #0e151c !important;
+  }
+  .nebrel-settings-nav-label {
+    font-size: 9px;
+    letter-spacing: .12em;
+  }
+  .nebrel-settings-tabstrip .nebrel-settings-pill {
+    min-height: 36px;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    font-size: 12px;
+  }
+  .nebrel-settings-tabstrip .nebrel-settings-pill.is-active {
+    box-shadow: inset 2px 0 var(--accent) !important;
+  }
+  .nebrel-settings-content {
+    padding: 24px 34px 40px !important;
+    background: #0d131a !important;
+  }
+  .nebrel-settings-workspace {
+    max-width: 1040px;
+  }
+  .nebrel-settings-workspace-kicker {
+    justify-content: flex-start;
+    margin: 0 0 18px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--settings-line);
+    color: #d6e0ea;
+    font-size: 12px;
+    letter-spacing: .1em;
+  }
+  .nebrel-settings-workspace-kicker::before {
+    width: 3px;
+    height: 14px;
+    margin-right: 8px;
+  }
+  .nebrel-settings-save-state {
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 9px;
+  }
+  .nebrel-settings-section {
+    padding: 18px 20px !important;
+    border-radius: 7px !important;
+    background: #121a22 !important;
+    box-shadow: none !important;
+  }
+  .nebrel-settings-section + .nebrel-settings-section {
+    margin-top: 12px;
+  }
+  .nebrel-settings-section h3 {
+    font-size: 14px;
+    letter-spacing: .06em;
+  }
+  .nebrel-settings-section > div:first-child p {
+    font-size: 12px;
+  }
+  .nebrel-setting-row {
+    padding: 13px 0;
+  }
+  .nebrel-setting-label {
+    font-size: 14px;
+  }
+  .nebrel-setting-description {
+    font-size: 11px;
+  }
+  @media (max-width: 760px) {
+    .nebrel-settings-toolbar {
+      min-height: 0;
+      padding: 12px 16px !important;
+    }
+    .nebrel-settings-content {
+      padding: 20px 16px 32px !important;
+    }
+  }
+  .nebrel-settings-nav-label {
+    display: none;
+  }
+  .nebrel-settings-toolbar > div:last-child {
+    width: 100% !important;
+  }
+  .nebrel-settings-content {
+    padding: 22px 16px 36px !important;
+  }
+}
+
+.nebrel-activity-button {
+  border: 1px solid rgba(var(--accent-rgb), .62) !important;
+  background: rgba(var(--accent-rgb), .14) !important;
+  color: var(--accent-light, var(--accent)) !important;
+  box-shadow: none !important;
+}
+.nebrel-activity-button:hover {
+  border-color: var(--accent) !important;
+  background: rgba(var(--accent-rgb), .24) !important;
+  color: #ffffff !important;
+}
+
+/* Log window follows the same theme tokens as the launcher instead of using
+   a separate hard-coded purple palette. */
+.nebrel-log-window {
+  color: rgba(235, 241, 247, .9);
+  background:
+    radial-gradient(ellipse at 12% 0, rgba(var(--accent-rgb), .16), transparent 38%),
+    #0b1016 !important;
+  transition: background .25s ease;
+}
+.nebrel-log-window-animated {
+  background:
+    radial-gradient(ellipse at 12% 0, rgba(var(--accent-rgb), .2), transparent 38%),
+    radial-gradient(ellipse at 90% 100%, rgba(var(--accent-rgb), .09), transparent 42%),
+    #0b1016 !important;
+  background-size: 140% 140%;
+  animation: nebrel-log-atmosphere 18s ease-in-out infinite alternate;
+}
+.nebrel-log-titlebar {
+  min-height: 52px;
+  border-bottom: 1px solid rgba(173, 192, 211, .14);
+  background: rgba(13, 18, 25, .82);
+}
+.nebrel-log-titlebar > div:first-child {
+  gap: 10px;
+}
+.nebrel-log-titlebar > div:first-child::after {
+  content: "LIVE CONSOLE";
+  margin-left: 8px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(173, 192, 211, .2);
+  color: var(--settings-muted, #8291a3);
+  font: 400 9px/1 var(--settings-font, sans-serif);
+  letter-spacing: .16em;
+}
+.nebrel-log-shell {
+  padding: 14px !important;
+  gap: 14px !important;
+}
+.nebrel-log-viewer,
+.nebrel-log-sidebar {
+  min-height: 0;
+  border: 1px solid rgba(173, 192, 211, .14);
+  border-radius: var(--border-radius, 8px);
+  background: rgba(13, 18, 25, .78);
+  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  overflow: hidden;
+}
+.nebrel-log-viewer > * {
+  border-radius: 0 !important;
+}
+.nebrel-log-sidebar {
+  background:
+    linear-gradient(180deg, rgba(var(--accent-rgb), .07), transparent 30%),
+    rgba(16, 22, 30, .9);
+}
+.nebrel-log-sidebar > div:first-child {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid rgba(173, 192, 211, .12);
+}
+.nebrel-log-sidebar > div:first-child span {
+  color: var(--accent) !important;
+  font-family: var(--settings-font, sans-serif);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.nebrel-account-menu {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 0 0, rgba(var(--accent-rgb), .16), transparent 45%),
+    #10161e;
+}
+.nebrel-account-menu .nebrel-account-list {
+  padding: 12px !important;
+}
+.nebrel-account-menu .nebrel-account-item {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 62px;
+  border: 1px solid rgba(var(--accent-rgb), .22) !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.045) !important;
+  transition: transform .16s ease, border-color .16s ease, background-color .16s ease;
+}
+.nebrel-account-menu .nebrel-account-item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--accent-rgb), .62) !important;
+  background: rgba(var(--accent-rgb), .13) !important;
+}
+.nebrel-account-menu .nebrel-account-item > div:first-child {
+  min-width: 0;
+  gap: 12px;
+  padding: 10px;
+}
+.nebrel-account-menu .nebrel-account-item h4 {
+  font-family: var(--font-smallcaps, var(--settings-font, sans-serif));
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .08em;
+}
+.nebrel-account-menu .nebrel-account-item > div:first-child > div:first-child {
+  border-color: rgba(var(--accent-rgb), .48) !important;
+  border-radius: 9px !important;
+  background: rgba(0,0,0,.35) !important;
+}
+.nebrel-account-menu .nebrel-account-item button {
+  border-radius: 10px !important;
+  color: rgba(255,255,255,.72) !important;
+}
+.nebrel-account-menu .nebrel-account-item button:hover {
+  background: rgba(220, 70, 90, .2) !important;
+  color: #ff9ba8 !important;
+}
+.nebrel-account-menu .nebrel-account-item > div:last-child {
+  padding-right: 10px;
+}
+.nebrel-account-menu > [class*="border-t"] {
+  border-color: rgba(var(--accent-rgb), .18) !important;
+}
+.nebrel-account-menu > div:last-child {
+  padding: 12px !important;
+}
+.nebrel-account-menu > div:last-child button {
+  min-height: 42px;
+  border: 1px solid rgba(var(--accent-rgb), .68) !important;
+  border-radius: 10px !important;
+  background: rgba(var(--accent-rgb), .16) !important;
+  color: var(--accent-light, var(--accent)) !important;
+  box-shadow: none !important;
+}
+.nebrel-account-menu > div:last-child button:hover {
+  background: rgba(var(--accent-rgb), .28) !important;
+  color: #fff !important;
+}
+.nebrel-log-sidebar .text-white\/50,
+.nebrel-log-sidebar .text-white\/60,
+.nebrel-log-viewer .text-white\/30 {
+  color: #8291a3 !important;
+}
+@keyframes nebrel-log-atmosphere {
+  from { background-position: 0% 0%, 100% 100%; }
+  to { background-position: 35% 18%, 70% 80%; }
+}
+@media (max-width: 760px) {
+  .nebrel-log-shell { flex-direction: column; }
+  .nebrel-log-sidebar { max-width: none; min-height: 190px; }
 }

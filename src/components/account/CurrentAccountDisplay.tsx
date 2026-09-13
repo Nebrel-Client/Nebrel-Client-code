@@ -49,22 +49,6 @@ export function CurrentAccountDisplay({
     return `0 8px 0 rgba(0,0,0,0.3), 0 10px 15px rgba(0,0,0,0.35), inset 0 1px 0 ${accentColor.value}40, inset 0 0 0 1px ${accentColor.value}20`;
   };
 
-  // Get hover box shadow based on variant
-  const getHoverBoxShadow = () => {
-    if (variant === "flat") {
-      return "none";
-    }
-    return "0 10px 0 rgba(0,0,0,0.25), 0 12px 20px rgba(0,0,0,0.4)";
-  };
-
-  // Get active box shadow based on variant
-  const getActiveBoxShadow = () => {
-    if (variant === "flat") {
-      return "none";
-    }
-    return "0 2px 0 rgba(0,0,0,0.2), 0 3px 5px rgba(0,0,0,0.3)";
-  };
-
   // Get hover transform based on variant
   const getHoverTransform = () => {
     if (variant === "flat") {
@@ -103,10 +87,10 @@ export function CurrentAccountDisplay({
             "shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
           "cursor-pointer",
           getHoverTransform(),
-          variant !== "flat" && `hover:shadow-[${getHoverBoxShadow()}]`,
+          variant !== "flat" && "hover:shadow-lg",
           "hover:brightness-110",
           getActiveTransform(),
-          variant !== "flat" && `active:shadow-[${getActiveBoxShadow()}]`,
+          variant !== "flat" && "active:shadow-sm",
           "active:brightness-90",
           className,
         )}
@@ -174,10 +158,10 @@ export function CurrentAccountDisplay({
           "shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
         "cursor-pointer",
         getHoverTransform(),
-        variant !== "flat" && `hover:shadow-[${getHoverBoxShadow()}]`,
+        variant !== "flat" && "hover:shadow-lg",
         "hover:brightness-110",
         getActiveTransform(),
-        variant !== "flat" && `active:shadow-[${getActiveBoxShadow()}]`,
+        variant !== "flat" && "active:shadow-sm",
         "active:brightness-90",
         className,
       )}

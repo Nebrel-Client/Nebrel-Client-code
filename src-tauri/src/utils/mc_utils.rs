@@ -13,7 +13,7 @@ use log::{debug, error, info, warn};
 use serde::Deserialize;
 use serde::Serialize; // Added Serialize directly
                       // To represent NBT Compound
-use futures::future::{join_all, try_join_all};
+use futures::future::try_join_all;
 use std::env;
 use std::io::{Cursor, Read}; // Needed for reading NBT from bytes and decompression
 use std::net::SocketAddr;
@@ -22,7 +22,6 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use tokio::fs;
 use tokio::io::{AsyncReadExt as _, BufReader};
-use tokio::sync::Semaphore;
 use trust_dns_resolver::config::{ResolverConfig, ResolverOpts};
 use trust_dns_resolver::TokioAsyncResolver;
 use uuid::Uuid;

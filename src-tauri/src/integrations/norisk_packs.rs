@@ -377,7 +377,7 @@ pub async fn import_noriskpack_as_profile(pack_path: PathBuf, event_id: Option<U
         AppError::Io(e)
     })?;
     let mut overrides_buf_reader = BufReader::new(overrides_file_for_listing);
-    let mut zip_lister_for_overrides = ZipFileReader::with_tokio(&mut overrides_buf_reader)
+    let zip_lister_for_overrides = ZipFileReader::with_tokio(&mut overrides_buf_reader)
         .await
         .map_err(|e| {
         error!(
@@ -776,8 +776,8 @@ pub async fn handle_noriskpack_file_paths<R: tauri::Runtime>(
                             e // Use {:?} for CommandError
                         );
                         // Optionally, send an event to the frontend to show an error toast/dialog
-                        if let Some(window) = import_app_handle.get_webview_window("main") {
-                            let error_message = format!(
+                        if let Some(_window) = import_app_handle.get_webview_window("main") {
+                            let _error_message = format!(
                                 "Failed to import noriskpack ({}): {:?}",
                                 file_path_to_import.display(),
                                 e

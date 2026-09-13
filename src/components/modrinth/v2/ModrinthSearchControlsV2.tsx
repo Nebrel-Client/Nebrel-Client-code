@@ -166,11 +166,7 @@ export const ModrinthSearchControlsV2: React.FC<
               )}
               title={t('content.search_modrinth')}
             >
-              <img
-                src="https://cdn.modrinth.com/modrinth-new.png"
-                alt="Modrinth"
-                className="w-5 h-5 object-contain"
-              />
+              <Icon icon="simple-icons:modrinth" className="w-5 h-5 text-[#45d483]" />
               <span className="hidden sm:inline">Modrinth</span>
             </button>
 
@@ -184,11 +180,7 @@ export const ModrinthSearchControlsV2: React.FC<
               )}
               title={t('content.search_curseforge')}
             >
-              <img
-                src="https://cdn.nebrel.de/misc/curseforge.webp"
-                alt="CurseForge"
-                className="w-5 h-5 object-contain"
-              />
+              <Icon icon="simple-icons:curseforge" className="w-5 h-5 text-[#f16436]" />
               <span className="hidden sm:inline">CurseForge</span>
             </button>
           </div>

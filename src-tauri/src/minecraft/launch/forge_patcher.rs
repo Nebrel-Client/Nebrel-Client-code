@@ -402,7 +402,7 @@ impl ForgePatcher {
     pub async fn apply_processors(
         &self,
         install_profile: &ForgeInstallProfile,
-        minecraft_version: &str,
+        _minecraft_version: &str,
         is_client: bool,
         installer_path: &PathBuf,
     ) -> Result<()> {
